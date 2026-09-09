@@ -1,0 +1,169 @@
+{
+  "scenario": "SCN-BACKEND-LOSS-FINAL",
+  "started_at_utc": "2026-09-08T21:38:47.057021+00:00",
+  "pre_failure": {
+    "captured_at_utc": "2026-09-08T21:38:53.093858+00:00",
+    "label": "connected_baseline",
+    "backend_link_18081": true,
+    "backend_edge_8081": true,
+    "central_backend_8083": true,
+    "consumption_w": 4100,
+    "production_w": 1100,
+    "ess_w": 3000,
+    "grid_w": 0,
+    "ess_soc_pct": 28,
+    "last_successful_resend": null,
+    "unable_to_send": 0,
+    "rrd4j_state": 0,
+    "power_balance_residual_w": 0
+  },
+  "rrd_before": {
+    "consumption": {
+      "path": "/tmp/openems-energy-lab/data/rrd4j/rrd4j0/_sum/ConsumptionActivePower",
+      "size": 1037068,
+      "mtime_ns": 1788903300628222936,
+      "sha256": "06dd65124c24e103a3d129c1087586c3392d69a05b0f32b517073d17fb377ff9"
+    },
+    "production": {
+      "path": "/tmp/openems-energy-lab/data/rrd4j/rrd4j0/_sum/ProductionActivePower",
+      "size": 1037068,
+      "mtime_ns": 1788903300645222935,
+      "sha256": "a9a4855a47241352ba81839ede364aea4635ae3f3b3066a1ccbacd3c290d0878"
+    },
+    "ess": {
+      "path": "/tmp/openems-energy-lab/data/rrd4j/rrd4j0/_sum/EssActivePower",
+      "size": 1037068,
+      "mtime_ns": 1788903300634222936,
+      "sha256": "e5eaa04659220dbf57698dd23edd83cbf69ba4e6752cbbcc784cae2e8f7b563a"
+    },
+    "grid": {
+      "path": "/tmp/openems-energy-lab/data/rrd4j/rrd4j0/_sum/GridActivePower",
+      "size": 1037068,
+      "mtime_ns": 1788903300651222935,
+      "sha256": "6c7becaf92290e33ebefa4e09a62f34608624ab71b2a81cf04641c9ada2ae4db"
+    },
+    "soc": {
+      "path": "/tmp/openems-energy-lab/data/rrd4j/rrd4j0/_sum/EssSoc",
+      "size": 1037068,
+      "mtime_ns": 1788903300636222936,
+      "sha256": "bff6f68a186e13719fb24f040bf850bcb88ba894bd18a614a32a760c4aa1c999"
+    }
+  },
+  "failure_injected_at_utc": "2026-09-08T21:38:53.158528+00:00",
+  "outage_discharge": {
+    "captured_at_utc": "2026-09-08T21:39:05.175682+00:00",
+    "label": "outage_discharge",
+    "backend_link_18081": false,
+    "backend_edge_8081": false,
+    "central_backend_8083": true,
+    "consumption_w": 5200,
+    "production_w": 700,
+    "ess_w": 4500,
+    "grid_w": 0,
+    "ess_soc_pct": 28,
+    "last_successful_resend": null,
+    "unable_to_send": 1,
+    "rrd4j_state": 0,
+    "power_balance_residual_w": 0
+  },
+  "outage_charge": {
+    "captured_at_utc": "2026-09-08T21:39:17.224121+00:00",
+    "label": "outage_charge",
+    "backend_link_18081": false,
+    "backend_edge_8081": false,
+    "central_backend_8083": true,
+    "consumption_w": 1800,
+    "production_w": 4300,
+    "ess_w": -2500,
+    "grid_w": 0,
+    "ess_soc_pct": 28,
+    "last_successful_resend": null,
+    "unable_to_send": 1,
+    "rrd4j_state": 0,
+    "power_balance_residual_w": 0
+  },
+  "rrd_during_outage": {
+    "consumption": {
+      "path": "/tmp/openems-energy-lab/data/rrd4j/rrd4j0/_sum/ConsumptionActivePower",
+      "size": 1037068,
+      "mtime_ns": 1788903300628222936,
+      "sha256": "06dd65124c24e103a3d129c1087586c3392d69a05b0f32b517073d17fb377ff9"
+    },
+    "production": {
+      "path": "/tmp/openems-energy-lab/data/rrd4j/rrd4j0/_sum/ProductionActivePower",
+      "size": 1037068,
+      "mtime_ns": 1788903300645222935,
+      "sha256": "a9a4855a47241352ba81839ede364aea4635ae3f3b3066a1ccbacd3c290d0878"
+    },
+    "ess": {
+      "path": "/tmp/openems-energy-lab/data/rrd4j/rrd4j0/_sum/EssActivePower",
+      "size": 1037068,
+      "mtime_ns": 1788903300634222936,
+      "sha256": "e5eaa04659220dbf57698dd23edd83cbf69ba4e6752cbbcc784cae2e8f7b563a"
+    },
+    "grid": {
+      "path": "/tmp/openems-energy-lab/data/rrd4j/rrd4j0/_sum/GridActivePower",
+      "size": 1037068,
+      "mtime_ns": 1788903300651222935,
+      "sha256": "6c7becaf92290e33ebefa4e09a62f34608624ab71b2a81cf04641c9ada2ae4db"
+    },
+    "soc": {
+      "path": "/tmp/openems-energy-lab/data/rrd4j/rrd4j0/_sum/EssSoc",
+      "size": 1037068,
+      "mtime_ns": 1788903300636222936,
+      "sha256": "bff6f68a186e13719fb24f040bf850bcb88ba894bd18a614a32a760c4aa1c999"
+    }
+  },
+  "failure_window_end_utc": "2026-09-08T21:39:17.270373+00:00",
+  "recovery_started_at_utc": "2026-09-08T21:39:17.273555+00:00",
+  "reconnected_at_utc": "2026-09-08T21:39:26.298322+00:00",
+  "recovery": {
+    "captured_at_utc": "2026-09-08T21:39:34.303665+00:00",
+    "label": "after_reconnection",
+    "backend_link_18081": true,
+    "backend_edge_8081": true,
+    "central_backend_8083": true,
+    "consumption_w": 4100,
+    "production_w": 1100,
+    "ess_w": 3000,
+    "grid_w": 0,
+    "ess_soc_pct": 28,
+    "last_successful_resend": null,
+    "unable_to_send": 1,
+    "rrd4j_state": 0,
+    "power_balance_residual_w": 0
+  },
+  "rrd_after_recovery": {
+    "consumption": {
+      "path": "/tmp/openems-energy-lab/data/rrd4j/rrd4j0/_sum/ConsumptionActivePower",
+      "size": 1037068,
+      "mtime_ns": 1788903300628222936,
+      "sha256": "06dd65124c24e103a3d129c1087586c3392d69a05b0f32b517073d17fb377ff9"
+    },
+    "production": {
+      "path": "/tmp/openems-energy-lab/data/rrd4j/rrd4j0/_sum/ProductionActivePower",
+      "size": 1037068,
+      "mtime_ns": 1788903300645222935,
+      "sha256": "a9a4855a47241352ba81839ede364aea4635ae3f3b3066a1ccbacd3c290d0878"
+    },
+    "ess": {
+      "path": "/tmp/openems-energy-lab/data/rrd4j/rrd4j0/_sum/EssActivePower",
+      "size": 1037068,
+      "mtime_ns": 1788903300634222936,
+      "sha256": "e5eaa04659220dbf57698dd23edd83cbf69ba4e6752cbbcc784cae2e8f7b563a"
+    },
+    "grid": {
+      "path": "/tmp/openems-energy-lab/data/rrd4j/rrd4j0/_sum/GridActivePower",
+      "size": 1037068,
+      "mtime_ns": 1788903300651222935,
+      "sha256": "6c7becaf92290e33ebefa4e09a62f34608624ab71b2a81cf04641c9ada2ae4db"
+    },
+    "soc": {
+      "path": "/tmp/openems-energy-lab/data/rrd4j/rrd4j0/_sum/EssSoc",
+      "size": 1037068,
+      "mtime_ns": 1788903300636222936,
+      "sha256": "bff6f68a186e13719fb24f040bf850bcb88ba894bd18a614a32a760c4aa1c999"
+    }
+  },
+  "finished_at_utc": "2026-09-08T21:39:34.361063+00:00"
+}

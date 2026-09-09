@@ -1,0 +1,477 @@
+[
+  {
+    "control_id": "ENG-GOV-001",
+    "title": "Applicability, ownership and assurance accountability",
+    "risks": [
+      "R-GOV-012"
+    ],
+    "profiles": [
+      "GB-OES",
+      "EU-NIS2",
+      "EU-CER",
+      "EU-ELECTRICITY-CYBER"
+    ],
+    "objective": "Material risks, regulatory assumptions, controls and unresolved gaps have explicit owners and recorded applicability decisions.",
+    "source_mappings": [
+      {
+        "source_id": "GB-CAF-003",
+        "reference": "CAF A1/A2"
+      },
+      {
+        "source_id": "EU-NIS2-001",
+        "reference": "Articles 20-21"
+      },
+      {
+        "source_id": "EU-ELEC-003",
+        "reference": "Article 26 risk-management context"
+      }
+    ],
+    "expected_evidence": [
+      "regulatory applicability register",
+      "risk owner record",
+      "control owner record",
+      "assurance conclusion and unresolved-gap record"
+    ],
+    "test_procedure": "Sample a material risk and trace its applicability rationale, owner, control, required evidence and current conclusion.",
+    "failure_indicators": [
+      "proposed legislation treated as current law",
+      "conditional requirement represented as universally applicable",
+      "material gap has no accountable owner",
+      "compliance conclusion cannot be traced to evidence"
+    ],
+    "test_type": "design",
+    "conclusion": "NOT TESTED"
+  },
+  {
+    "control_id": "ENG-ARC-002",
+    "title": "Architecture and critical-dependency mapping",
+    "risks": [
+      "R-RES-001",
+      "R-DEP-011",
+      "R-IAM-004"
+    ],
+    "profiles": [
+      "GB-OES",
+      "EU-NIS2",
+      "EU-ELECTRICITY-CYBER"
+    ],
+    "objective": "Control, telemetry, remote-management and evidence paths are documented with their critical dependencies and trust boundaries.",
+    "source_mappings": [
+      {
+        "source_id": "GB-CAF-003",
+        "reference": "CAF A3, B4 and B5"
+      },
+      {
+        "source_id": "EU-NIS2-001",
+        "reference": "Article 21 risk-management and asset-management context"
+      }
+    ],
+    "expected_evidence": [
+      "system context diagram",
+      "asset register",
+      "critical dependency register",
+      "trust-boundary description"
+    ],
+    "test_procedure": "Trace one local-control path and one central telemetry path end to end and verify that every material dependency and trust transition appears in the architecture model.",
+    "failure_indicators": [
+      "undocumented control path",
+      "central dependency omitted",
+      "measurement dependency omitted",
+      "management interface excluded without rationale"
+    ],
+    "test_type": "design",
+    "conclusion": "NOT TESTED"
+  },
+  {
+    "control_id": "ENG-IAM-003",
+    "title": "Remote and privileged access control",
+    "risks": [
+      "R-IAM-004"
+    ],
+    "profiles": [
+      "GB-OES",
+      "EU-NIS2",
+      "EU-ELECTRICITY-CYBER"
+    ],
+    "objective": "Remote and privileged actions affecting the energy-management function are restricted to authorised identities and remain attributable.",
+    "source_mappings": [
+      {
+        "source_id": "GB-CAF-003",
+        "reference": "CAF B2"
+      },
+      {
+        "source_id": "EU-NIS2-001",
+        "reference": "Article 21(2)(i)-(j)"
+      }
+    ],
+    "expected_evidence": [
+      "identity and role configuration",
+      "privileged account inventory",
+      "remote-access path",
+      "representative attributable administrative event"
+    ],
+    "test_procedure": "Trace a representative privileged action from authenticated identity through authorisation to the resulting event record.",
+    "failure_indicators": [
+      "shared privileged identity",
+      "unmanaged remote path",
+      "control action cannot be attributed",
+      "role grants unnecessary control capability"
+    ],
+    "test_type": "design_and_operating",
+    "conclusion": "NOT TESTED"
+  },
+  {
+    "control_id": "ENG-CTL-004",
+    "title": "Local control resilience and state integrity",
+    "risks": [
+      "R-RES-001",
+      "R-CTL-002",
+      "R-CFG-008"
+    ],
+    "profiles": [
+      "GB-OES",
+      "EU-NIS2",
+      "EU-CER"
+    ],
+    "objective": "The defined local control function behaves predictably when central connectivity is lost and does not make an unexplained control transition.",
+    "source_mappings": [
+      {
+        "source_id": "GB-CAF-003",
+        "reference": "CAF B5 and D1"
+      },
+      {
+        "source_id": "GB-OFGEM-002",
+        "reference": "assurance and resilience expectations"
+      },
+      {
+        "source_id": "EU-NIS2-001",
+        "reference": "Article 21(2)(c)"
+      },
+      {
+        "source_id": "EU-CER-002",
+        "reference": "Article 13"
+      }
+    ],
+    "expected_evidence": [
+      "simulation configuration",
+      "baseline control state",
+      "control output or set-point during interruption",
+      "recovery control state",
+      "scenario timestamps"
+    ],
+    "test_procedure": "Execute SCN-BACKEND-LOSS and compare baseline, interruption and recovery control states against SC-01 through SC-06.",
+    "failure_indicators": [
+      "local control stops unexpectedly",
+      "unexplained set-point transition",
+      "required local measurement disappears",
+      "recovery state cannot be reconciled"
+    ],
+    "test_type": "operating",
+    "conclusion": "NOT TESTED"
+  },
+  {
+    "control_id": "ENG-TEL-005",
+    "title": "Telemetry integrity and source attribution",
+    "risks": [
+      "R-TEL-003",
+      "R-DEP-011",
+      "R-DAT-010"
+    ],
+    "profiles": [
+      "GB-OES",
+      "EU-NIS2",
+      "EU-DATA"
+    ],
+    "objective": "Material operational measurements can be attributed to a defined source and their availability and validity can be assessed during the scenario.",
+    "source_mappings": [
+      {
+        "source_id": "GB-CAF-003",
+        "reference": "CAF B3/B4"
+      },
+      {
+        "source_id": "EU-NIS2-001",
+        "reference": "Article 21 risk-management context"
+      },
+      {
+        "source_id": "EU-DATA-004",
+        "reference": "conditional data-governance profile"
+      }
+    ],
+    "expected_evidence": [
+      "channel inventory",
+      "measurement source mapping",
+      "captured telemetry",
+      "validation or range assumptions",
+      "data lineage record"
+    ],
+    "test_procedure": "Trace grid, PV and battery measurements from simulated source to collected evidence and identify missing, stale or unexplained values.",
+    "failure_indicators": [
+      "measurement source cannot be established",
+      "missing value cannot be distinguished from a valid value",
+      "stale telemetry is treated as current",
+      "required controller input is not captured"
+    ],
+    "test_type": "design_and_operating",
+    "conclusion": "NOT TESTED"
+  },
+  {
+    "control_id": "ENG-MON-006",
+    "title": "Event logging and time integrity",
+    "risks": [
+      "R-MON-005",
+      "R-TEL-003"
+    ],
+    "profiles": [
+      "GB-OES",
+      "EU-NIS2",
+      "EU-ELECTRICITY-CYBER"
+    ],
+    "objective": "Material connectivity, control and measurement events can be placed into a sufficiently reliable sequence for investigation and assurance.",
+    "source_mappings": [
+      {
+        "source_id": "GB-CAF-003",
+        "reference": "CAF C1"
+      },
+      {
+        "source_id": "EU-NIS2-001",
+        "reference": "Article 21(2)(b) and (f)"
+      },
+      {
+        "source_id": "EU-ELEC-003",
+        "reference": "monitoring and risk-management context"
+      }
+    ],
+    "expected_evidence": [
+      "event logs",
+      "channel timestamps",
+      "connectivity timestamps",
+      "time-source information",
+      "evidence manifest"
+    ],
+    "test_procedure": "Generate or observe a known state transition and verify that connectivity, measurement and control evidence can be ordered consistently.",
+    "failure_indicators": [
+      "material event absent",
+      "timestamps contradict one another without explanation",
+      "control output cannot be correlated with measurement state",
+      "scenario timing depends on an undocumented clock"
+    ],
+    "test_type": "operating",
+    "conclusion": "NOT TESTED"
+  },
+  {
+    "control_id": "ENG-REC-007",
+    "title": "Recovery and state reconciliation",
+    "risks": [
+      "R-REC-009",
+      "R-RES-001"
+    ],
+    "profiles": [
+      "GB-OES",
+      "EU-NIS2",
+      "EU-CER"
+    ],
+    "objective": "Restoration of central connectivity includes sufficient reconciliation to explain the resulting operational and telemetry state.",
+    "source_mappings": [
+      {
+        "source_id": "GB-CAF-003",
+        "reference": "CAF D1/D2"
+      },
+      {
+        "source_id": "EU-NIS2-001",
+        "reference": "Article 21(2)(c)"
+      },
+      {
+        "source_id": "EU-CER-002",
+        "reference": "Article 13(1)(d)"
+      }
+    ],
+    "expected_evidence": [
+      "reconnection timestamp",
+      "post-recovery channel state",
+      "telemetry-gap record",
+      "comparison with baseline",
+      "identified recovery limitation"
+    ],
+    "test_procedure": "Restore the interrupted dependency and determine whether post-recovery state and any telemetry gap can be explained from the retained evidence.",
+    "failure_indicators": [
+      "connectivity returns but state remains unexplained",
+      "telemetry gap is silently hidden",
+      "recovery is declared solely because a process is reachable",
+      "material difference from baseline is not investigated"
+    ],
+    "test_type": "operating",
+    "conclusion": "NOT TESTED"
+  },
+  {
+    "control_id": "ENG-SUP-008",
+    "title": "Open-source provenance and dependency governance",
+    "risks": [
+      "R-SUP-006"
+    ],
+    "profiles": [
+      "GB-OES",
+      "EU-NIS2",
+      "EU-ELECTRICITY-CYBER"
+    ],
+    "objective": "The OpenEMS baseline and other material software dependencies have known provenance, version ownership and a repeatable update or risk decision process.",
+    "source_mappings": [
+      {
+        "source_id": "GB-CAF-003",
+        "reference": "CAF A4"
+      },
+      {
+        "source_id": "EU-NIS2-001",
+        "reference": "Article 21(2)(d)-(e)"
+      },
+      {
+        "source_id": "EU-ELEC-003",
+        "reference": "Article 33 supply-chain control context"
+      }
+    ],
+    "expected_evidence": [
+      "exact upstream commit",
+      "build environment record",
+      "artefact hash",
+      "reproduction script",
+      "upstream security and release monitoring approach"
+    ],
+    "test_procedure": "Reproduce the pinned OpenEMS Edge build from the recorded source revision and verify that provenance and generated artefact information are retained.",
+    "failure_indicators": [
+      "unknown source revision",
+      "build depends on undocumented manual state",
+      "no provenance record",
+      "material dependency has no update owner"
+    ],
+    "test_type": "design_and_operating",
+    "conclusion": "NOT TESTED"
+  },
+  {
+    "control_id": "ENG-PHY-009",
+    "title": "Physical and environmental dependency coverage",
+    "risks": [
+      "R-PHY-007",
+      "R-DEP-011"
+    ],
+    "profiles": [
+      "GB-OES",
+      "EU-NIS2",
+      "EU-CER"
+    ],
+    "objective": "Physical access, power and environmental dependencies capable of defeating the local-control function are visible in the assurance scope.",
+    "source_mappings": [
+      {
+        "source_id": "GB-OFGEM-E-004",
+        "reference": "Objective E"
+      },
+      {
+        "source_id": "EU-NIS2-001",
+        "reference": "Article 21(2) all-hazards approach"
+      },
+      {
+        "source_id": "EU-CER-002",
+        "reference": "Article 13(1)(a)-(d)"
+      }
+    ],
+    "expected_evidence": [
+      "physical dependency statement",
+      "power dependency",
+      "site-access assumption",
+      "environmental limitation",
+      "explicit simulation limitation"
+    ],
+    "test_procedure": "Review the local-control dependency model and confirm that physical assumptions are documented rather than silently treated as trusted.",
+    "failure_indicators": [
+      "physical compromise excluded without rationale",
+      "power dependency omitted",
+      "simulation result represented as physical-resilience proof"
+    ],
+    "test_type": "design",
+    "conclusion": "NOT TESTED"
+  },
+  {
+    "control_id": "ENG-CFG-010",
+    "title": "Configuration and control-change traceability",
+    "risks": [
+      "R-CFG-008",
+      "R-CTL-002"
+    ],
+    "profiles": [
+      "GB-OES",
+      "EU-NIS2",
+      "EU-ELECTRICITY-CYBER"
+    ],
+    "objective": "A change capable of altering control behaviour is identifiable, reviewable and reversible within the assurance environment.",
+    "source_mappings": [
+      {
+        "source_id": "GB-CAF-003",
+        "reference": "CAF B1/B4"
+      },
+      {
+        "source_id": "EU-NIS2-001",
+        "reference": "Article 21(2)(e)"
+      },
+      {
+        "source_id": "EU-ELEC-003",
+        "reference": "entity-level cybersecurity risk-management context"
+      }
+    ],
+    "expected_evidence": [
+      "version-controlled configuration",
+      "change diff",
+      "test scenario version",
+      "rollback or baseline reference"
+    ],
+    "test_procedure": "Trace the configuration used by the scenario to Git history and the recorded technical baseline.",
+    "failure_indicators": [
+      "scenario configuration changed without trace",
+      "control logic differs from recorded baseline",
+      "result cannot be tied to a configuration version"
+    ],
+    "test_type": "design",
+    "conclusion": "NOT TESTED"
+  },
+  {
+    "control_id": "ENG-DAT-011",
+    "title": "Assurance evidence integrity and lineage",
+    "risks": [
+      "R-DAT-010",
+      "R-MON-005"
+    ],
+    "profiles": [
+      "GB-OES",
+      "EU-NIS2",
+      "EU-DATA"
+    ],
+    "objective": "Evidence used for an assurance conclusion can be traced to its source, scenario, collection time and integrity record.",
+    "source_mappings": [
+      {
+        "source_id": "GB-OFGEM-002",
+        "reference": "assurance evidence context"
+      },
+      {
+        "source_id": "GB-CAF-003",
+        "reference": "CAF B3/C1"
+      },
+      {
+        "source_id": "EU-DATA-004",
+        "reference": "conditional data-governance profile"
+      }
+    ],
+    "expected_evidence": [
+      "raw evidence files",
+      "evidence manifest",
+      "SHA-256 hashes",
+      "collection metadata",
+      "derived-analysis reference to raw input"
+    ],
+    "test_procedure": "Select a reported finding and trace it backwards from conclusion to derived analysis, raw evidence file and integrity hash.",
+    "failure_indicators": [
+      "finding has no raw evidence source",
+      "evidence file changed without detection",
+      "derived data cannot be reproduced",
+      "collection context is missing"
+    ],
+    "test_type": "design_and_operating",
+    "conclusion": "NOT TESTED"
+  }
+]

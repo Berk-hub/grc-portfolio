@@ -1,0 +1,7 @@
+Governance model integrity record
+Captured UTC: 2026-09-08T22:01:05+00:00
+
+8bfbb9b77c95fbd449595fc19468111641c0ebc02ebc8ca6bd56650c580298ee  data/data-governance.json
+3262fcba1a3cd9e7d22c6596402b097bdac52d4e5a6105cb604202404e71a3fb  data/ai-governance.json
+0363a9ef407426d8f0c66cf134fd65ca964f917a96367af53c79b910e753c743  docs/07-data-governance.md
+6f4bc6ec14bb13afbf88ae1176654ead682e4825d0e9d920e786ce7ccb58777f  docs/08-ai-governance.md

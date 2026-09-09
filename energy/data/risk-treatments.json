@@ -1,0 +1,126 @@
+{
+  "schema_version": "1.0",
+  "note": "Residual-risk view per risk. Inherent scores live in data/risks.json. A residual status is only reduced where control evidence exists for the tested scope; otherwise it stays UNASSESSED. Ordinal scores are ranking aids and are never summed. No risk has been formally accepted.",
+  "treatments": [
+    {
+      "risk_id": "R-RES-001",
+      "controls": ["ENG-CTL-004", "ENG-ARC-002", "ENG-REC-007"],
+      "control_evidence": "EVIDENCED_FOR_TESTED_SCOPE",
+      "residual_status": "REDUCED_WITHIN_TESTED_SCOPE",
+      "residual_rationale": "SC-01 to SC-05 are supported by the recorded run: local control continued and responded in both directions during the outage. Recovery understanding (SC-06) remains open via FND-REC-001, so the reduction does not extend to reconciliation.",
+      "treatment": "MITIGATE",
+      "acceptance": null,
+      "review_due": "2026-12-09"
+    },
+    {
+      "risk_id": "R-CTL-002",
+      "controls": ["ENG-CTL-004", "ENG-CFG-010"],
+      "control_evidence": "PARTIAL",
+      "residual_status": "PARTIALLY_ASSESSED",
+      "residual_rationale": "No unexplained transition was observed in the recorded run (SC-03), but adversarial manipulation of control was not tested.",
+      "treatment": "MITIGATE",
+      "acceptance": null,
+      "review_due": "2026-12-09"
+    },
+    {
+      "risk_id": "R-TEL-003",
+      "controls": ["ENG-TEL-005", "ENG-MON-006"],
+      "control_evidence": "PARTIAL",
+      "residual_status": "PARTIALLY_ASSESSED",
+      "residual_rationale": "Telemetry source and timestamps were examined for the run; integrity attacks and stale-data behaviour were not tested (planned EXP-05).",
+      "treatment": "MITIGATE",
+      "acceptance": null,
+      "review_due": "2026-12-09"
+    },
+    {
+      "risk_id": "R-IAM-004",
+      "controls": ["ENG-IAM-003"],
+      "control_evidence": "NOT_TESTED",
+      "residual_status": "UNASSESSED",
+      "residual_rationale": "IAM effectiveness was not exercised. Absence of evidence is not treated as low risk.",
+      "treatment": "MITIGATE",
+      "acceptance": null,
+      "review_due": "2026-12-09"
+    },
+    {
+      "risk_id": "R-MON-005",
+      "controls": ["ENG-MON-006", "ENG-DAT-011"],
+      "control_evidence": "PARTIAL",
+      "residual_status": "PARTIALLY_ASSESSED",
+      "residual_rationale": "Connectivity and control events for the recorded run were time-orderable (SC-05); complete logging coverage was not assessed.",
+      "treatment": "MITIGATE",
+      "acceptance": null,
+      "review_due": "2026-12-09"
+    },
+    {
+      "risk_id": "R-SUP-006",
+      "controls": ["ENG-SUP-008"],
+      "control_evidence": "EVIDENCED_FOR_TESTED_SCOPE",
+      "residual_status": "PARTIALLY_ASSESSED",
+      "residual_rationale": "Provenance and pinning are evidenced. Vulnerability, licence and signing governance remain outside the implemented evidence, so the residual view is bounded.",
+      "treatment": "MITIGATE",
+      "acceptance": null,
+      "review_due": "2026-12-09"
+    },
+    {
+      "risk_id": "R-PHY-007",
+      "controls": ["ENG-PHY-009"],
+      "control_evidence": "NOT_TESTED",
+      "residual_status": "UNASSESSED",
+      "residual_rationale": "Physical and environmental dependencies are modelled only; no physical test exists in a simulated laboratory.",
+      "treatment": "MITIGATE",
+      "acceptance": null,
+      "review_due": "2026-12-09"
+    },
+    {
+      "risk_id": "R-CFG-008",
+      "controls": ["ENG-CFG-010"],
+      "control_evidence": "PARTIAL",
+      "residual_status": "PARTIALLY_ASSESSED",
+      "residual_rationale": "Configuration is version-controlled and traceable to the recorded baseline; a change-management process was not tested (planned EXP-09).",
+      "treatment": "MITIGATE",
+      "acceptance": null,
+      "review_due": "2026-12-09"
+    },
+    {
+      "risk_id": "R-REC-009",
+      "controls": ["ENG-REC-007"],
+      "control_evidence": "INCONCLUSIVE",
+      "residual_status": "UNASSESSED",
+      "residual_rationale": "Reconciliation evidence is the open finding FND-REC-001. Residual assessment is blocked until EXP-02 or a documented root cause.",
+      "treatment": "MITIGATE",
+      "acceptance": null,
+      "review_due": "2026-10-09"
+    },
+    {
+      "risk_id": "R-DAT-010",
+      "controls": ["ENG-DAT-011"],
+      "control_evidence": "EVIDENCED_FOR_TESTED_SCOPE",
+      "residual_status": "REDUCED_WITHIN_TESTED_SCOPE",
+      "residual_rationale": "Evidence lineage and SHA-256 integrity are implemented and continuously verified for the laboratory evidence set.",
+      "treatment": "MITIGATE",
+      "acceptance": null,
+      "review_due": "2026-12-09"
+    },
+    {
+      "risk_id": "R-DEP-011",
+      "controls": ["ENG-TEL-005", "ENG-ARC-002"],
+      "control_evidence": "PARTIAL",
+      "residual_status": "UNASSESSED",
+      "residual_rationale": "Loss of a required measurement was modelled but not injected (planned EXP-05). Controller behaviour with stale or missing meter input is unknown.",
+      "treatment": "MITIGATE",
+      "acceptance": null,
+      "review_due": "2026-12-09"
+    },
+    {
+      "risk_id": "R-GOV-012",
+      "controls": ["ENG-GOV-001"],
+      "control_evidence": "PARTIAL",
+      "residual_status": "PARTIALLY_ASSESSED",
+      "residual_rationale": "Applicability records now exist at provision level with explicit missing facts. Real oversight is absent (GAP-GOV-OVERSIGHT).",
+      "treatment": "MITIGATE",
+      "acceptance": null,
+      "review_due": "2026-12-09"
+    }
+  ]
+}

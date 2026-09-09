@@ -1,0 +1,18 @@
+{
+  "repository": "https://github.com/OpenEMS/openems",
+  "commit": "189ac916fd653d3496797ac20921d18a2e6237f1",
+  "artifacts": {
+    "openems-edge.jar": {
+      "sha256": "ad6415df233bf72c4c1a99887b6cb90092a7901e5b602fda3ab22c09448e9a74",
+      "size_bytes": 68762819
+    },
+    "openems-backend.jar": {
+      "sha256": "e2138ad4b052aa4a3e096df788e52ec9eafca63a6fb294ad88b81f2f52d9963f",
+      "size_bytes": 37303186
+    },
+    "openems-backend-edge.jar": {
+      "sha256": "bed49ee735af2de7da238cf884f182f46a0e67cd0e53fa9b3d9ccdb0997f59db",
+      "size_bytes": 19906465
+    }
+  }
+}

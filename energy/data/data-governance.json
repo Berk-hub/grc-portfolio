@@ -1,0 +1,162 @@
+{
+  "model_id": "ENERGY-DATA-GOV-001",
+  "system": "REF-ENERGY-001",
+  "status": "ACTIVE_LAB_MODEL",
+  "scope": {
+    "included": [
+      "simulated energy telemetry",
+      "local control outputs",
+      "OpenEMS configuration",
+      "Backend connectivity state",
+      "RRD4J local history",
+      "InfluxDB central history",
+      "assurance evidence",
+      "software provenance"
+    ],
+    "excluded": [
+      "production customer data",
+      "billing data",
+      "real operator personal data"
+    ]
+  },
+  "data_classes": [
+    {
+      "id": "DG-OP-001",
+      "name": "Operational telemetry",
+      "classification": "OPERATIONAL",
+      "confidentiality": "MEDIUM",
+      "integrity": "HIGH",
+      "availability": "HIGH",
+      "examples": [
+        "_sum/ConsumptionActivePower",
+        "_sum/ProductionActivePower",
+        "_sum/EssActivePower",
+        "_sum/GridActivePower",
+        "_sum/EssSoc"
+      ]
+    },
+    {
+      "id": "DG-CTL-002",
+      "name": "Cyber-physical control data",
+      "classification": "CYBER_PHYSICAL_CONTROL",
+      "confidentiality": "HIGH",
+      "integrity": "CRITICAL",
+      "availability": "HIGH",
+      "examples": [
+        "ESS active-power response",
+        "balancing controller output",
+        "ess0/DebugSetActivePower"
+      ]
+    },
+    {
+      "id": "DG-CFG-003",
+      "name": "Configuration and topology",
+      "classification": "SYSTEM_CONFIGURATION",
+      "confidentiality": "HIGH",
+      "integrity": "HIGH",
+      "availability": "MEDIUM"
+    },
+    {
+      "id": "DG-SEC-004",
+      "name": "Authentication and secrets",
+      "classification": "SECRET",
+      "confidentiality": "CRITICAL",
+      "integrity": "HIGH",
+      "availability": "MEDIUM",
+      "repository_policy": "MUST_NOT_BE_COMMITTED"
+    },
+    {
+      "id": "DG-EVD-005",
+      "name": "Assurance evidence",
+      "classification": "ASSURANCE_RECORD",
+      "confidentiality": "MEDIUM",
+      "integrity": "CRITICAL",
+      "availability": "HIGH"
+    },
+    {
+      "id": "DG-SUP-006",
+      "name": "Software provenance",
+      "classification": "PROVENANCE",
+      "confidentiality": "LOW",
+      "integrity": "HIGH",
+      "availability": "MEDIUM"
+    }
+  ],
+  "flows": [
+    {
+      "id": "DF-01",
+      "from": "Simulated field assets",
+      "to": "OpenEMS Edge",
+      "boundary": "TB-01",
+      "data_classes": ["DG-OP-001"]
+    },
+    {
+      "id": "DF-02",
+      "from": "OpenEMS Edge",
+      "to": "RRD4J",
+      "boundary": "LOCAL_EDGE",
+      "data_classes": ["DG-OP-001", "DG-CTL-002"]
+    },
+    {
+      "id": "DF-03",
+      "from": "OpenEMS Edge",
+      "to": "Backend Edge Application",
+      "boundary": "TB-02",
+      "protocol": "WebSocket",
+      "failure_tested": true,
+      "scenario": "SCN-BACKEND-LOSS",
+      "data_classes": ["DG-OP-001", "DG-CFG-003"]
+    },
+    {
+      "id": "DF-04",
+      "from": "Backend Edge Application",
+      "to": "Central Backend",
+      "protocol": "WebSocket",
+      "data_classes": ["DG-OP-001"]
+    },
+    {
+      "id": "DF-05",
+      "from": "Central Backend",
+      "to": "InfluxDB",
+      "data_classes": ["DG-OP-001"]
+    },
+    {
+      "id": "DF-06",
+      "from": "Runtime system",
+      "to": "Version-controlled assurance evidence",
+      "boundary": "TB-04",
+      "data_classes": ["DG-EVD-005", "DG-SUP-006"]
+    }
+  ],
+  "data_quality": [
+    "provenance",
+    "integrity",
+    "timeliness",
+    "completeness",
+    "consistency",
+    "recoverability"
+  ],
+  "retention": {
+    "rrd4j": "LAB_EPHEMERAL",
+    "influxdb": "LAB_EPHEMERAL",
+    "assurance_evidence": "VERSION_CONTROLLED",
+    "production_retention_claim": false
+  },
+  "privacy": {
+    "personal_data_in_current_test_dataset": false,
+    "production_privacy_assessment_required_if_scope_changes": true
+  },
+  "regulatory_mapping": [
+    {
+      "source": "EU-DATA-004",
+      "status": "CONDITIONAL"
+    }
+  ],
+  "control_mapping": [
+    "ENG-DAT-011",
+    "ENG-MON-006",
+    "ENG-REC-007",
+    "ENG-CFG-010",
+    "ENG-SUP-008"
+  ]
+}

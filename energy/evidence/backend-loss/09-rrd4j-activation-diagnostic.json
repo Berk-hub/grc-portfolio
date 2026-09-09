@@ -1,0 +1,487 @@
+{
+  "jsonrpc": "2.0",
+  "id": "51b3500d-7b58-46f4-90e4-fdac93792f7e",
+  "result": {
+    "components": {
+      "_appManager": {
+        "alias": "Core.AppManager",
+        "factoryId": "Core.AppManager",
+        "properties": {
+          "apps": "[]",
+          "keyForFreeApps": "0000-0000-0000-0000"
+        }
+      },
+      "_componentManager": {
+        "alias": "Core.ComponentManager",
+        "factoryId": "Core.ComponentManager",
+        "properties": {}
+      },
+      "_cycle": {
+        "alias": "Core.Cycle",
+        "factoryId": "Core.Cycle",
+        "properties": {
+          "cycleTime": 1000,
+          "logVerbosity": "NONE"
+        }
+      },
+      "_energy": {
+        "alias": "Core.Energy",
+        "factoryId": "Core.Energy",
+        "properties": {
+          "enabled": "true",
+          "environment": "PRODUCTION",
+          "logVerbosity": "DEBUG_LOG",
+          "version": "V1_ESS_ONLY"
+        }
+      },
+      "_evcsSlowPowerIncreaseFilter": {
+        "alias": "Evcs.SlowPowerIncreaseFilter",
+        "factoryId": "Evcs.SlowPowerIncreaseFilter",
+        "properties": {
+          "enableSlowIncrease": "false",
+          "increaseRate": "0.05"
+        }
+      },
+      "_host": {
+        "alias": "Core.Host",
+        "factoryId": "Core.Host",
+        "properties": {
+          "_lastChangeAt": "2026-09-08T20:04:58",
+          "_lastChangeBy": "Internal UsbConfigurationWorker",
+          "networkConfiguration": {
+            "interfaces": {}
+          },
+          "usbConfiguration": ""
+        }
+      },
+      "_meta": {
+        "alias": "Core.Meta",
+        "factoryId": "Core.Meta",
+        "properties": {
+          "currency": "EUR",
+          "gridBuySoftLimit": "[]",
+          "gridConnectionPointFuseLimit": "32",
+          "gridFeedInLimitationType": "NO_LIMITATION",
+          "isEssChargeFromGridAllowed": "false",
+          "isEssDischargeToGridAllowed": "false",
+          "latitude": "-999.0",
+          "longitude": "-999.0",
+          "maximumGridFeedInLimit": "-1",
+          "placeName": "",
+          "postcode": "",
+          "subdivisionCode": "UNDEFINED",
+          "thirdPartyUsageAcceptance": "UNDECIDED",
+          "timezone": ""
+        }
+      },
+      "_power": {
+        "alias": "Ess.Power",
+        "factoryId": "Ess.Power",
+        "properties": {
+          "d": "0.1",
+          "debugMode": "false",
+          "enablePT1Filter": "false",
+          "enablePid": false,
+          "i": "0.3",
+          "p": "0.3",
+          "pt1TimeConstant": "800",
+          "strategy": "OPTIMIZE_BY_MOVING_TOWARDS_TARGET",
+          "symmetricMode": "true"
+        }
+      },
+      "_predictorManager": {
+        "alias": "Core.PredictorManager",
+        "factoryId": "Core.PredictorManager",
+        "properties": {
+          "predictor.ids": [
+            ""
+          ]
+        }
+      },
+      "_serialNumber": {
+        "alias": "Core.SerialNumber",
+        "factoryId": "Core.SerialNumber",
+        "properties": {
+          "data": "{}"
+        }
+      },
+      "_simulator": {
+        "alias": "Simulator.App",
+        "factoryId": "Simulator.App",
+        "properties": {
+          "_lastChangeAt": "2026-09-08T20:50:26",
+          "_lastChangeBy": "admin: Admin",
+          "enabled": false
+        }
+      },
+      "_sum": {
+        "alias": "Core.Sum",
+        "factoryId": "Core.Sum",
+        "properties": {
+          "consumptionMaxActivePower": "0",
+          "essMaxDischargePower": "0",
+          "essMinDischargePower": "0",
+          "gridMaxActivePower": "0",
+          "gridMinActivePower": "0",
+          "ignoreStateComponents": [
+            ""
+          ],
+          "productionMaxActivePower": "0"
+        }
+      },
+      "ctrlApiRest0": {
+        "alias": "ctrlApiRest0",
+        "factoryId": "Controller.Api.Rest.ReadWrite",
+        "properties": {
+          "alias": "",
+          "apiTimeout": 60,
+          "connectionlimit": 5,
+          "debugMode": true,
+          "enabled": true,
+          "port": 8084
+        }
+      },
+      "ctrlBackend0": {
+        "alias": "ctrlBackend0",
+        "factoryId": "Controller.Api.Backend",
+        "properties": {
+          "_lastChangeAt": "2026-09-08T20:59:45",
+          "_lastChangeBy": "admin: Admin",
+          "aggregationPriority": "LOW",
+          "alias": "",
+          "apiTimeout": 60,
+          "apikey": "xxx",
+          "debugMode": false,
+          "enabled": true,
+          "persistencePriority": "HIGH",
+          "proxyAddress": "",
+          "proxyPort": 0,
+          "proxyType": "HTTP",
+          "resendPriority": "HIGH",
+          "uri": "ws://localhost:18081"
+        }
+      },
+      "ctrlBalancing0": {
+        "alias": "ctrlBalancing0",
+        "factoryId": "Controller.Symmetric.Balancing",
+        "properties": {
+          "_lastChangeAt": "2026-09-08T20:50:26",
+          "_lastChangeBy": "admin: Admin",
+          "alias": "",
+          "enabled": true,
+          "ess.id": "ess0",
+          "meter.id": "meter0",
+          "targetGridSetpoint": "0"
+        }
+      },
+      "ess0": {
+        "alias": "ess0",
+        "factoryId": "Simulator.EssSymmetric.Reacting",
+        "properties": {
+          "_lastChangeAt": "2026-09-08T20:50:26",
+          "_lastChangeBy": "admin: Admin",
+          "alias": "",
+          "capacity": 10200,
+          "enabled": true,
+          "gridMode": "ON_GRID",
+          "initialSoc": 50,
+          "maxApparentPower": 10000,
+          "maxChargePower": "10000",
+          "maxDischargePower": "10000"
+        }
+      },
+      "meter0": {
+        "alias": "meter0",
+        "factoryId": "Simulator.GridMeter.Reacting",
+        "properties": {
+          "_lastChangeAt": "2026-09-08T20:50:26",
+          "_lastChangeBy": "admin: Admin",
+          "alias": "",
+          "enabled": true
+        }
+      },
+      "meter1": {
+        "alias": "Consumption",
+        "factoryId": "Simulator.NRCMeter.Acting",
+        "properties": {
+          "_lastChangeAt": "2026-09-08T20:50:26",
+          "_lastChangeBy": "admin: Admin",
+          "alias": "Consumption",
+          "datasource.id": "simulateConsumption",
+          "enabled": true
+        }
+      },
+      "meter2": {
+        "alias": "Solar PV",
+        "factoryId": "Simulator.ProductionMeter.Acting",
+        "properties": {
+          "_lastChangeAt": "2026-09-08T20:50:26",
+          "_lastChangeBy": "admin: Admin",
+          "alias": "Solar PV",
+          "datasource.id": "simulateProduction",
+          "enabled": true
+        }
+      },
+      "rrd4j0": {
+        "alias": "Local resilience evidence buffer",
+        "factoryId": "Timedata.Rrd4j",
+        "properties": {
+          "_lastChangeAt": "2026-09-08T21:26:30",
+          "_lastChangeBy": "admin: Admin",
+          "alias": "Local resilience evidence buffer",
+          "debugMode": false,
+          "enabled": true,
+          "isReadOnly": false,
+          "persistencePriority": "HIGH"
+        }
+      },
+      "scheduler0": {
+        "alias": "scheduler0",
+        "factoryId": "Scheduler.AllAlphabetically",
+        "properties": {
+          "_lastChangeAt": "2026-09-08T20:50:26",
+          "_lastChangeBy": "admin: Admin",
+          "alias": "",
+          "controllers.ids": [
+            ""
+          ],
+          "enabled": true
+        }
+      },
+      "simulateConsumption": {
+        "alias": "simulateConsumption",
+        "factoryId": "Simulator.Datasource.Single.Channel",
+        "properties": {
+          "_lastChangeAt": "2026-09-08T20:50:26",
+          "_lastChangeBy": "admin: Admin",
+          "alias": "",
+          "enabled": true,
+          "timeDelta": "-1"
+        }
+      },
+      "simulateProduction": {
+        "alias": "simulateProduction",
+        "factoryId": "Simulator.Datasource.Single.Channel",
+        "properties": {
+          "_lastChangeAt": "2026-09-08T20:50:26",
+          "_lastChangeBy": "admin: Admin",
+          "alias": "",
+          "enabled": true,
+          "timeDelta": "-1"
+        }
+      }
+    },
+    "factories": {
+      "Controller.Api.Backend": {
+        "name": "Controller Api Backend",
+        "description": "This controller connects to OpenEMS Backend",
+        "natureIds": [
+          "io.openems.edge.controller.api.backend.api.ControllerApiBackend",
+          "io.openems.edge.common.component.OpenemsComponent",
+          "io.openems.edge.controller.api.Controller"
+        ]
+      },
+      "Controller.Api.Rest.ReadWrite": {
+        "name": "Controller Api REST/JSON Read-Write",
+        "description": "This controller provides a read-write REST/JSON api.",
+        "natureIds": [
+          "io.openems.edge.controller.api.rest.readwrite.ControllerApiRestReadWrite",
+          "io.openems.edge.common.component.OpenemsComponent",
+          "io.openems.edge.controller.api.rest.RestApi",
+          "io.openems.edge.controller.api.Controller"
+        ]
+      },
+      "Controller.Symmetric.Balancing": {
+        "name": "Controller Ess Balancing",
+        "description": "Optimizes the self-consumption by keeping the grid meter on zero.",
+        "natureIds": [
+          "io.openems.edge.common.modbusslave.ModbusSlave",
+          "io.openems.edge.common.component.OpenemsComponent",
+          "io.openems.edge.controller.ess.balancing.ControllerEssBalancing",
+          "io.openems.edge.controller.api.Controller"
+        ]
+      },
+      "Core.AppManager": {
+        "name": "Core App-Manager",
+        "description": "The global manager for OpenEMS Apps. (Changes are only applied to the components if the App gets updated via UI or JSONRPC-Request)",
+        "natureIds": [
+          "io.openems.edge.core.appmanager.AppManager",
+          "io.openems.edge.common.jsonapi.ComponentJsonApi",
+          "io.openems.edge.common.component.OpenemsComponent",
+          "io.openems.edge.core.appmanager.AppManagerImpl"
+        ]
+      },
+      "Core.ComponentManager": {
+        "name": "Core Component-Manager",
+        "description": "The global manager for OpenEMS Components.",
+        "natureIds": [
+          "io.openems.edge.common.jsonapi.ComponentJsonApi",
+          "io.openems.edge.common.component.OpenemsComponent",
+          "org.osgi.service.cm.ConfigurationListener",
+          "io.openems.edge.common.component.ComponentManager"
+        ]
+      },
+      "Core.Cycle": {
+        "name": "Core Cycle",
+        "description": "The global OpenEMS Cycle.",
+        "natureIds": [
+          "io.openems.edge.common.cycle.Cycle",
+          "io.openems.edge.common.component.OpenemsComponent"
+        ]
+      },
+      "Core.Energy": {
+        "name": "Core Energy Scheduler",
+        "description": "The global Energy Scheduler.",
+        "natureIds": [
+          "io.openems.edge.common.jsonapi.ComponentJsonApi",
+          "io.openems.edge.common.component.OpenemsComponent",
+          "io.openems.edge.energy.api.EnergyScheduler"
+        ]
+      },
+      "Core.Host": {
+        "name": "Core Host",
+        "description": "This component represents the Host computer and its Operating System.",
+        "natureIds": [
+          "io.openems.edge.common.jsonapi.ComponentJsonApi",
+          "io.openems.edge.common.component.OpenemsComponent",
+          "io.openems.edge.common.host.Host"
+        ]
+      },
+      "Core.Meta": {
+        "name": "Core Meta",
+        "description": "The global manager for Metadata.",
+        "natureIds": [
+          "io.openems.edge.common.jsonapi.ComponentJsonApi",
+          "io.openems.edge.common.modbusslave.ModbusSlave",
+          "io.openems.edge.common.component.OpenemsComponent",
+          "io.openems.edge.common.meta.Meta"
+        ]
+      },
+      "Core.PredictorManager": {
+        "name": "Core Predictor-Manager",
+        "description": "The global manager for Predictors.",
+        "natureIds": [
+          "io.openems.edge.common.component.OpenemsComponent",
+          "io.openems.edge.predictor.api.manager.PredictorManager"
+        ]
+      },
+      "Core.SerialNumber": {
+        "name": "Core Serial Numbers",
+        "description": "Global storage for serial numbers",
+        "natureIds": [
+          "io.openems.edge.common.component.OpenemsComponent",
+          "io.openems.edge.common.serialnumber.SerialNumberStorage"
+        ]
+      },
+      "Core.Sum": {
+        "name": "Core Sum",
+        "description": "The global OpenEMS Summary data.",
+        "natureIds": [
+          "io.openems.edge.common.sum.Sum",
+          "io.openems.edge.common.modbusslave.ModbusSlave",
+          "io.openems.edge.common.component.OpenemsComponent",
+          "io.openems.edge.timedata.api.TimedataProvider"
+        ]
+      },
+      "Ess.Power": {
+        "name": "ESS Power",
+        "description": "This component solves Power distribution among energy storage systems.",
+        "natureIds": [
+          "io.openems.edge.ess.core.power.EssPower",
+          "io.openems.edge.common.component.OpenemsComponent",
+          "io.openems.edge.ess.power.api.Power"
+        ]
+      },
+      "Evcs.SlowPowerIncreaseFilter": {
+        "name": "EVCS Power",
+        "description": "This component defines the increase rate for the ramp filter for every EVCS Component.",
+        "natureIds": [
+          "io.openems.edge.common.component.OpenemsComponent",
+          "io.openems.edge.evcs.api.EvcsPower"
+        ]
+      },
+      "Scheduler.AllAlphabetically": {
+        "name": "Scheduler All Alphabetically",
+        "description": "This Scheduler takes an ordered list of Component IDs. All remaining Controllers are afterwards ordered alphabetically by their ID.",
+        "natureIds": [
+          "io.openems.edge.scheduler.api.Scheduler",
+          "io.openems.edge.common.component.OpenemsComponent",
+          "io.openems.edge.scheduler.allalphabetically.SchedulerAllAlphabetically"
+        ]
+      },
+      "Simulator.App": {
+        "name": "Simulator App",
+        "description": "The Simulator-App is a very specific component that needs to be handled with care. It provides a full simulation environment to run an OpenEMS Edge instance in simulated realtime environment. CAUTION: Be aware that the SimulatorApp Component takes control over the complete OpenEMS Edge Application, i.e. if you enable it, it is going to *delete all existing Component configurations*!",
+        "natureIds": [
+          "io.openems.edge.common.jsonapi.ComponentJsonApi",
+          "io.openems.edge.simulator.datasource.api.SimulatorDatasource",
+          "io.openems.edge.common.component.OpenemsComponent",
+          "io.openems.edge.timedata.api.Timedata",
+          "io.openems.edge.simulator.app.SimulatorApp",
+          "io.openems.edge.common.component.ClockProvider"
+        ]
+      },
+      "Simulator.Datasource.Single.Channel": {
+        "name": "Simulator DataSource: Single Channel",
+        "description": "This service provides direct input for one data channel via a value set in a channel.",
+        "natureIds": [
+          "io.openems.edge.simulator.datasource.single.channel.SimulatorDatasourceSingleChannel",
+          "io.openems.edge.simulator.datasource.api.SimulatorDatasource",
+          "io.openems.edge.common.component.OpenemsComponent"
+        ]
+      },
+      "Simulator.EssSymmetric.Reacting": {
+        "name": "Simulator EssSymmetric Reacting",
+        "description": "This simulates a 'reacting' symmetric Energy Storage System.",
+        "natureIds": [
+          "io.openems.edge.common.modbusslave.ModbusSlave",
+          "io.openems.edge.ess.api.SymmetricEss",
+          "io.openems.edge.common.component.OpenemsComponent",
+          "io.openems.edge.common.startstop.StartStoppable",
+          "io.openems.edge.simulator.ess.symmetric.reacting.SimulatorEssSymmetricReacting",
+          "io.openems.edge.ess.api.ManagedSymmetricEss",
+          "io.openems.edge.timedata.api.TimedataProvider"
+        ]
+      },
+      "Simulator.GridMeter.Reacting": {
+        "name": "Simulator GridMeter Reacting",
+        "description": "This simulates an 'reacting' Grid meter.",
+        "natureIds": [
+          "io.openems.edge.meter.api.ElectricityMeter",
+          "io.openems.edge.common.component.OpenemsComponent",
+          "io.openems.edge.simulator.meter.grid.reacting.SimulatorGridMeterReacting",
+          "io.openems.edge.timedata.api.TimedataProvider"
+        ]
+      },
+      "Simulator.NRCMeter.Acting": {
+        "name": "Simulator NRCMeter Acting",
+        "description": "This simulates an 'acting' non-regulated-consumption meter using data provided by a data source.",
+        "natureIds": [
+          "io.openems.edge.meter.api.ElectricityMeter",
+          "io.openems.edge.common.component.OpenemsComponent",
+          "io.openems.edge.timedata.api.TimedataProvider",
+          "io.openems.edge.simulator.meter.nrc.acting.SimulatorNrcMeterActing"
+        ]
+      },
+      "Simulator.ProductionMeter.Acting": {
+        "name": "Simulator ProductionMeter Acting",
+        "description": "This simulates an 'acting' Production meter using data provided by a data source.",
+        "natureIds": [
+          "io.openems.edge.meter.api.ElectricityMeter",
+          "io.openems.edge.common.component.OpenemsComponent",
+          "io.openems.edge.simulator.meter.production.acting.SimulatorProductionMeterActing",
+          "io.openems.edge.timedata.api.TimedataProvider"
+        ]
+      },
+      "Timedata.Rrd4j": {
+        "name": "Timedata RRD4J",
+        "description": "This component persists data to RRD4J files.",
+        "natureIds": [
+          "io.openems.edge.timedata.rrd4j.TimedataRrd4j",
+          "io.openems.edge.common.component.OpenemsComponent",
+          "io.openems.edge.timedata.api.Timedata"
+        ]
+      }
+    }
+  }
+}

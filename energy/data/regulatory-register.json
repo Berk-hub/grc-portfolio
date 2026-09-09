@@ -1,0 +1,115 @@
+[
+  {
+    "source_id": "GB-NIS-001",
+    "jurisdiction": "GB",
+    "title": "Network and Information Systems Regulations 2018",
+    "source_type": "binding_law",
+    "status": "in_force",
+    "applicability": "CONDITIONAL",
+    "project_use": "Current-law baseline where the fictional operator is assumed to fall within the applicable GB OES regime.",
+    "url": "https://www.legislation.gov.uk/uksi/2018/506/contents"
+  },
+  {
+    "source_id": "GB-OFGEM-002",
+    "jurisdiction": "GB",
+    "title": "Ofgem NIS Guidance for Downstream Gas and Electricity Operators of Essential Services in GB, v3.0",
+    "source_type": "regulatory_guidance",
+    "status": "current_project_baseline",
+    "applicability": "CONDITIONAL",
+    "project_use": "Used for the GB OES assurance profile, including risk management, CAF assessment, improvement planning and assurance expectations.",
+    "snapshot": "Updated 14 January 2026",
+    "url": "https://www.ofgem.gov.uk/guidance/nis-directive-and-nis-regulations-2018-ofgem-guidance-operators-essential-services"
+  },
+  {
+    "source_id": "GB-CAF-003",
+    "jurisdiction": "GB",
+    "title": "NCSC Cyber Assessment Framework v4.0",
+    "source_type": "assessment_framework",
+    "status": "current",
+    "applicability": "REFERENCE_FRAMEWORK",
+    "project_use": "Outcome-based assurance framework used to structure governance, protection, detection and response mappings.",
+    "snapshot": "CAF v4.0 released 4 August 2025",
+    "url": "https://www.ncsc.gov.uk/collection/cyber-assessment-framework"
+  },
+  {
+    "source_id": "GB-OFGEM-E-004",
+    "jurisdiction": "GB",
+    "title": "Ofgem NIS Supplementary Guidance and CAF Overlay for the Downstream Gas and Electricity Sector",
+    "source_type": "sector_guidance",
+    "status": "current_project_reference",
+    "applicability": "CONDITIONAL",
+    "project_use": "Adds sector context including Objective E for physical security and broader resilience concerns.",
+    "url": "https://www.ofgem.gov.uk/sites/default/files/2024-02/NIS%20Supplementary%20Guidance%20and%20CAF%20Overlay%20for%20DGE%20Sector_TLPWhite.pdf"
+  },
+  {
+    "source_id": "GB-CSR-BILL-005",
+    "jurisdiction": "GB",
+    "title": "Cyber Security and Resilience (Network and Information Systems) Bill",
+    "source_type": "proposed_legislation",
+    "status": "NOT_LAW",
+    "applicability": "CHANGE_WATCH_ONLY",
+    "project_use": "Tracked for future change impact. It is not used as a current-law control requirement.",
+    "snapshot": "8 September 2026: House of Lords; next stage listed as report stage.",
+    "url": "https://bills.parliament.uk/bills/4035"
+  },
+  {
+    "source_id": "EU-NIS2-001",
+    "jurisdiction": "EU",
+    "title": "Directive (EU) 2022/2555 \u2014 NIS2",
+    "source_type": "directive",
+    "status": "in_force",
+    "applicability": "CONDITIONAL",
+    "project_use": "Energy-sector cybersecurity profile. Applicability depends on entity type, size rules, Member State implementation and factual activities.",
+    "url": "https://eur-lex.europa.eu/eli/dir/2022/2555/oj"
+  },
+  {
+    "source_id": "EU-CER-002",
+    "jurisdiction": "EU",
+    "title": "Directive (EU) 2022/2557 \u2014 Critical Entities Resilience Directive",
+    "source_type": "directive",
+    "status": "in_force",
+    "applicability": "CONDITIONAL",
+    "project_use": "Broader all-hazards resilience profile where the operator is identified as a critical entity under national implementation.",
+    "url": "https://eur-lex.europa.eu/eli/dir/2022/2557/oj"
+  },
+  {
+    "source_id": "EU-ELEC-003",
+    "jurisdiction": "EU",
+    "title": "Commission Delegated Regulation (EU) 2024/1366",
+    "source_type": "delegated_regulation",
+    "status": "in_force",
+    "applicability": "NARROW_CONDITIONAL",
+    "project_use": "Electricity-sector cybersecurity reference only where the relevant entity is identified as high-impact or critical-impact under the Regulation.",
+    "url": "https://eur-lex.europa.eu/eli/reg_del/2024/1366/oj"
+  },
+  {
+    "source_id": "EU-DATA-004",
+    "jurisdiction": "EU",
+    "title": "Regulation (EU) 2023/2854 \u2014 Data Act",
+    "source_type": "regulation",
+    "status": "in_force",
+    "applicability": "CONDITIONAL",
+    "project_use": "Used only for the later connected-product and related-service data analysis after roles and data flows are established.",
+    "url": "https://eur-lex.europa.eu/eli/reg/2023/2854/oj"
+  },
+  {
+    "source_id": "EU-AI-005",
+    "jurisdiction": "EU",
+    "title": "Regulation (EU) 2024/1689 \u2014 Artificial Intelligence Act",
+    "source_type": "regulation",
+    "status": "phased_application",
+    "applicability": "DORMANT_CONDITIONAL",
+    "project_use": "Not part of the initial control test. It becomes relevant only if AI is introduced into a role that triggers the critical-infrastructure high-risk analysis.",
+    "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj"
+  },
+  {
+    "source_id": "GLOBAL-MITRE-001",
+    "jurisdiction": "GLOBAL",
+    "title": "MITRE ATT&CK for ICS",
+    "source_type": "threat_knowledge_base",
+    "status": "reference",
+    "applicability": "REFERENCE_ONLY",
+    "project_use": "Used selectively to describe adversarial behaviour relevant to industrial control environments.",
+    "url": "https://attack.mitre.org/matrices/ics/"
+  }
+]

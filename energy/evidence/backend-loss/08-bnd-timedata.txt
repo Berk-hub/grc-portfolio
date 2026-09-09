@@ -1,0 +1,5 @@
+216:	bnd.identity;id='io.openems.edge.timedata.influxdb',\
+217:	bnd.identity;id='io.openems.edge.timedata.rrd4j',\
+435:	io.openems.edge.timedata.api;version=snapshot,\
+436:	io.openems.edge.timedata.influxdb;version=snapshot,\
+437:	io.openems.edge.timedata.rrd4j;version=snapshot,\

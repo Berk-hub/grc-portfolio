@@ -1,0 +1,10 @@
+{
+  "captured_utc": "2026-09-08T22:28:14+00:00",
+  "scenario": "SCN-BACKEND-LOSS",
+  "sc06_result": "INCONCLUSIVE",
+  "overall_result": "INCONCLUSIVE",
+  "last_successful_resend": null,
+  "central_backfill_verified": false,
+  "monitor_was_running_before_release_freeze": true,
+  "release_decision": "Historic telemetry reconciliation was not verified in the release evidence set. Connectivity recovery was observed, but SC-06 remains INCONCLUSIVE."
+}

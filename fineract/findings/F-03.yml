@@ -1,0 +1,14 @@
+id: F-03
+title: Database bootstrap grants the root account full rights from any host
+rating: Medium
+assets: [1, 2]
+status: open
+evidence: []
+evidence_note: manual review, kubernetes/fineractmysql-configmap.yml data.init.sql last line; fineract-server-deployment.yml lines 94-103
+criteria_uk: PRA SS2/21 access controls at the provider
+criteria_dora: Art. 9 access management
+criteria_iso27001: A.8.2 privileged access rights; A.5.15 access control
+criteria_nist_csf: PR.AA-05
+condition: C2
+owner_bank: Platform engineering
+note: would be High if these manifests were used as-is in production; lowered because they are undocumented samples (F-05)

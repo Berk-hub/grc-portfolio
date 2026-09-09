@@ -1,0 +1,87 @@
+{
+  "system_id": "REF-ENERGY-001",
+  "system_name": "Commercial solar and battery energy-management reference site",
+  "assets": [
+    {
+      "asset_id": "A-EDGE-001",
+      "name": "OpenEMS Edge",
+      "type": "software_control_component",
+      "criticality": "high",
+      "role": "local measurement and control",
+      "dependencies": [
+        "A-METER-001",
+        "A-BESS-001",
+        "A-PV-001"
+      ]
+    },
+    {
+      "asset_id": "A-BACKEND-001",
+      "name": "OpenEMS Backend",
+      "type": "central_management_component",
+      "criticality": "high",
+      "role": "central visibility and management",
+      "dependencies": [
+        "A-EDGE-001"
+      ]
+    },
+    {
+      "asset_id": "A-BESS-001",
+      "name": "Battery energy storage simulator",
+      "type": "energy_asset",
+      "criticality": "high",
+      "role": "simulated controllable storage"
+    },
+    {
+      "asset_id": "A-PV-001",
+      "name": "PV generation simulator",
+      "type": "energy_asset",
+      "criticality": "medium",
+      "role": "simulated local generation"
+    },
+    {
+      "asset_id": "A-METER-001",
+      "name": "Grid meter simulator",
+      "type": "measurement_asset",
+      "criticality": "high",
+      "role": "simulated grid-boundary measurement"
+    },
+    {
+      "asset_id": "A-UI-001",
+      "name": "Operator interface",
+      "type": "management_interface",
+      "criticality": "medium",
+      "role": "central operator visibility",
+      "dependencies": [
+        "A-BACKEND-001"
+      ]
+    },
+    {
+      "asset_id": "A-EVIDENCE-001",
+      "name": "Assurance evidence set",
+      "type": "data_asset",
+      "criticality": "high",
+      "role": "logs, measurements, configuration and test records"
+    }
+  ],
+  "critical_dependencies": [
+    {
+      "dependency_id": "D-001",
+      "source": "A-EDGE-001",
+      "target": "A-BACKEND-001",
+      "description": "central connectivity and telemetry path",
+      "tested_in": "SCN-BACKEND-LOSS"
+    },
+    {
+      "dependency_id": "D-002",
+      "source": "A-METER-001",
+      "target": "A-EDGE-001",
+      "description": "measurement input used by local control"
+    },
+    {
+      "dependency_id": "D-003",
+      "source": "A-EDGE-001",
+      "target": "A-BESS-001",
+      "description": "local storage control path"
+    }
+  ]
+}

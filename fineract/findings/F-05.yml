@@ -1,0 +1,14 @@
+id: F-05
+title: Deployment manifests have no stated purpose (demo or production)
+rating: Low
+assets: [5]
+status: open
+evidence: []
+evidence_note: ls of kubernetes/ directory 8 Sep 2026, five manifests and two shell scripts, no README
+criteria_uk: PRA SS2/21 documentation of the service
+criteria_dora: Art. 28 documentation of ICT services
+criteria_iso27001: A.5.37 documented operating procedures
+criteria_nist_csf: GV.PO
+condition: C2
+owner_bank: Platform engineering
+note: reason F-03 and F-04 are Medium rather than High

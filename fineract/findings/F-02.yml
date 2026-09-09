@@ -1,0 +1,14 @@
+id: F-02
+title: Official container images carry no release version tag
+rating: High
+assets: [5]
+status: open
+evidence: [EV-06, EV-07, EV-08]
+evidence_note: latest and develop point to the same commit 61c6bde794, develop is 630 commits ahead of 1.15.0
+criteria_uk: PRA SS2/21 change and version control of outsourced systems
+criteria_dora: Art. 28 third-party risk; Art. 8 identification of ICT assets
+criteria_iso27001: A.8.32 change management; A.8.9 configuration management
+criteria_nist_csf: PR.PS-01; GV.SC
+condition: C1
+owner_bank: Platform engineering
+note: image is identifiable by digest but cannot be tied to a PMC-voted release without provenance mapping

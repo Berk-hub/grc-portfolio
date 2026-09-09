@@ -1,0 +1,2852 @@
+{
+  "status": "Bundle information: 284 bundles in total, 278 bundles active, 3 bundles active fragments.",
+  "s": [
+    284,
+    278,
+    3,
+    0,
+    0
+  ],
+  "data": [
+    {
+      "id": 0,
+      "name": "System Bundle",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "7.0.5",
+      "symbolicName": "org.apache.felix.framework",
+      "category": ""
+    },
+    {
+      "id": 4,
+      "name": "aalto-xml",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.4.0",
+      "symbolicName": "com.fasterxml.aalto-xml",
+      "category": ""
+    },
+    {
+      "id": 249,
+      "name": "Apache Commons BeanUtils",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.9.4",
+      "symbolicName": "org.apache.commons.commons-beanutils",
+      "category": ""
+    },
+    {
+      "id": 250,
+      "name": "Apache Commons Codec",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.19.0",
+      "symbolicName": "org.apache.commons.commons-codec",
+      "category": ""
+    },
+    {
+      "id": 248,
+      "name": "Apache Commons Collections",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "3.2.2",
+      "symbolicName": "org.apache.commons.collections",
+      "category": ""
+    },
+    {
+      "id": 251,
+      "name": "Apache Commons Collections",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "4.4.0",
+      "symbolicName": "org.apache.commons.commons-collections4",
+      "category": ""
+    },
+    {
+      "id": 252,
+      "name": "Apache Commons Compress",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.28.0",
+      "symbolicName": "org.apache.commons.commons-compress",
+      "category": ""
+    },
+    {
+      "id": 253,
+      "name": "Apache Commons CSV",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.14.1",
+      "symbolicName": "org.apache.commons.commons-csv",
+      "category": ""
+    },
+    {
+      "id": 254,
+      "name": "Apache Commons IO",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "2.20.0",
+      "symbolicName": "org.apache.commons.commons-io",
+      "category": ""
+    },
+    {
+      "id": 255,
+      "name": "Apache Commons Lang",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "3.20.0",
+      "symbolicName": "org.apache.commons.lang3",
+      "category": ""
+    },
+    {
+      "id": 256,
+      "name": "Apache Commons Math",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "3.6.1",
+      "symbolicName": "org.apache.commons.math3",
+      "category": ""
+    },
+    {
+      "id": 257,
+      "name": "Apache Commons Text",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.11.0",
+      "symbolicName": "org.apache.commons.text",
+      "category": ""
+    },
+    {
+      "id": 258,
+      "name": "Apache Felix Configuration Admin Service",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.9.26",
+      "symbolicName": "org.apache.felix.configadmin",
+      "category": "osgi"
+    },
+    {
+      "id": 265,
+      "name": "Apache Felix Declarative Services",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "2.2.18",
+      "symbolicName": "org.apache.felix.scr",
+      "category": "osgi"
+    },
+    {
+      "id": 259,
+      "name": "Apache Felix EventAdmin",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.6.4",
+      "symbolicName": "org.apache.felix.eventadmin",
+      "category": ""
+    },
+    {
+      "id": 260,
+      "name": "Apache Felix File Install",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "3.7.4",
+      "symbolicName": "org.apache.felix.fileinstall",
+      "category": ""
+    },
+    {
+      "id": 261,
+      "name": "Apache Felix Http Jetty 12.x",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "2.0.6",
+      "symbolicName": "org.apache.felix.http.jetty12",
+      "category": ""
+    },
+    {
+      "id": 263,
+      "name": "Apache Felix Inventory",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "2.0.0",
+      "symbolicName": "org.apache.felix.inventory",
+      "category": "osgi"
+    },
+    {
+      "id": 264,
+      "name": "Apache Felix Metatype Service",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.2.4",
+      "symbolicName": "org.apache.felix.metatype",
+      "category": "osgi"
+    },
+    {
+      "id": 262,
+      "name": "Apache Felix Servlet API",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "6.1.0",
+      "symbolicName": "org.apache.felix.http.servlet-api",
+      "category": ""
+    },
+    {
+      "id": 267,
+      "name": "Apache Felix Web Console Service Component Runtime/Declarative Services Plugin",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "2.3.0",
+      "symbolicName": "org.apache.felix.webconsole.plugins.ds",
+      "category": ""
+    },
+    {
+      "id": 266,
+      "name": "Apache Felix Web Management Console",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "5.0.18",
+      "symbolicName": "org.apache.felix.webconsole",
+      "category": ""
+    },
+    {
+      "id": 1,
+      "name": "bcpkix",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.85",
+      "symbolicName": "bcpkix",
+      "category": ""
+    },
+    {
+      "id": 2,
+      "name": "bcprov",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.85.2",
+      "symbolicName": "bcprov",
+      "category": ""
+    },
+    {
+      "id": 3,
+      "name": "bcutil",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.85",
+      "symbolicName": "bcutil",
+      "category": ""
+    },
+    {
+      "id": 11,
+      "name": "com.squareup.okhttp3",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "5.5.0",
+      "symbolicName": "com.squareup.okhttp3",
+      "category": ""
+    },
+    {
+      "id": 12,
+      "name": "com.squareup.okhttp3.logging",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "5.5.0",
+      "symbolicName": "com.squareup.okhttp3.logging",
+      "category": ""
+    },
+    {
+      "id": 13,
+      "name": "com.squareup.okio",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "3.18.1",
+      "symbolicName": "com.squareup.okio",
+      "category": ""
+    },
+    {
+      "id": 226,
+      "name": "fastexcel",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "0.20.2",
+      "symbolicName": "io.openems.wrapper.fastexcel",
+      "category": ""
+    },
+    {
+      "id": 126,
+      "name": "FENECON Edge EVSE Charge-Point Bender",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.evse.chargepoint.bender",
+      "category": ""
+    },
+    {
+      "id": 272,
+      "name": "FindBugs-jsr305",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "3.0.2",
+      "symbolicName": "org.jsr-305",
+      "category": ""
+    },
+    {
+      "id": 6,
+      "name": "Gson",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "2.14.0",
+      "symbolicName": "com.google.gson",
+      "category": ""
+    },
+    {
+      "id": 8,
+      "name": "Guava InternalFutureFailureAccess and InternalFutures",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.3",
+      "symbolicName": "com.google.guava.failureaccess",
+      "category": ""
+    },
+    {
+      "id": 7,
+      "name": "Guava: Google Core Libraries for Java",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "33.7.1.jre",
+      "symbolicName": "com.google.guava",
+      "category": ""
+    },
+    {
+      "id": 228,
+      "name": "influxdb-client-core",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "8.0.0",
+      "symbolicName": "io.openems.wrapper.influxdb-client-core",
+      "category": ""
+    },
+    {
+      "id": 229,
+      "name": "influxdb-client-java",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "8.0.0",
+      "symbolicName": "io.openems.wrapper.influxdb-client-java",
+      "category": ""
+    },
+    {
+      "id": 230,
+      "name": "influxdb-client-utils",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "8.0.0",
+      "symbolicName": "io.openems.wrapper.influxdb-client-utils",
+      "category": ""
+    },
+    {
+      "id": 231,
+      "name": "influxdb-flux-dsl",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "8.0.0",
+      "symbolicName": "io.openems.wrapper.influxdb-flux-dsl",
+      "category": ""
+    },
+    {
+      "id": 221,
+      "name": "j2mod",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "3.3.0.openems_2",
+      "symbolicName": "io.openems.j2mod",
+      "category": ""
+    },
+    {
+      "id": 280,
+      "name": "Java Encoder",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.4.0",
+      "symbolicName": "org.owasp.encoder",
+      "category": ""
+    },
+    {
+      "id": 225,
+      "name": "Java-OCA-OCPP",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.1.0",
+      "symbolicName": "io.openems.wrapper.eu.chargetime.ocpp",
+      "category": ""
+    },
+    {
+      "id": 224,
+      "name": "Java-WebSocket",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.5.7",
+      "symbolicName": "io.openems.wrapper.Java-WebSocket",
+      "category": ""
+    },
+    {
+      "id": 234,
+      "name": "JavaBeans Activation Framework",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.2.0",
+      "symbolicName": "io.openems.wrapper.javax.activation",
+      "category": ""
+    },
+    {
+      "id": 233,
+      "name": "javaluator",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "3.0.6",
+      "symbolicName": "io.openems.wrapper.javaluator",
+      "category": ""
+    },
+    {
+      "id": 235,
+      "name": "Jenetics",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "8.3.0",
+      "symbolicName": "io.openems.wrapper.jenetics",
+      "category": ""
+    },
+    {
+      "id": 273,
+      "name": "jMBus",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "3.3.0",
+      "symbolicName": "org.openmuc.jmbus",
+      "category": ""
+    },
+    {
+      "id": 247,
+      "name": "JmDNS",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "3.6.3",
+      "symbolicName": "javax.jmdns",
+      "category": ""
+    },
+    {
+      "id": 14,
+      "name": "jna",
+      "fragment": false,
+      "stateRaw": 8,
+      "state": "Starting",
+      "version": "5.19.1",
+      "symbolicName": "com.sun.jna",
+      "category": "jni"
+    },
+    {
+      "id": 274,
+      "name": "jRxTx",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.1",
+      "symbolicName": "org.openmuc.jrxtx",
+      "category": ""
+    },
+    {
+      "id": 5,
+      "name": "jSerialComm",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "2.11.4",
+      "symbolicName": "com.fazecast.jSerialComm",
+      "category": ""
+    },
+    {
+      "id": 271,
+      "name": "jsoup Java HTML Parser",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.23.2",
+      "symbolicName": "org.jsoup",
+      "category": ""
+    },
+    {
+      "id": 152,
+      "name": "Katek EDCOM Library",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.katek.edcom",
+      "category": ""
+    },
+    {
+      "id": 270,
+      "name": "Kotlin OSGi Bundle",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "2.4.10",
+      "symbolicName": "org.jetbrains.kotlin.osgi-bundle",
+      "category": ""
+    },
+    {
+      "id": 236,
+      "name": "kotlinx-coroutines-core-jvm",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.11.0",
+      "symbolicName": "io.openems.wrapper.kotlinx-coroutines-core-jvm",
+      "category": ""
+    },
+    {
+      "id": 237,
+      "name": "OLCUT",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "5.3.1",
+      "symbolicName": "io.openems.wrapper.olcut",
+      "category": ""
+    },
+    {
+      "id": 238,
+      "name": "opczip",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.2.0",
+      "symbolicName": "io.openems.wrapper.opczip",
+      "category": ""
+    },
+    {
+      "id": 10,
+      "name": "opencsv",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "5.9.0",
+      "symbolicName": "com.opencsv",
+      "category": ""
+    },
+    {
+      "id": 15,
+      "name": "OpenEMS Common",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081905",
+      "symbolicName": "io.openems.common",
+      "category": ""
+    },
+    {
+      "id": 16,
+      "name": "OpenEMS Common Http Bridge",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081905",
+      "symbolicName": "io.openems.common.bridge.http",
+      "category": ""
+    },
+    {
+      "id": 17,
+      "name": "OpenEMS Core Logger",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081909",
+      "symbolicName": "io.openems.core.logger",
+      "category": ""
+    },
+    {
+      "id": 19,
+      "name": "OpenEMS Edge",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081909",
+      "symbolicName": "io.openems.edge.application",
+      "category": ""
+    },
+    {
+      "id": 108,
+      "name": "OpenEMS Edge ABL eM4",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.evcs.abl",
+      "category": ""
+    },
+    {
+      "id": 101,
+      "name": "OpenEMS Edge Adstec StoraXe",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.ess.adstec.storaxe",
+      "category": ""
+    },
+    {
+      "id": 20,
+      "name": "OpenEMS Edge Battery Api",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081909",
+      "symbolicName": "io.openems.edge.battery.api",
+      "category": ""
+    },
+    {
+      "id": 23,
+      "name": "OpenEMS Edge Battery FENECON Commercial",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081909",
+      "symbolicName": "io.openems.edge.battery.fenecon.commercial",
+      "category": ""
+    },
+    {
+      "id": 24,
+      "name": "OpenEMS Edge Battery FENECON Home",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081909",
+      "symbolicName": "io.openems.edge.battery.fenecon.home",
+      "category": ""
+    },
+    {
+      "id": 218,
+      "name": "OpenEMS Edge Battery Inverter Victron",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.victron",
+      "category": ""
+    },
+    {
+      "id": 25,
+      "name": "OpenEMS Edge Battery Pylontech",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081909",
+      "symbolicName": "io.openems.edge.battery.pylontech",
+      "category": ""
+    },
+    {
+      "id": 27,
+      "name": "OpenEMS Edge Battery-Inverter Api",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081909",
+      "symbolicName": "io.openems.edge.batteryinverter.api",
+      "category": ""
+    },
+    {
+      "id": 28,
+      "name": "OpenEMS Edge Battery-Inverter KACO blueplanet gridsave",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081909",
+      "symbolicName": "io.openems.edge.batteryinverter.kaco.blueplanetgridsave",
+      "category": ""
+    },
+    {
+      "id": 29,
+      "name": "OpenEMS Edge Battery-Inverter REFU",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081909",
+      "symbolicName": "io.openems.edge.batteryinverter.refu",
+      "category": ""
+    },
+    {
+      "id": 21,
+      "name": "OpenEMS Edge BMW Battery  ",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081909",
+      "symbolicName": "io.openems.edge.battery.bmw",
+      "category": ""
+    },
+    {
+      "id": 31,
+      "name": "OpenEMS Edge Bosch BPT-S 5 Hybrid",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081909",
+      "symbolicName": "io.openems.edge.bosch.bpts5hybrid",
+      "category": ""
+    },
+    {
+      "id": 32,
+      "name": "OpenEMS Edge Braiins OS",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.braiinsos",
+      "category": ""
+    },
+    {
+      "id": 33,
+      "name": "OpenEMS Edge Bridge Http",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081909",
+      "symbolicName": "io.openems.edge.bridge.http",
+      "category": ""
+    },
+    {
+      "id": 34,
+      "name": "OpenEMS Edge Bridge M-Bus",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081909",
+      "symbolicName": "io.openems.edge.bridge.mbus",
+      "category": ""
+    },
+    {
+      "id": 35,
+      "name": "OpenEMS Edge Bridge Modbus",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081909",
+      "symbolicName": "io.openems.edge.bridge.modbus",
+      "category": ""
+    },
+    {
+      "id": 36,
+      "name": "OpenEMS Edge Bridge MQTT",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081909",
+      "symbolicName": "io.openems.edge.bridge.mqtt",
+      "category": ""
+    },
+    {
+      "id": 37,
+      "name": "OpenEMS Edge Bridge OneWire",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081909",
+      "symbolicName": "io.openems.edge.bridge.onewire",
+      "category": ""
+    },
+    {
+      "id": 22,
+      "name": "OpenEMS Edge BYD Battery-Box Commercial",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081909",
+      "symbolicName": "io.openems.edge.battery.bydcommercial",
+      "category": ""
+    },
+    {
+      "id": 38,
+      "name": "OpenEMS Edge Common",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081909",
+      "symbolicName": "io.openems.edge.common",
+      "category": ""
+    },
+    {
+      "id": 39,
+      "name": "OpenEMS Edge Controller Api",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081909",
+      "symbolicName": "io.openems.edge.controller.api",
+      "category": ""
+    },
+    {
+      "id": 40,
+      "name": "OpenEMS Edge Controller Api Backend",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.api.backend",
+      "category": ""
+    },
+    {
+      "id": 41,
+      "name": "OpenEMS Edge Controller API Common",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.api.common",
+      "category": ""
+    },
+    {
+      "id": 42,
+      "name": "OpenEMS Edge Controller Api Modbus/TCP",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.api.modbus",
+      "category": ""
+    },
+    {
+      "id": 43,
+      "name": "OpenEMS Edge Controller Api MQTT",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.api.mqtt",
+      "category": ""
+    },
+    {
+      "id": 44,
+      "name": "OpenEMS Edge Controller Api REST/JSON",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.api.rest",
+      "category": ""
+    },
+    {
+      "id": 45,
+      "name": "OpenEMS Edge Controller Api Websocket",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.api.websocket",
+      "category": ""
+    },
+    {
+      "id": 46,
+      "name": "OpenEMS Edge Controller Asymmetric Cos-Phi",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.asymmetric.balancingcosphi",
+      "category": ""
+    },
+    {
+      "id": 47,
+      "name": "OpenEMS Edge Controller Asymmetric Fix-ReactivePower",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.asymmetric.fixreactivepower",
+      "category": ""
+    },
+    {
+      "id": 48,
+      "name": "OpenEMS Edge Controller Asymmetric Peakshaving",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.asymmetric.peakshaving",
+      "category": ""
+    },
+    {
+      "id": 49,
+      "name": "OpenEMS Edge Controller Asymmetric Phase-Rectification",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.asymmetric.phaserectification",
+      "category": ""
+    },
+    {
+      "id": 50,
+      "name": "OpenEMS Edge Controller ChannelThreshold",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.channelthreshold",
+      "category": ""
+    },
+    {
+      "id": 51,
+      "name": "OpenEMS Edge Controller CHP SOC",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.chp.soc",
+      "category": ""
+    },
+    {
+      "id": 52,
+      "name": "OpenEMS Edge Controller Clever-PV",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.cleverpv",
+      "category": ""
+    },
+    {
+      "id": 53,
+      "name": "OpenEMS Edge Controller Debug DetailedLog",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.debug.detailedlog",
+      "category": ""
+    },
+    {
+      "id": 54,
+      "name": "OpenEMS Edge Controller Debug Log",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.debug.log",
+      "category": ""
+    },
+    {
+      "id": 77,
+      "name": "OpenEMS Edge Controller Electric Vehicle Charging Station",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.evcs",
+      "category": ""
+    },
+    {
+      "id": 78,
+      "name": "OpenEMS Edge Controller Electric Vehicle Charging Station Fix Active-Power",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.evcs.fixactivepower",
+      "category": ""
+    },
+    {
+      "id": 55,
+      "name": "OpenEMS Edge Controller ESS AC-Island",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.ess.acisland",
+      "category": ""
+    },
+    {
+      "id": 56,
+      "name": "OpenEMS Edge Controller Ess Active Power Voltage Characteristics",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.ess.activepowervoltagecharacteristic",
+      "category": ""
+    },
+    {
+      "id": 57,
+      "name": "OpenEMS Edge Controller Ess Balancing",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.ess.balancing",
+      "category": ""
+    },
+    {
+      "id": 58,
+      "name": "OpenEMS Edge Controller Ess Cycle",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.ess.cycle",
+      "category": ""
+    },
+    {
+      "id": 59,
+      "name": "OpenEMS Edge Controller Ess Delay Charge",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.ess.delaycharge",
+      "category": ""
+    },
+    {
+      "id": 60,
+      "name": "OpenEMS Edge Controller Ess Delayed-Sell-To-Grid",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.ess.delayedselltogrid",
+      "category": ""
+    },
+    {
+      "id": 61,
+      "name": "OpenEMS Edge Controller Ess Emergency Capacity Reserve",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.ess.emergencycapacityreserve",
+      "category": ""
+    },
+    {
+      "id": 64,
+      "name": "OpenEMS Edge Controller Ess Fix State Of Charge",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.ess.fixstateofcharge",
+      "category": ""
+    },
+    {
+      "id": 65,
+      "name": "OpenEMS Edge Controller Ess Grid Optimized Charge",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.ess.gridoptimizedcharge",
+      "category": ""
+    },
+    {
+      "id": 66,
+      "name": "OpenEMS Edge Controller Ess Hybrid Surplus-Feed-To-Grid",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.ess.hybrid.surplusfeedtogrid",
+      "category": ""
+    },
+    {
+      "id": 68,
+      "name": "OpenEMS Edge Controller Ess Limit Total Discharge",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.ess.limittotaldischarge",
+      "category": ""
+    },
+    {
+      "id": 69,
+      "name": "OpenEMS Edge Controller Ess Linear Power Band",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.ess.linearpowerband",
+      "category": ""
+    },
+    {
+      "id": 70,
+      "name": "OpenEMS Edge Controller Ess Minimum Discharge Period",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.ess.mindischargeperiod",
+      "category": ""
+    },
+    {
+      "id": 71,
+      "name": "OpenEMS Edge Controller Ess Reactive Power Voltage Characteristics",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.ess.reactivepowervoltagecharacteristic",
+      "category": ""
+    },
+    {
+      "id": 73,
+      "name": "OpenEMS Edge Controller Ess Sell-To-Grid Limit",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.ess.selltogridlimit",
+      "category": ""
+    },
+    {
+      "id": 75,
+      "name": "OpenEMS Edge Controller ESS Standby",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.ess.standby",
+      "category": ""
+    },
+    {
+      "id": 76,
+      "name": "OpenEMS Edge Controller Ess Time-Of-Use Tariff",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.ess.timeofusetariff",
+      "category": ""
+    },
+    {
+      "id": 62,
+      "name": "OpenEMS Edge Controller Fast Frequency Reserve",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.ess.fastfrequencyreserve",
+      "category": ""
+    },
+    {
+      "id": 72,
+      "name": "OpenEMS Edge Controller for Ripple Control Receiver",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.ess.ripplecontrolreceiver",
+      "category": ""
+    },
+    {
+      "id": 67,
+      "name": "OpenEMS Edge Controller for \u00a714a EnWG",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.ess.limiter14a",
+      "category": ""
+    },
+    {
+      "id": 80,
+      "name": "OpenEMS Edge Controller Generic JsonLogic",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.generic.jsonlogic",
+      "category": ""
+    },
+    {
+      "id": 81,
+      "name": "OpenEMS Edge Controller HighLoadTimeslot",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.highloadtimeslot",
+      "category": ""
+    },
+    {
+      "id": 83,
+      "name": "OpenEMS Edge Controller IO Analog",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.io.analog",
+      "category": ""
+    },
+    {
+      "id": 84,
+      "name": "OpenEMS Edge Controller IO Channel Single Threshold",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.io.channelsinglethreshold",
+      "category": ""
+    },
+    {
+      "id": 85,
+      "name": "OpenEMS Edge Controller IO FixDigitalOutput",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.io.fixdigitaloutput",
+      "category": ""
+    },
+    {
+      "id": 87,
+      "name": "OpenEMS Edge Controller IO Heating Element",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.io.heatingelement",
+      "category": ""
+    },
+    {
+      "id": 86,
+      "name": "OpenEMS Edge Controller IO Heating Room",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.io.heating.room",
+      "category": ""
+    },
+    {
+      "id": 88,
+      "name": "OpenEMS Edge Controller IO SG-Ready Heat Pump",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.io.heatpump.sgready",
+      "category": ""
+    },
+    {
+      "id": 82,
+      "name": "OpenEMS Edge Controller IOAlarm",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.io.alarm",
+      "category": ""
+    },
+    {
+      "id": 89,
+      "name": "OpenEMS Edge Controller PV-Inverter Fix-Power-Limit",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.pvinverter.fixpowerlimit",
+      "category": ""
+    },
+    {
+      "id": 90,
+      "name": "OpenEMS Edge Controller PV-Inverter Sell-to-Grid Limit",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.pvinverter.selltogridlimit",
+      "category": ""
+    },
+    {
+      "id": 74,
+      "name": "OpenEMS Edge Controller SoH Cycle",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.ess.sohcycle",
+      "category": ""
+    },
+    {
+      "id": 91,
+      "name": "OpenEMS Edge Controller Symmetric Balancing Schedule",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.symmetric.balancingschedule",
+      "category": ""
+    },
+    {
+      "id": 63,
+      "name": "OpenEMS Edge Controller Symmetric Fix-ActivePower",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.ess.fixactivepower",
+      "category": ""
+    },
+    {
+      "id": 92,
+      "name": "OpenEMS Edge Controller Symmetric Fix-ReactivePower",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.symmetric.fixreactivepower",
+      "category": ""
+    },
+    {
+      "id": 93,
+      "name": "OpenEMS Edge Controller Symmetric Limit ActivePower",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.symmetric.limitactivepower",
+      "category": ""
+    },
+    {
+      "id": 94,
+      "name": "OpenEMS Edge Controller Symmetric Peak-Shaving",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.symmetric.peakshaving",
+      "category": ""
+    },
+    {
+      "id": 95,
+      "name": "OpenEMS Edge Controller Symmetric Random",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.symmetric.randompower",
+      "category": ""
+    },
+    {
+      "id": 96,
+      "name": "OpenEMS Edge Controller Symmetric Timeslot-Peakshaving",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.symmetric.timeslotpeakshaving",
+      "category": ""
+    },
+    {
+      "id": 97,
+      "name": "OpenEMS Edge Core",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.core",
+      "category": ""
+    },
+    {
+      "id": 98,
+      "name": "OpenEMS Edge Edge-2-Edge",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.edge2edge",
+      "category": ""
+    },
+    {
+      "id": 123,
+      "name": "OpenEMS Edge Electric Vehicle Supply Equipment (EVSE) Api",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081909",
+      "symbolicName": "io.openems.edge.evse.api",
+      "category": ""
+    },
+    {
+      "id": 79,
+      "name": "OpenEMS Edge Electric Vehicle Supply Equipment (EVSE) Controllers",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.controller.evse",
+      "category": ""
+    },
+    {
+      "id": 99,
+      "name": "OpenEMS Edge Energy",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.energy",
+      "category": ""
+    },
+    {
+      "id": 100,
+      "name": "OpenEMS Edge Energy Api",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.energy.api",
+      "category": ""
+    },
+    {
+      "id": 102,
+      "name": "OpenEMS Edge ESS Api",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081909",
+      "symbolicName": "io.openems.edge.ess.api",
+      "category": ""
+    },
+    {
+      "id": 103,
+      "name": "OpenEMS Edge ESS Cluster",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.ess.cluster",
+      "category": ""
+    },
+    {
+      "id": 104,
+      "name": "OpenEMS Edge ESS Core",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.ess.core",
+      "category": ""
+    },
+    {
+      "id": 105,
+      "name": "OpenEMS Edge ESS FENECON Commercial40",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.ess.fenecon.commercial40",
+      "category": ""
+    },
+    {
+      "id": 153,
+      "name": "OpenEMS Edge ESS KOSTAL PIKO",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.kostal",
+      "category": ""
+    },
+    {
+      "id": 107,
+      "name": "OpenEMS Edge ESS Samsung",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.ess.samsung",
+      "category": ""
+    },
+    {
+      "id": 30,
+      "name": "OpenEMS Edge ESS Sinexcel",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081909",
+      "symbolicName": "io.openems.edge.batteryinverter.sinexcel",
+      "category": ""
+    },
+    {
+      "id": 109,
+      "name": "OpenEMS Edge EVCS Api",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.evcs.api",
+      "category": ""
+    },
+    {
+      "id": 110,
+      "name": "OpenEMS Edge EVCS Cluster",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.evcs.cluster",
+      "category": ""
+    },
+    {
+      "id": 111,
+      "name": "OpenEMS Edge EVCS Core",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.evcs.core",
+      "category": ""
+    },
+    {
+      "id": 113,
+      "name": "OpenEMS Edge EVCS Go-e Charger Home",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.evcs.goe.chargerhome",
+      "category": ""
+    },
+    {
+      "id": 112,
+      "name": "OpenEMS Edge EVCS Go-e Gemini",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.evcs.goe",
+      "category": ""
+    },
+    {
+      "id": 114,
+      "name": "OpenEMS Edge EVCS Heidelberg",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.evcs.heidelberg",
+      "category": ""
+    },
+    {
+      "id": 116,
+      "name": "OpenEMS Edge EVCS OCPP Common",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.evcs.ocpp.common",
+      "category": ""
+    },
+    {
+      "id": 117,
+      "name": "OpenEMS Edge EVCS OCPP Ies KeyWatt for CCS Charger",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.evcs.ocpp.ies.keywatt.singleccs",
+      "category": ""
+    },
+    {
+      "id": 115,
+      "name": "OpenEMS Edge EVCS OCPP implementation of ABL",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.evcs.ocpp.abl",
+      "category": ""
+    },
+    {
+      "id": 118,
+      "name": "OpenEMS Edge EVCS OCPP Server",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.evcs.ocpp.server",
+      "category": ""
+    },
+    {
+      "id": 119,
+      "name": "OpenEMS Edge EVCS OpenWB",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.evcs.openwb",
+      "category": ""
+    },
+    {
+      "id": 120,
+      "name": "OpenEMS Edge EVCS Spelsberg SMART",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.evcs.spelsberg",
+      "category": ""
+    },
+    {
+      "id": 121,
+      "name": "OpenEMS Edge EVCS Webasto Next",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.evcs.webasto.next",
+      "category": ""
+    },
+    {
+      "id": 122,
+      "name": "OpenEMS Edge EVCS Webasto Unite",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.evcs.webasto.unite",
+      "category": ""
+    },
+    {
+      "id": 124,
+      "name": "OpenEMS Edge EVSE Charge-Point Alfen",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.evse.chargepoint.alfen",
+      "category": ""
+    },
+    {
+      "id": 125,
+      "name": "OpenEMS Edge EVSE Charge-Point Alpitronic",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.evse.chargepoint.alpitronic",
+      "category": ""
+    },
+    {
+      "id": 127,
+      "name": "OpenEMS Edge EVSE Charge-Point Hardy Barth",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.evse.chargepoint.hardybarth",
+      "category": ""
+    },
+    {
+      "id": 128,
+      "name": "OpenEMS Edge EVSE Charge-Point Heidelberg",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.evse.chargepoint.heidelberg",
+      "category": ""
+    },
+    {
+      "id": 129,
+      "name": "OpenEMS Edge EVSE Charge-Point KEBA KeContact",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.evse.chargepoint.keba",
+      "category": ""
+    },
+    {
+      "id": 130,
+      "name": "OpenEMS Edge EVSE Charge-Point Mennekes",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.evse.chargepoint.mennekes",
+      "category": ""
+    },
+    {
+      "id": 131,
+      "name": "OpenEMS Edge EVSE Electric-Vehicle Generic",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.evse.electricvehicle.generic",
+      "category": ""
+    },
+    {
+      "id": 132,
+      "name": "OpenEMS Edge FENECON DESS (PRO Hybrid, PRO Compact)",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.fenecon.dess",
+      "category": ""
+    },
+    {
+      "id": 133,
+      "name": "OpenEMS Edge FENECON Mini",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.fenecon.mini",
+      "category": ""
+    },
+    {
+      "id": 134,
+      "name": "OpenEMS Edge FENECON Pro 9-12",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.fenecon.pro",
+      "category": ""
+    },
+    {
+      "id": 135,
+      "name": "OpenEMS Edge Fronius",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.fronius",
+      "category": ""
+    },
+    {
+      "id": 136,
+      "name": "OpenEMS Edge GoodweET",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.goodwe",
+      "category": ""
+    },
+    {
+      "id": 137,
+      "name": "OpenEMS Edge Heat Api",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.heat.api",
+      "category": ""
+    },
+    {
+      "id": 138,
+      "name": "OpenEMS Edge Heat Askoma",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.heat.askoma",
+      "category": ""
+    },
+    {
+      "id": 139,
+      "name": "OpenEMS Edge Heat MyPv",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.heat.mypv",
+      "category": ""
+    },
+    {
+      "id": 141,
+      "name": "OpenEMS Edge Input/Output Api",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081909",
+      "symbolicName": "io.openems.edge.io.api",
+      "category": ""
+    },
+    {
+      "id": 142,
+      "name": "OpenEMS Edge IO Filipowski",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.io.filipowski",
+      "category": ""
+    },
+    {
+      "id": 143,
+      "name": "OpenEMS Edge IO GPIO",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.io.gpio",
+      "category": ""
+    },
+    {
+      "id": 144,
+      "name": "OpenEMS Edge IO KMtronic",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.io.kmtronic",
+      "category": ""
+    },
+    {
+      "id": 145,
+      "name": "OpenEMS Edge IO Off Grid Switch",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.io.offgridswitch",
+      "category": ""
+    },
+    {
+      "id": 147,
+      "name": "OpenEMS Edge IO Shelly",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.io.shelly",
+      "category": ""
+    },
+    {
+      "id": 148,
+      "name": "OpenEMS Edge IO Siemens LOGO!",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.io.siemenslogo",
+      "category": ""
+    },
+    {
+      "id": 149,
+      "name": "OpenEMS Edge IO WAGO Fieldbus Coupler",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.io.wago",
+      "category": ""
+    },
+    {
+      "id": 150,
+      "name": "OpenEMS Edge IO Weidm\u00fcller Fieldbus Coupler UR20",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.io.weidmueller",
+      "category": ""
+    },
+    {
+      "id": 106,
+      "name": "OpenEMS Edge io.openems.edge.ess.generic",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.ess.generic",
+      "category": ""
+    },
+    {
+      "id": 151,
+      "name": "OpenEMS Edge KACO blueplanet hybrid 10.0 TL3",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.kaco.blueplanet.hybrid10",
+      "category": ""
+    },
+    {
+      "id": 154,
+      "name": "OpenEMS Edge Meter ABB",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.meter.abb",
+      "category": ""
+    },
+    {
+      "id": 155,
+      "name": "OpenEMS Edge Meter Api",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081909",
+      "symbolicName": "io.openems.edge.meter.api",
+      "category": ""
+    },
+    {
+      "id": 156,
+      "name": "OpenEMS Edge Meter Artemes AM-2",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.meter.artemes.am2",
+      "category": ""
+    },
+    {
+      "id": 157,
+      "name": "OpenEMS Edge Meter B-Control EM300",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.meter.bcontrol.em300",
+      "category": ""
+    },
+    {
+      "id": 158,
+      "name": "OpenEMS Edge Meter Bgetech",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.meter.bgetech",
+      "category": ""
+    },
+    {
+      "id": 159,
+      "name": "OpenEMS Edge Meter Camillebauer Aplus",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.meter.camillebauer.aplus",
+      "category": ""
+    },
+    {
+      "id": 160,
+      "name": "OpenEMS Edge Meter Carlo Gavazzi EM300",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.meter.carlo.gavazzi",
+      "category": ""
+    },
+    {
+      "id": 161,
+      "name": "OpenEMS Edge Meter Chint",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.meter.chint",
+      "category": ""
+    },
+    {
+      "id": 162,
+      "name": "OpenEMS Edge Meter Discovergy",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.meter.discovergy",
+      "category": ""
+    },
+    {
+      "id": 163,
+      "name": "OpenEMS Edge Meter Eastron SDM 630 Smart Meter",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.meter.eastron",
+      "category": ""
+    },
+    {
+      "id": 164,
+      "name": "OpenEMS Edge Meter Hager",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.meter.hager",
+      "category": ""
+    },
+    {
+      "id": 165,
+      "name": "OpenEMS Edge Meter Janitza",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.meter.janitza",
+      "category": ""
+    },
+    {
+      "id": 166,
+      "name": "OpenEMS Edge Meter KDK 2PU CT",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.meter.kdk",
+      "category": ""
+    },
+    {
+      "id": 167,
+      "name": "OpenEMS Edge Meter OpenDTU",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.meter.opendtu",
+      "category": ""
+    },
+    {
+      "id": 168,
+      "name": "OpenEMS Edge Meter Phoenix Contact",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.meter.phoenixcontact",
+      "category": ""
+    },
+    {
+      "id": 169,
+      "name": "OpenEMS Edge Meter Plexlog Datalogger",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.meter.plexlog",
+      "category": ""
+    },
+    {
+      "id": 170,
+      "name": "OpenEMS Edge Meter PQ Plus",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.meter.pqplus",
+      "category": ""
+    },
+    {
+      "id": 171,
+      "name": "OpenEMS Edge Meter Schneider Electric Acti9 Smartlink SI D",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.meter.schneider.acti9.smartlink",
+      "category": ""
+    },
+    {
+      "id": 172,
+      "name": "OpenEMS Edge Meter Siemens",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.meter.siemens",
+      "category": ""
+    },
+    {
+      "id": 173,
+      "name": "OpenEMS Edge Meter SOCOMEC",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.meter.socomec",
+      "category": ""
+    },
+    {
+      "id": 174,
+      "name": "OpenEMS Edge Meter Virtual Add",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.meter.virtual",
+      "category": ""
+    },
+    {
+      "id": 175,
+      "name": "OpenEMS Edge Meter Weidmueller 525",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.meter.weidmueller",
+      "category": ""
+    },
+    {
+      "id": 176,
+      "name": "OpenEMS Edge Meter Ziehl EFR4001IP",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.meter.ziehl",
+      "category": ""
+    },
+    {
+      "id": 177,
+      "name": "OpenEMS Edge OneWire Thermometer",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.onewire.thermometer",
+      "category": ""
+    },
+    {
+      "id": 178,
+      "name": "OpenEMS Edge Phoenix Contact PLCnext Components",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "0.1.0.202609081911",
+      "symbolicName": "io.openems.edge.phoenixcontact.plcnext",
+      "category": ""
+    },
+    {
+      "id": 179,
+      "name": "OpenEMS Edge Predictor Api",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081909",
+      "symbolicName": "io.openems.edge.predictor.api",
+      "category": ""
+    },
+    {
+      "id": 180,
+      "name": "OpenEMS Edge Predictor LSTM",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.predictor.lstm",
+      "category": ""
+    },
+    {
+      "id": 181,
+      "name": "OpenEMS Edge Predictor Persistence-Model",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.predictor.persistencemodel",
+      "category": ""
+    },
+    {
+      "id": 182,
+      "name": "OpenEMS Edge Predictor Production Linear Model",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.predictor.production.linearmodel",
+      "category": ""
+    },
+    {
+      "id": 183,
+      "name": "OpenEMS Edge Predictor Profile Clustering Model",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.predictor.profileclusteringmodel",
+      "category": ""
+    },
+    {
+      "id": 184,
+      "name": "OpenEMS Edge Predictor Similarday-Model",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.predictor.similardaymodel",
+      "category": ""
+    },
+    {
+      "id": 185,
+      "name": "OpenEMS Edge Protection Relay Tele Haase",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.protectionrelay.telehaase",
+      "category": ""
+    },
+    {
+      "id": 140,
+      "name": "OpenEMS Edge PV Inverter Huawei",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.huawei",
+      "category": ""
+    },
+    {
+      "id": 188,
+      "name": "OpenEMS Edge PV Inverter KACO blueplanet",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.pvinverter.kaco.blueplanet",
+      "category": ""
+    },
+    {
+      "id": 189,
+      "name": "OpenEMS Edge PV Inverter Kostal",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.pvinverter.kostal",
+      "category": ""
+    },
+    {
+      "id": 190,
+      "name": "OpenEMS Edge PV Inverter Solar Log",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.pvinverter.solarlog",
+      "category": ""
+    },
+    {
+      "id": 186,
+      "name": "OpenEMS Edge PV-Inverter Api",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081909",
+      "symbolicName": "io.openems.edge.pvinverter.api",
+      "category": ""
+    },
+    {
+      "id": 187,
+      "name": "OpenEMS Edge PV-Inverter Cluster",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.pvinverter.cluster",
+      "category": ""
+    },
+    {
+      "id": 146,
+      "name": "OpenEMS Edge RevolutionPi Data IO module",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.io.revpi",
+      "category": ""
+    },
+    {
+      "id": 191,
+      "name": "OpenEMS Edge Scheduler All-Alphabetically",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.scheduler.allalphabetically",
+      "category": ""
+    },
+    {
+      "id": 192,
+      "name": "OpenEMS Edge Scheduler Api",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.scheduler.api",
+      "category": ""
+    },
+    {
+      "id": 193,
+      "name": "OpenEMS Edge Scheduler Daily",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.scheduler.daily",
+      "category": ""
+    },
+    {
+      "id": 194,
+      "name": "OpenEMS Edge Scheduler Fixed-Order",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.scheduler.fixedorder",
+      "category": ""
+    },
+    {
+      "id": 195,
+      "name": "OpenEMS Edge Scheduler JSCalendar",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.scheduler.jscalendar",
+      "category": ""
+    },
+    {
+      "id": 223,
+      "name": "OpenEMS Edge Shared InfluxDB",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081909",
+      "symbolicName": "io.openems.shared.influxdb",
+      "category": ""
+    },
+    {
+      "id": 196,
+      "name": "OpenEMS Edge Simulator",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.simulator",
+      "category": ""
+    },
+    {
+      "id": 197,
+      "name": "OpenEMS Edge SMA",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.sma",
+      "category": ""
+    },
+    {
+      "id": 198,
+      "name": "OpenEMS Edge SolarEdge",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.solaredge",
+      "category": ""
+    },
+    {
+      "id": 26,
+      "name": "OpenEMS Edge Soltaro Battery  ",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081909",
+      "symbolicName": "io.openems.edge.battery.soltaro",
+      "category": ""
+    },
+    {
+      "id": 199,
+      "name": "OpenEMS Edge System FENECON",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.system.fenecon",
+      "category": ""
+    },
+    {
+      "id": 200,
+      "name": "OpenEMS Edge Tesla Powerwall 2",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.tesla.powerwall2",
+      "category": ""
+    },
+    {
+      "id": 201,
+      "name": "OpenEMS Edge Thermometer Api",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081910",
+      "symbolicName": "io.openems.edge.thermometer.api",
+      "category": ""
+    },
+    {
+      "id": 205,
+      "name": "OpenEMS Edge Time-Of-Use Ancillary Costs",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.timeofusetariff.ancillarycosts",
+      "category": ""
+    },
+    {
+      "id": 209,
+      "name": "OpenEMS Edge Time-Of-Use ENTSO-E",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.timeofusetariff.entsoe",
+      "category": ""
+    },
+    {
+      "id": 211,
+      "name": "OpenEMS Edge Time-Of-Use Groupe-E",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.timeofusetariff.groupe",
+      "category": ""
+    },
+    {
+      "id": 213,
+      "name": "OpenEMS Edge Time-Of-Use LUOX",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.timeofusetariff.luox",
+      "category": ""
+    },
+    {
+      "id": 214,
+      "name": "OpenEMS Edge Time-Of-Use Manual (Octopus Go/Heat, Fixed, German EEG 2025)",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.timeofusetariff.manual",
+      "category": ""
+    },
+    {
+      "id": 206,
+      "name": "OpenEMS Edge Time-Of-Use Tariff API",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081909",
+      "symbolicName": "io.openems.edge.timeofusetariff.api",
+      "category": ""
+    },
+    {
+      "id": 207,
+      "name": "OpenEMS Edge Time-Of-Use Tariff Awattar",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.timeofusetariff.awattar",
+      "category": ""
+    },
+    {
+      "id": 208,
+      "name": "OpenEMS Edge Time-Of-Use Tariff Corrently by STROMDAO",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.timeofusetariff.corrently",
+      "category": ""
+    },
+    {
+      "id": 210,
+      "name": "OpenEMS Edge Time-Of-Use Tariff EWS Sch\u00f6nau",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.timeofusetariff.ews",
+      "category": ""
+    },
+    {
+      "id": 215,
+      "name": "OpenEMS Edge Time-Of-Use Tariff rabot.charge",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.timeofusetariff.rabotcharge",
+      "category": ""
+    },
+    {
+      "id": 212,
+      "name": "OpenEMS Edge Time-Of-Use Tariff Stadtwerk Hassfurt",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.timeofusetariff.hassfurt",
+      "category": ""
+    },
+    {
+      "id": 216,
+      "name": "OpenEMS Edge Time-Of-Use Tariff Swisspower",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.timeofusetariff.swisspower",
+      "category": ""
+    },
+    {
+      "id": 217,
+      "name": "OpenEMS Edge Time-Of-Use Tariff Tibber",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.timeofusetariff.tibber",
+      "category": ""
+    },
+    {
+      "id": 202,
+      "name": "OpenEMS Edge Timedata Api",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081909",
+      "symbolicName": "io.openems.edge.timedata.api",
+      "category": ""
+    },
+    {
+      "id": 203,
+      "name": "OpenEMS Edge Timedata InfluxDB",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.timedata.influxdb",
+      "category": ""
+    },
+    {
+      "id": 204,
+      "name": "OpenEMS Edge Timedata RRD4J",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.timedata.rrd4j",
+      "category": ""
+    },
+    {
+      "id": 219,
+      "name": "OpenEMS Edge Weather Api",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.weather.api",
+      "category": ""
+    },
+    {
+      "id": 220,
+      "name": "OpenEMS Edge Weather Open-Meteo",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.edge.weather.openmeteo",
+      "category": ""
+    },
+    {
+      "id": 222,
+      "name": "OpenEMS OEM Bundle",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081911",
+      "symbolicName": "io.openems.oem.openems",
+      "category": ""
+    },
+    {
+      "id": 18,
+      "name": "OpenEMS Plugin Reference target",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.0.202609081909",
+      "symbolicName": "io.openems.core.referencetarget",
+      "category": ""
+    },
+    {
+      "id": 227,
+      "name": "OpenEMS Wrapper",
+      "fragment": true,
+      "stateRaw": 4,
+      "state": "Fragment",
+      "version": "0",
+      "symbolicName": "io.openems.wrapper.gson",
+      "category": ""
+    },
+    {
+      "id": 232,
+      "name": "OpenEMS Wrapper",
+      "fragment": true,
+      "stateRaw": 4,
+      "state": "Fragment",
+      "version": "0",
+      "symbolicName": "io.openems.wrapper.io.reactivex.rxjava3.rxjava",
+      "category": ""
+    },
+    {
+      "id": 275,
+      "name": "OPS4J Pax Logging - API",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "2.3.5",
+      "symbolicName": "org.ops4j.pax.logging.pax-logging-api",
+      "category": ""
+    },
+    {
+      "id": 276,
+      "name": "OPS4J Pax Logging - Log4Jv2 implementation",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "2.3.5",
+      "symbolicName": "org.ops4j.pax.logging.pax-logging-log4j2",
+      "category": ""
+    },
+    {
+      "id": 268,
+      "name": "org.eclipse.paho.client.mqttv3",
+      "fragment": false,
+      "stateRaw": 8,
+      "state": "Starting",
+      "version": "1.2.5",
+      "symbolicName": "org.eclipse.paho.client.mqttv3",
+      "category": ""
+    },
+    {
+      "id": 277,
+      "name": "org.osgi:org.osgi.service.component",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.5.1.202212101352",
+      "symbolicName": "org.osgi.service.component",
+      "category": ""
+    },
+    {
+      "id": 278,
+      "name": "org.osgi:org.osgi.util.function",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.2.0.202109301733",
+      "symbolicName": "org.osgi.util.function",
+      "category": ""
+    },
+    {
+      "id": 279,
+      "name": "org.osgi:org.osgi.util.promise",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.3.0.202212101352",
+      "symbolicName": "org.osgi.util.promise",
+      "category": ""
+    },
+    {
+      "id": 269,
+      "name": "Paho Mqtt Client",
+      "fragment": false,
+      "stateRaw": 8,
+      "state": "Starting",
+      "version": "1.2.5",
+      "symbolicName": "org.eclipse.paho.mqttv5.client",
+      "category": ""
+    },
+    {
+      "id": 239,
+      "name": "paho-mqttv5",
+      "fragment": true,
+      "stateRaw": 4,
+      "state": "Fragment",
+      "version": "1.2.5",
+      "symbolicName": "io.openems.wrapper.paho-mqttv5",
+      "category": ""
+    },
+    {
+      "id": 9,
+      "name": "Protocol Buffers [Core]",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "4.36.1",
+      "symbolicName": "com.google.protobuf",
+      "category": ""
+    },
+    {
+      "id": 281,
+      "name": "reactive-streams-jvm",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.0.4",
+      "symbolicName": "reactive-streams",
+      "category": ""
+    },
+    {
+      "id": 243,
+      "name": "retrofit",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "3.0.0",
+      "symbolicName": "io.openems.wrapper.retrofit2",
+      "category": ""
+    },
+    {
+      "id": 240,
+      "name": "retrofit-adapter-rxjava3",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "3.0.0",
+      "symbolicName": "io.openems.wrapper.retrofit-adapter-rxjava3",
+      "category": ""
+    },
+    {
+      "id": 241,
+      "name": "retrofit-converter-gson",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "3.0.0",
+      "symbolicName": "io.openems.wrapper.retrofit-converter-gson",
+      "category": ""
+    },
+    {
+      "id": 242,
+      "name": "retrofit-converter-scalars",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "3.0.0",
+      "symbolicName": "io.openems.wrapper.retrofit-converter-scalars",
+      "category": ""
+    },
+    {
+      "id": 282,
+      "name": "RRD4J",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "3.10.0",
+      "symbolicName": "rrd4j",
+      "category": ""
+    },
+    {
+      "id": 246,
+      "name": "rxjava",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "3.1.12",
+      "symbolicName": "io.reactivex.rxjava3.rxjava",
+      "category": ""
+    },
+    {
+      "id": 244,
+      "name": "SDNotify",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "1.6",
+      "symbolicName": "io.openems.wrapper.sdnotify",
+      "category": ""
+    },
+    {
+      "id": 283,
+      "name": "Stax2 API",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "4.3.0",
+      "symbolicName": "stax2-api",
+      "category": ""
+    },
+    {
+      "id": 245,
+      "name": "tribuo",
+      "fragment": false,
+      "stateRaw": 32,
+      "state": "Active",
+      "version": "4.3.2",
+      "symbolicName": "io.openems.wrapper.tribuo",
+      "category": ""
+    }
+  ]
+}

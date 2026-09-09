@@ -1,0 +1,107 @@
+{
+  "model_id": "ENERGY-ASSURANCE-COVERAGE-001",
+  "scenario": "SCN-BACKEND-LOSS",
+  "scenario_result": "INCONCLUSIVE",
+  "status_vocabulary": {
+    "EVIDENCED": "Direct project evidence supports the scoped assurance activity.",
+    "PARTIAL": "Some relevant evidence exists, but the complete control objective was not tested.",
+    "INCONCLUSIVE": "Testing was performed but the available evidence does not support a final conclusion.",
+    "NOT_TESTED": "The control was modelled but not technically exercised."
+  },
+  "controls": [
+    {
+      "control_id": "ENG-GOV-001",
+      "coverage": "EVIDENCED",
+      "evidence": [
+        "data/regulatory-register.json",
+        "docs/05-regulatory-applicability.md"
+      ],
+      "note": "Applicability and governance sources were analysed; this is not a legal compliance opinion."
+    },
+    {
+      "control_id": "ENG-ARC-002",
+      "coverage": "EVIDENCED",
+      "evidence": [
+        "docs/03-architecture.md",
+        "data/assets.json"
+      ],
+      "note": "Architecture, dependencies and trust boundaries are explicitly modelled."
+    },
+    {
+      "control_id": "ENG-IAM-003",
+      "coverage": "NOT_TESTED",
+      "evidence": [],
+      "note": "Authentication was required to operate the lab, but IAM effectiveness was not independently tested."
+    },
+    {
+      "control_id": "ENG-CTL-004",
+      "coverage": "EVIDENCED",
+      "evidence": [
+        "evidence/backend-loss/11-final-reconciliation-run.json",
+        "evidence/backend-loss/assessment-latest.json"
+      ],
+      "note": "Local balancing responded in both charge and discharge directions during Backend communication loss."
+    },
+    {
+      "control_id": "ENG-TEL-005",
+      "coverage": "PARTIAL",
+      "evidence": [
+        "data/data-governance.json",
+        "evidence/backend-loss/11-final-reconciliation-run.json"
+      ],
+      "note": "Telemetry source, timestamps and consistency were examined; comprehensive integrity attacks were not tested."
+    },
+    {
+      "control_id": "ENG-MON-006",
+      "coverage": "PARTIAL",
+      "evidence": [
+        "evidence/backend-loss/11-final-reconciliation-run.json",
+        "evidence/backend-loss/backend-link-proxy.log"
+      ],
+      "note": "Failure state and timestamps were observable, but this is not a complete logging-control assessment."
+    },
+    {
+      "control_id": "ENG-REC-007",
+      "coverage": "INCONCLUSIVE",
+      "evidence": [
+        "evidence/backend-loss/11-final-reconciliation-run.json",
+        "evidence/backend-loss/assessment-latest.json"
+      ],
+      "note": "Connectivity recovery was observed. Historical telemetry reconciliation requires direct central backfill evidence before full support is claimed."
+    },
+    {
+      "control_id": "ENG-SUP-008",
+      "coverage": "EVIDENCED",
+      "evidence": [
+        "config/openems-upstream-lock.json",
+        "evidence/supply-chain/openems-provenance.json"
+      ],
+      "note": "Source revision and executable provenance are recorded. This is not a complete dependency vulnerability or licence assessment."
+    },
+    {
+      "control_id": "ENG-PHY-009",
+      "coverage": "NOT_TESTED",
+      "evidence": [],
+      "note": "Physical and environmental dependencies were modelled but no physical hardware was tested."
+    },
+    {
+      "control_id": "ENG-CFG-010",
+      "coverage": "PARTIAL",
+      "evidence": [
+        "config/scenario-backend-loss.json",
+        "config/openems-upstream-lock.json"
+      ],
+      "note": "Configuration and source changes are traceable, but a production change-management process was not tested."
+    },
+    {
+      "control_id": "ENG-DAT-011",
+      "coverage": "EVIDENCED",
+      "evidence": [
+        "data/data-governance.json",
+        "evidence/backend-loss/SHA256SUMS"
+      ],
+      "note": "Evidence lineage, timestamps and SHA-256 integrity records are implemented for the laboratory evidence set."
+    }
+  ],
+  "compliance_conclusion": "NOT_ASSESSED"
+}

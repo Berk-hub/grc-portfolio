@@ -1,0 +1,189 @@
+{
+  "schema_version": "1.0",
+  "note": "Provision-level applicability records for the reference entity profiles. Applicability here is a lab self-assessment, not legal advice. A mapping to a control never implies legal compliance.",
+  "status_vocabulary": [
+    "APPLICABLE",
+    "NOT_APPLICABLE",
+    "CONDITIONAL",
+    "UNDETERMINED"
+  ],
+  "obligations": [
+    {
+      "id": "OBL-NIS2-ART20",
+      "source_id": "EU-NIS2-001",
+      "entity_profile_id": "PROFILE-EU-MS-B",
+      "provision": "Article 20 - Governance",
+      "source_version": "OJ L 333, 27.12.2022",
+      "checked_at": "2026-09-09",
+      "applicability_status": "CONDITIONAL",
+      "rationale": "Applies to essential/important entities; member state, registration and size criteria are not fixed for the reference profile.",
+      "missing_facts": [
+        "member state",
+        "entity designation",
+        "national transposition act"
+      ],
+      "requirement_summary": "Management bodies approve and oversee cybersecurity risk-management measures and can be held accountable; members receive training.",
+      "control_ids": [
+        "ENG-GOV-001"
+      ],
+      "evidence_ids": [
+        "data/regulatory-register.json",
+        "docs/05-regulatory-applicability.md"
+      ],
+      "gap_ids": [
+        "GAP-GOV-OVERSIGHT"
+      ],
+      "reviewer": "SELF_REVIEW",
+      "review_due": "2026-12-09"
+    },
+    {
+      "id": "OBL-NIS2-ART21",
+      "source_id": "EU-NIS2-001",
+      "entity_profile_id": "PROFILE-EU-MS-B",
+      "provision": "Article 21 - Cybersecurity risk-management measures",
+      "source_version": "OJ L 333, 27.12.2022",
+      "checked_at": "2026-09-09",
+      "applicability_status": "CONDITIONAL",
+      "rationale": "Same profile conditions as Article 20. Used as a control-design reference in the laboratory regardless of legal applicability.",
+      "missing_facts": [
+        "member state",
+        "entity designation"
+      ],
+      "requirement_summary": "All-hazards measures including incident handling, business continuity, supply-chain security and effectiveness assessment.",
+      "control_ids": [
+        "ENG-ARC-002",
+        "ENG-CTL-004",
+        "ENG-REC-007",
+        "ENG-SUP-008"
+      ],
+      "evidence_ids": [
+        "evidence/backend-loss/11-final-reconciliation-run.json",
+        "evidence/supply-chain/openems-provenance.json"
+      ],
+      "gap_ids": [
+        "FND-REC-001"
+      ],
+      "reviewer": "SELF_REVIEW",
+      "review_due": "2026-12-09"
+    },
+    {
+      "id": "OBL-NIS2-ART23",
+      "source_id": "EU-NIS2-001",
+      "entity_profile_id": "PROFILE-EU-MS-B",
+      "provision": "Article 23 - Reporting obligations",
+      "source_version": "OJ L 333, 27.12.2022",
+      "checked_at": "2026-09-09",
+      "applicability_status": "CONDITIONAL",
+      "rationale": "Reporting duties attach to designated entities. The laboratory plans a tabletop notification assessment only; no real notification is made or claimed.",
+      "missing_facts": [
+        "member state",
+        "CSIRT/authority identity",
+        "national significance thresholds"
+      ],
+      "requirement_summary": "Early warning within 24h, incident notification within 72h and a final report within one month for significant incidents.",
+      "control_ids": [],
+      "evidence_ids": [
+        "docs/15-ttx-notification.md"
+      ],
+      "gap_ids": [
+        "GAP-INCIDENT-TTX"
+      ],
+      "reviewer": "SELF_REVIEW",
+      "review_due": "2026-12-09"
+    },
+    {
+      "id": "OBL-GB-NIS-R10",
+      "source_id": "GB-NIS-001",
+      "entity_profile_id": "PROFILE-GB-OES-A",
+      "provision": "Regulation 10 - Security duties of operators of essential services",
+      "source_version": "UK SI 2018/506 as amended",
+      "checked_at": "2026-09-09",
+      "applicability_status": "CONDITIONAL",
+      "rationale": "Applies only if the reference entity meets OES thresholds for the energy subsector; the profile assumes this for analysis without evaluating real thresholds.",
+      "missing_facts": [
+        "OES threshold evaluation",
+        "competent authority confirmation"
+      ],
+      "requirement_summary": "Appropriate and proportionate measures to manage risks to network and information systems supporting the essential service.",
+      "control_ids": [
+        "ENG-GOV-001",
+        "ENG-ARC-002"
+      ],
+      "evidence_ids": [
+        "data/controls.json",
+        "docs/05-regulatory-applicability.md"
+      ],
+      "gap_ids": [],
+      "reviewer": "SELF_REVIEW",
+      "review_due": "2026-12-09"
+    },
+    {
+      "id": "EXP-CAF-B5",
+      "source_id": "GB-CAF-003",
+      "entity_profile_id": "PROFILE-GB-OES-A",
+      "provision": "Objective B, Principle B5 - Resilient Networks and Systems",
+      "source_version": "CAF v4.0",
+      "checked_at": "2026-09-09",
+      "applicability_status": "APPLICABLE",
+      "rationale": "Framework expectation, not law. Directly exercised by the backend-loss experiment: local control continuity under connectivity failure.",
+      "missing_facts": [],
+      "requirement_summary": "Resilience against incidents is built into the design, operation and management of systems supporting the essential function.",
+      "control_ids": [
+        "ENG-CTL-004",
+        "ENG-ARC-002"
+      ],
+      "evidence_ids": [
+        "evidence/backend-loss/11-final-reconciliation-run.json",
+        "evidence/backend-loss/assessment-latest.json"
+      ],
+      "gap_ids": [],
+      "reviewer": "SELF_REVIEW",
+      "review_due": "2026-12-09"
+    },
+    {
+      "id": "EXP-CAF-C1",
+      "source_id": "GB-CAF-003",
+      "entity_profile_id": "PROFILE-GB-OES-A",
+      "provision": "Objective C, Principle C1 - Security Monitoring",
+      "source_version": "CAF v4.0",
+      "checked_at": "2026-09-09",
+      "applicability_status": "APPLICABLE",
+      "rationale": "Partially exercised: interruption and restoration observability (SC-04/SC-05) relates here. Full monitoring coverage was not tested.",
+      "missing_facts": [],
+      "requirement_summary": "Monitoring to detect potential security problems and track the effectiveness of protective measures.",
+      "control_ids": [
+        "ENG-MON-006"
+      ],
+      "evidence_ids": [
+        "evidence/backend-loss/backend-link-proxy.log",
+        "evidence/backend-loss/11-final-reconciliation-run.json"
+      ],
+      "gap_ids": [],
+      "reviewer": "SELF_REVIEW",
+      "review_due": "2026-12-09"
+    },
+    {
+      "id": "EXP-CAF-D1",
+      "source_id": "GB-CAF-003",
+      "entity_profile_id": "PROFILE-GB-OES-A",
+      "provision": "Objective D, Principle D1 - Response and Recovery Planning",
+      "source_version": "CAF v4.0",
+      "checked_at": "2026-09-09",
+      "applicability_status": "APPLICABLE",
+      "rationale": "The open area of the project. SC-06 INCONCLUSIVE maps here as a documented gap, not a pass.",
+      "missing_facts": [],
+      "requirement_summary": "Well-defined and tested incident response and recovery capabilities for the essential function.",
+      "control_ids": [
+        "ENG-REC-007"
+      ],
+      "evidence_ids": [
+        "evidence/backend-loss/15-final-reconciliation-status.json"
+      ],
+      "gap_ids": [
+        "FND-REC-001"
+      ],
+      "reviewer": "SELF_REVIEW",
+      "review_due": "2026-12-09"
+    }
+  ]
+}

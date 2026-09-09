@@ -1,0 +1,14 @@
+id: F-06
+title: CI workflows do not follow least privilege; branch protection is partial
+rating: Medium
+assets: [5]
+status: open
+evidence: [EV-09]
+evidence_note: Token-Permissions 0/10, Branch-Protection 5/10; Code-Review and Maintained 10/10
+criteria_uk: PRA SS2/21 supply-chain risk of the provider
+criteria_dora: Art. 28 third-party risk
+criteria_iso27001: A.5.21 supply chain; A.8.25 secure development
+criteria_nist_csf: GV.SC-07
+condition: none
+owner_bank: Platform engineering
+note: avoided by building from a pinned reviewed tag (C1); fix itself sits with the project, raised in section 8.3

@@ -1,0 +1,13 @@
+Result: _result
+Table: keys: [_field, edge]
+              _field:string             edge:string                      _time:time                  _value:int
+---------------------------  ----------------------  ------------------------------  --------------------------
+_sum/ConsumptionActivePower                       0  2026-09-08T21:38:48.000000000Z                        4100
+Table: keys: [_field, edge]
+              _field:string             edge:string                      _time:time                  _value:int
+---------------------------  ----------------------  ------------------------------  --------------------------
+                _sum/EssSoc                       0  2026-09-08T21:39:57.000000000Z                          27
+Table: keys: [_field, edge]
+              _field:string             edge:string                      _time:time                  _value:int
+---------------------------  ----------------------  ------------------------------  --------------------------
+ _sum/ProductionActivePower                       0  2026-09-08T21:38:48.000000000Z                        1100

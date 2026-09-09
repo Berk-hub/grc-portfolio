@@ -1,0 +1,46 @@
+{
+  "UnableToSend": {
+    "status": 200,
+    "body": {
+      "address": "ctrlBackend0/UnableToSend",
+      "type": "BOOLEAN",
+      "accessMode": "RO",
+      "text": "",
+      "unit": "",
+      "value": 0
+    }
+  },
+  "LastSuccessfulResend": {
+    "status": 200,
+    "body": {
+      "address": "ctrlBackend0/LastSuccessfulResend",
+      "type": "LONG",
+      "accessMode": "RO",
+      "text": "Latest timestamp of successfully resent data",
+      "unit": "sec_\u03a3",
+      "value": null
+    }
+  },
+  "RunFailed": {
+    "status": 200,
+    "body": {
+      "address": "ctrlBackend0/RunFailed",
+      "type": "BOOLEAN",
+      "accessMode": "RO",
+      "text": "Running the Controller failed",
+      "unit": "",
+      "value": 0
+    }
+  },
+  "ApiWorkerLog": {
+    "status": 200,
+    "body": {
+      "address": "ctrlBackend0/ApiWorkerLog",
+      "type": "STRING",
+      "accessMode": "RO",
+      "text": "Logs Write-Commands via ApiWorker",
+      "unit": "",
+      "value": ""
+    }
+  }
+}

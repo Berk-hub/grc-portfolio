@@ -1,0 +1,84 @@
+{
+  "scenario": "SCN-BACKEND-LOSS",
+  "evidence_file": "evidence/backend-loss/11-final-reconciliation-run.json",
+  "criteria": {
+    "SC-01": "SUPPORTED",
+    "SC-02": "SUPPORTED",
+    "SC-03": "SUPPORTED",
+    "SC-04": "SUPPORTED",
+    "SC-05": "SUPPORTED",
+    "SC-06": "INCONCLUSIVE"
+  },
+  "overall_result": "INCONCLUSIVE",
+  "reconciliation": {
+    "status": "INCONCLUSIVE",
+    "last_successful_resend": null,
+    "central_backfill_verified": false
+  },
+  "observations": {
+    "pre_failure": {
+      "captured_at_utc": "2026-09-08T21:38:53.093858+00:00",
+      "label": "connected_baseline",
+      "backend_link_18081": true,
+      "backend_edge_8081": true,
+      "central_backend_8083": true,
+      "consumption_w": 4100,
+      "production_w": 1100,
+      "ess_w": 3000,
+      "grid_w": 0,
+      "ess_soc_pct": 28,
+      "last_successful_resend": null,
+      "unable_to_send": 0,
+      "rrd4j_state": 0,
+      "power_balance_residual_w": 0
+    },
+    "outage_discharge": {
+      "captured_at_utc": "2026-09-08T21:39:05.175682+00:00",
+      "label": "outage_discharge",
+      "backend_link_18081": false,
+      "backend_edge_8081": false,
+      "central_backend_8083": true,
+      "consumption_w": 5200,
+      "production_w": 700,
+      "ess_w": 4500,
+      "grid_w": 0,
+      "ess_soc_pct": 28,
+      "last_successful_resend": null,
+      "unable_to_send": 1,
+      "rrd4j_state": 0,
+      "power_balance_residual_w": 0
+    },
+    "outage_charge": {
+      "captured_at_utc": "2026-09-08T21:39:17.224121+00:00",
+      "label": "outage_charge",
+      "backend_link_18081": false,
+      "backend_edge_8081": false,
+      "central_backend_8083": true,
+      "consumption_w": 1800,
+      "production_w": 4300,
+      "ess_w": -2500,
+      "grid_w": 0,
+      "ess_soc_pct": 28,
+      "last_successful_resend": null,
+      "unable_to_send": 1,
+      "rrd4j_state": 0,
+      "power_balance_residual_w": 0
+    },
+    "recovery": {
+      "captured_at_utc": "2026-09-08T21:39:34.303665+00:00",
+      "label": "after_reconnection",
+      "backend_link_18081": true,
+      "backend_edge_8081": true,
+      "central_backend_8083": true,
+      "consumption_w": 4100,
+      "production_w": 1100,
+      "ess_w": 3000,
+      "grid_w": 0,
+      "ess_soc_pct": 28,
+      "last_successful_resend": null,
+      "unable_to_send": 1,
+      "rrd4j_state": 0,
+      "power_balance_residual_w": 0
+    }
+  }
+}

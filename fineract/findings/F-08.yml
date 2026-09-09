@@ -1,0 +1,14 @@
+id: F-08
+title: Database password passed on the command line in health probes
+rating: Low
+assets: [2, 3]
+status: open
+evidence: []
+evidence_note: manual review, fineractmysql-deployment.yml lines 108 and 116
+criteria_uk: PRA SS2/21 credential handling
+criteria_dora: Art. 9 access management
+criteria_iso27001: A.5.17 authentication information
+criteria_nist_csf: PR.AA-01
+condition: C2
+owner_bank: Platform engineering
+note: password comes from a Secret (good) but is visible in the container process list

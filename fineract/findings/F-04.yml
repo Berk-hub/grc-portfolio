@@ -1,0 +1,14 @@
+id: F-04
+title: Sample Kubernetes deployments run with default security context
+rating: Medium
+assets: [4, 5]
+status: open
+evidence: [EV-01]
+evidence_note: 73 misconfigurations across three manifests, 13 HIGH (KSV-0014, KSV-0118), no CRITICAL
+criteria_uk: SYSC 15A resilience of important business services
+criteria_dora: Art. 9 protection and prevention
+criteria_iso27001: A.8.9 configuration management; A.8.22 segregation of networks
+criteria_nist_csf: PR.PS-01
+condition: C2
+owner_bank: Platform engineering
+note: raises post-compromise capability, not container escape on its own; Trivy rates HIGH, lowered for the same reason as F-03

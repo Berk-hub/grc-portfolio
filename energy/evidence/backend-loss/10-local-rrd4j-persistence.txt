@@ -1,0 +1,25 @@
+OpenEMS Edge local RRD4J persistence evidence
+Captured UTC: 2026-09-08T21:32:36+00:00
+
+=== COMPONENT STATE ===
+{"address":"rrd4j0/State","type":"INTEGER","accessMode":"RO","text":"0:Ok, 1:Info, 2:Warning, 3:Fault","unit":"","value":0}
+
+=== STORAGE SUMMARY ===
+File count: 147
+123M	/tmp/openems-energy-lab/data/rrd4j/rrd4j0
+
+=== CRITICAL CHANNEL FILES ===
+/tmp/openems-energy-lab/data/rrd4j/rrd4j0/_sum/ConsumptionActivePower | 1037068 bytes | modified=2026-09-08 21:30:00.575240538 +0000
+/tmp/openems-energy-lab/data/rrd4j/rrd4j0/_sum/ProductionActivePower | 1037068 bytes | modified=2026-09-08 21:30:00.580240538 +0000
+/tmp/openems-energy-lab/data/rrd4j/rrd4j0/_sum/EssActivePower | 1037068 bytes | modified=2026-09-08 21:30:00.577240538 +0000
+/tmp/openems-energy-lab/data/rrd4j/rrd4j0/_sum/GridActivePower | 1037068 bytes | modified=2026-09-08 21:30:00.583240538 +0000
+/tmp/openems-energy-lab/data/rrd4j/rrd4j0/_sum/EssSoc | 1037068 bytes | modified=2026-09-08 21:30:00.578240538 +0000
+/tmp/openems-energy-lab/data/rrd4j/rrd4j0/ess0/DebugSetActivePower | 1037068 bytes | modified=2026-09-08 21:30:00.586240538 +0000
+
+=== SNAPSHOT HASHES ===
+89a9e343778cfecf076ec6ba771c1136d51e3526c61d05873fc91b96e04ebd9d  /tmp/openems-energy-lab/data/rrd4j/rrd4j0/_sum/ConsumptionActivePower
+05733e9083cfa2a5c32be934b1c62f46f84f125e654f1a9468b32d7e77f2f991  /tmp/openems-energy-lab/data/rrd4j/rrd4j0/_sum/ProductionActivePower
+fd2312d287006de550f177314fd50368f5bc9b19e51258478a4b855dd0f53193  /tmp/openems-energy-lab/data/rrd4j/rrd4j0/_sum/EssActivePower
+c56e67c68e3638cfe40ae8d0f787c2e8ec99b623116486f06d966635436c95ef  /tmp/openems-energy-lab/data/rrd4j/rrd4j0/_sum/GridActivePower
+4752a27b5b27e18c01fad66d75ce3fb182c3eb52e2f3dc0cda6714b660d01220  /tmp/openems-energy-lab/data/rrd4j/rrd4j0/_sum/EssSoc
+fd2312d287006de550f177314fd50368f5bc9b19e51258478a4b855dd0f53193  /tmp/openems-energy-lab/data/rrd4j/rrd4j0/ess0/DebugSetActivePower

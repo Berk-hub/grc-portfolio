@@ -1,0 +1,39 @@
+{
+  "scenario_id": "SCN-BACKEND-LOSS",
+  "title": "Loss of OpenEMS Backend connectivity",
+  "status": "DESIGNED",
+  "function": "Local energy control during temporary loss of central connectivity",
+  "failure_injection": {
+    "target_dependency": "D-001",
+    "description": "Interrupt Edge-to-Backend connectivity while keeping the local simulated asset path available."
+  },
+  "phases": [
+    "baseline",
+    "connectivity_interruption",
+    "recovery"
+  ],
+  "evidence_required": [
+    "connectivity state",
+    "grid measurement",
+    "PV generation measurement",
+    "battery state",
+    "local control output or set-point",
+    "timestamps",
+    "recovery state"
+  ],
+  "success_criteria": [
+    "SC-01",
+    "SC-02",
+    "SC-03",
+    "SC-04",
+    "SC-05",
+    "SC-06"
+  ],
+  "allowed_results": [
+    "SUPPORTED",
+    "NOT SUPPORTED",
+    "INCONCLUSIVE",
+    "NOT TESTED"
+  ],
+  "current_result": "INCONCLUSIVE"
+}

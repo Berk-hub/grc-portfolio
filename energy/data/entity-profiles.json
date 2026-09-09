@@ -1,0 +1,30 @@
+{
+  "model_id": "ENERGY-ENTITY-PROFILES-001",
+  "note": "Reference profiles for applicability analysis. Neither profile describes a real organisation and the laboratory itself is not a regulated entity.",
+  "profiles": [
+    {
+      "profile_id": "PROFILE-GB-OES-A",
+      "jurisdiction": "GB",
+      "description": "Fictional GB downstream electricity operator assumed to fall within the OES regime for analysis purposes.",
+      "oes_status": "ASSUMED_FOR_ANALYSIS",
+      "competent_authority_assumed": "Ofgem",
+      "missing_facts": [
+        "OES designation thresholds not evaluated against real activity or scale",
+        "no real legal entity exists"
+      ]
+    },
+    {
+      "profile_id": "PROFILE-EU-MS-B",
+      "jurisdiction": "EU",
+      "description": "Fictional energy entity in an EU member state. No member state has been selected yet.",
+      "member_state": null,
+      "entity_designation": "UNDETERMINED",
+      "missing_facts": [
+        "member state not selected",
+        "essential vs important designation unknown",
+        "size classification unknown",
+        "national transposition act not identified"
+      ]
+    }
+  ]
+}

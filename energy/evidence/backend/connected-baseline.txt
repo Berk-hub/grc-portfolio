@@ -1,0 +1,11 @@
+OpenEMS connected baseline
+Captured UTC: 2026-09-08T20:50:15+00:00
+
+=== TCP CONNECTION TO BACKEND EDGE ===
+ESTAB 0      0        [::ffff:127.0.0.1]:45718      [::ffff:127.0.0.1]:8081  users:(("java",pid=83174,fd=307))     
+ESTAB 0      0        [::ffff:127.0.0.1]:8081       [::ffff:127.0.0.1]:45718 users:(("java",pid=81100,fd=59))      
+
+=== RELEVANT PROCESSES ===
+78492 java -Dfelix.cm.dir=/tmp/openems-energy-lab/backend-config -Dopenems.data.dir=/tmp/openems-energy-lab/backend-data -jar build/openems-backend.jar
+81100 java -Dfelix.cm.dir=/tmp/openems-energy-lab/backend-edge-config -Dopenems.data.dir=/tmp/openems-energy-lab/backend-edge-data -jar build/openems-backend-edge.jar
+83174 java -Dfelix.cm.dir=/tmp/openems-energy-lab/config -Dopenems.data.dir=/tmp/openems-energy-lab/data -jar build/openems-edge.jar

@@ -1,0 +1,54 @@
+{
+  "model_id": "ENERGY-AI-GOV-001",
+  "system": "REF-ENERGY-001",
+  "assessment_date": "2026-09-08",
+  "current_configuration": {
+    "ai_or_ml_component_present": false,
+    "ai_in_local_control_loop": false,
+    "ai_in_backend_decision_path": false,
+    "ai_used_for_safety_function": false,
+    "conclusion": "NO_AI_SYSTEM_IN_TESTED_CONFIGURATION"
+  },
+  "current_ai_act_assessment": {
+    "source": "EU-AI-005",
+    "status": "NOT_TRIGGERED_BY_TESTED_CONFIGURATION",
+    "reason": "No AI or machine-learning system participates in the tested operational or assurance decision path."
+  },
+  "future_use_cases": [
+    {
+      "id": "AI-UC-01",
+      "name": "Demand or production forecasting",
+      "role": "ADVISORY_ANALYTICS",
+      "automatic_high_risk_conclusion": false
+    },
+    {
+      "id": "AI-UC-02",
+      "name": "Operator decision support",
+      "role": "DECISION_SUPPORT",
+      "automatic_high_risk_conclusion": false
+    },
+    {
+      "id": "AI-UC-03",
+      "name": "AI-based closed-loop energy control",
+      "role": "CYBER_PHYSICAL_CONTROL",
+      "automatic_high_risk_conclusion": false,
+      "requires_critical_infrastructure_assessment": true
+    }
+  ],
+  "governance_gates": [
+    "AI-GATE-01 Inventory and intended purpose",
+    "AI-GATE-02 Legal role and classification",
+    "AI-GATE-03 Data provenance and quality",
+    "AI-GATE-04 Human oversight and authority",
+    "AI-GATE-05 Deterministic safe fallback",
+    "AI-GATE-06 Logging and traceability",
+    "AI-GATE-07 Model and configuration change control",
+    "AI-GATE-08 Cybersecurity and abuse testing",
+    "AI-GATE-09 Performance and drift monitoring",
+    "AI-GATE-10 Incident response and rollback"
+  ],
+  "current_test_status": {
+    "ai_controls_tested": false,
+    "result": "NOT APPLICABLE TO CURRENT TEST CONFIGURATION"
+  }
+}

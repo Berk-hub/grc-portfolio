@@ -1,0 +1,14 @@
+id: F-01
+title: Deployed image ships Tomcat with three critical authentication vulnerabilities
+rating: High
+assets: [2, 5]
+status: open
+evidence: [EV-04, EV-05]
+evidence_note: image digest sha256:e9389051, inspected 8 Sep 2026
+criteria_uk: PRA SS2/21 due diligence on ICT service providers; SYSC 15A impact tolerance
+criteria_dora: Art. 9 protection and prevention; Art. 28 third-party risk
+criteria_iso27001: A.8.8 technical vulnerabilities; A.5.21 supply chain
+criteria_nist_csf: PR.PS-02
+condition: C1
+owner_bank: Platform engineering
+note: kept High despite doubtful reachability of the DIGEST/FORM CVEs, patch policy has no unused-module exception

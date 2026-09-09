@@ -1,0 +1,14 @@
+id: F-07
+title: No static analysis or fuzzing in the project pipeline
+rating: Medium
+assets: [1, 2]
+status: open
+evidence: [EV-09, EV-04]
+evidence_note: Scorecard SAST 0/10, Fuzzing 0/10
+criteria_uk: PRA SS2/21 secure development at the provider
+criteria_dora: Art. 9 secure development
+criteria_iso27001: A.8.28 secure coding; A.8.29 security testing
+criteria_nist_csf: PR.PS-06
+condition: C3
+owner_bank: Application security
+note: code review and tests give partial coverage but are not a substitute for SAST

@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "note": "Open findings and gaps. A finding is closed only by retest evidence or a documented decision, never by editing this file alone.",
+  "findings": [
+    {
+      "id": "FND-REC-001",
+      "status": "OPEN",
+      "criterion": "SC-06",
+      "control_id": "ENG-REC-007",
+      "risk_id": "R-REC-009",
+      "condition": "Central historical backfill was not verified. LastSuccessfulResend remained null and the expected post-resend central query evidence (14-influx-post-resend.txt) was never captured during the v1.0 run.",
+      "consequence": "An incident cannot be fully reconstructed from central history alone; local RRD4J remains the only continuous record. Permanent data loss is not established - this is an evidence gap, not a proven loss.",
+      "root_cause_status": "IDENTIFIED",
+      "root_cause_candidates": [
+        "CONFIRMED: ResendHistoricDataWorker schedules resend 5-65 minutes after reconnection (DELAY_TRIGGER_TIME + random up to MAX_RANDOM_DELAY); the v1.0 observation window was 48.8 minutes and could end before the drawn delay elapsed. See docs/13-sc06-root-cause.md."
+      ],
+      "planned_action": "EXP-02: rerun with distinctive outage markers, observe at least 66 minutes after reconnection, wait for LastSuccessfulResend to become non-null, capture evidence/backend-loss/14-influx-post-resend.txt, then compare local vs central per predefined window.",
+      "owner_role": "recovery control owner (person unassigned)",
+      "priority": "HIGH",
+      "closure_criteria": "Retest measures missing/duplicate/out-of-order samples within stated tolerance, or the root cause is documented and the INCONCLUSIVE result is kept and scoped.",
+      "evidence_ids": [
+        "evidence/backend-loss/15-final-reconciliation-status.json",
+        "evidence/backend-loss/13-historic-resend-monitor.log",
+        "docs/13-sc06-root-cause.md"
+      ]
+    },
+    {
+      "id": "GAP-GOV-OVERSIGHT",
+      "status": "OPEN",
+      "criterion": null,
+      "control_id": "ENG-GOV-001",
+      "risk_id": "R-GOV-012",
+      "condition": "Decision and review roles exist only as a documented role model. The project has a single author, so no independent review or management oversight has occurred.",
+      "consequence": "Governance-related obligations can be supported at design level only. Review independence is recorded as SELF_REVIEW throughout.",
+      "root_cause_status": "ACCEPTED_CONSTRAINT",
+      "planned_action": "Keep SELF_REVIEW labels accurate. Reassess if a second reviewer becomes available.",
+      "owner_role": "project author",
+      "priority": "MEDIUM",
+      "closure_criteria": "A real second reviewer records an independent review, or the constraint remains documented.",
+      "evidence_ids": [
+        "docs/11-operating-model.md"
+      ]
+    },
+    {
+      "id": "GAP-INCIDENT-TTX",
+      "status": "CLOSED",
+      "criterion": null,
+      "control_id": null,
+      "risk_id": "R-RES-001",
+      "condition": "No tabletop incident-notification assessment has been performed against the reporting expectations recorded in the obligations register.",
+      "consequence": "Reporting-related obligations have no supporting laboratory artefact.",
+      "root_cause_status": "NOT_STARTED",
+      "planned_action": "TTX-01: tabletop walkthrough of the backend-loss event against notification triggers, with a decision log. No real notification is made.",
+      "owner_role": "incident coordinator role (person unassigned)",
+      "priority": "MEDIUM",
+      "closure_criteria": "A tabletop record exists with trigger analysis, scope decision and identified unknowns.",
+      "evidence_ids": [
+        "docs/15-ttx-notification.md"
+      ],
+      "closed_at": "2026-09-09",
+      "closure_note": "TTX-01 performed as a desk exercise (docs/15-ttx-notification.md). Closure covers the tabletop record only, not real response capability."
+    }
+  ]
+}

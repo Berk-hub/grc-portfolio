@@ -1,0 +1,11 @@
+id,asset,threat,L_inherent,I_inherent,inherent,existing_controls,L_target,I_target,target_residual,finding
+R1,#2 Authorisation,Attacker bypasses web-layer authentication and calls transaction APIs,3,3,9,Spring Security stack current; maker-checker enforced in command service,1,3,3,F-01
+R2,#5 Supply chain,Bank deploys an image whose contents cannot be tied to a reviewed release,3,2,6,Source releases voted by PMC; SBOM producible,1,2,2,F-02
+R3,#1 Ledger,Application-level bug escalates to full database write via over-privileged DB account,2,3,6,Credentials held in Kubernetes Secrets,1,3,3,F-03
+R4,#4 Availability,Denial of service through Netty or HttpCore parsing flaws,2,2,4,Fixed versions available,1,2,2,F-01
+R5,#5 Supply chain,Persistence or privilege abuse inside a compromised workload via writable filesystem and root context,2,2,4,None in sample manifests,1,2,2,F-04
+R6,#5 Supply chain,Sample configuration reaches production unchanged,2,2,4,None (no README),1,2,2,F-05
+R7,#5 Supply chain,Compromise of a CI token or single account lands malicious code on the default branch,2,3,6,Mandatory code review; pinned build dependencies,1,3,3,F-06
+R8,"#1, #2",Injection or logic defect in Fineract code reaches production undetected,2,3,6,Code review; quality-checks workflow (no SAST),1,3,3,F-07
+R9,#3 Confidentiality,Database password read from process list inside a compromised container,1,2,2,Secret-backed environment variable,1,1,1,F-08
+R10,#3 Confidentiality,Man-in-the-middle downgrade of database authentication (PostgreSQL driver),1,2,2,Not applicable if MariaDB is used as in the sample manifests,1,1,1,F-01

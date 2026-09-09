@@ -1,0 +1,10 @@
+id,file,what,collected,used_in
+EV-01,evidence/trivy-1.15.0.txt,Trivy source scan of tag 1.15.0 (vuln + secret + misconfig),2026-09-08,F-04
+EV-02,evidence/trivy.txt,Trivy source scan of develop at 61c6bde794,2026-09-08,reference
+EV-03,evidence/sbom-1.15.0.json,CycloneDX SBOM of the source tree (132 packages; incomplete - Gradle deps resolve at build time),2026-09-08,limitations
+EV-04,evidence/trivy-image-latest.txt,Trivy scan of apache/fineract:latest - all severities,2026-09-08,"F-01, F-07"
+EV-05,evidence/trivy-image-crit-high.txt,Same image scan filtered to CRITICAL and HIGH,2026-09-08,F-01
+EV-06,evidence/trivy-image-1.15.0.txt,Failed pull of apache/fineract:1.15.0 - tag does not exist,2026-09-08,F-02
+EV-07,screenshots/dockerhub-no-tag-1.15.png,Docker Hub tag filter for 1.15 showing no results,2026-09-08,F-02
+EV-08,screenshots/dockerhub-no-tag-1.14.png,Docker Hub tag filter for 1.14 showing no results,2026-09-08,F-02
+EV-09,screenshots/scorecard.png,OpenSSF Scorecard report 6.6/10 for commit 61c6bde794,2026-09-08,"F-06, F-07"

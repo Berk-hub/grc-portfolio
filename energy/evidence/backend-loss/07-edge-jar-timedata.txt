@@ -1,0 +1,9 @@
+jar/io.openems.edge.timedata.api.jar
+jar/io.openems.edge.timedata.influxdb.jar
+jar/io.openems.edge.timedata.rrd4j.jar
+jar/io.openems.shared.influxdb.jar
+jar/io.openems.wrapper.influxdb-client-core.jar
+jar/io.openems.wrapper.influxdb-client-java.jar
+jar/io.openems.wrapper.influxdb-client-utils.jar
+jar/io.openems.wrapper.influxdb-flux-dsl.jar
+jar/rrd4j-3.10.jar

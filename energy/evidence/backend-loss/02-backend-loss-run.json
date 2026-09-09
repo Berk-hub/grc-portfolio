@@ -1,0 +1,64 @@
+{
+  "scenario": "SCN-BACKEND-LOSS",
+  "description": "Temporary interruption of the Edge-to-Backend communication path while the Edge energy-control process remains operational.",
+  "started_at_utc": "2026-09-08T21:01:38.333054+00:00",
+  "phases": {
+    "pre_failure": {
+      "captured_at_utc": "2026-09-08T21:01:38.333089+00:00",
+      "label": "connected_before_failure",
+      "backend_link_18081_established": true,
+      "backend_edge_8081_established": true,
+      "central_backend_8083_established": true,
+      "consumption_w": 4000,
+      "production_w": 1000,
+      "ess_w": 3000,
+      "grid_w": 0,
+      "ess_soc_pct": 46,
+      "power_balance_residual_w": 0
+    },
+    "outage_discharge": {
+      "captured_at_utc": "2026-09-08T21:01:43.422025+00:00",
+      "label": "outage_discharge",
+      "backend_link_18081_established": false,
+      "backend_edge_8081_established": false,
+      "central_backend_8083_established": true,
+      "consumption_w": 5000,
+      "production_w": 500,
+      "ess_w": 4500,
+      "grid_w": 0,
+      "ess_soc_pct": 46,
+      "power_balance_residual_w": 0
+    },
+    "outage_charge": {
+      "captured_at_utc": "2026-09-08T21:01:48.458872+00:00",
+      "label": "outage_charge",
+      "backend_link_18081_established": false,
+      "backend_edge_8081_established": false,
+      "central_backend_8083_established": true,
+      "consumption_w": 2000,
+      "production_w": 4500,
+      "ess_w": -2500,
+      "grid_w": 0,
+      "ess_soc_pct": 46,
+      "power_balance_residual_w": 0
+    },
+    "recovery": {
+      "captured_at_utc": "2026-09-08T21:01:54.504809+00:00",
+      "label": "after_reconnection",
+      "backend_link_18081_established": true,
+      "backend_edge_8081_established": true,
+      "central_backend_8083_established": true,
+      "consumption_w": 4000,
+      "production_w": 1000,
+      "ess_w": 3000,
+      "grid_w": 0,
+      "ess_soc_pct": 46,
+      "power_balance_residual_w": 0
+    }
+  },
+  "failure_injected_at_utc": "2026-09-08T21:01:38.395479+00:00",
+  "recovery_started_at_utc": "2026-09-08T21:01:48.489778+00:00",
+  "new_proxy_pid": 109068,
+  "reconnected_at_utc": "2026-09-08T21:01:49.498850+00:00",
+  "finished_at_utc": "2026-09-08T21:01:54.523696+00:00"
+}

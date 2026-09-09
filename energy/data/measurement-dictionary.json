@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0",
+  "note": "Measurement semantics and operating limits for the laboratory. Limits are derived from the recorded simulation configuration (evidence/backend-loss/04-edge-config-discovery.json), not from hardware datasheets. All channels derive from the same simulator clock and equations; the zero-residual check is therefore a consistency check, not an independent measurement.",
+  "time_source": "host UTC; no independent clock verification",
+  "balance_tolerance_w": 50,
+  "balance_tolerance_rationale": "Matches the tolerance already applied by the assessment logic in src/energy_assurance/cli.py.",
+  "sign_convention": {
+    "ess_w": "positive = discharge to the site, negative = charge",
+    "grid_w": "positive = import from grid",
+    "residual_definition": "production + ess - consumption - grid, expected 0 within tolerance"
+  },
+  "channels": [
+    {"channel": "_sum/ConsumptionActivePower", "unit": "W", "source": "simulateConsumption via meter1", "sampling": "1 s cycle", "stale_after_s": 5},
+    {"channel": "_sum/ProductionActivePower", "unit": "W", "source": "simulateProduction via meter2", "sampling": "1 s cycle", "stale_after_s": 5},
+    {"channel": "_sum/EssActivePower", "unit": "W", "source": "ess0 (Simulator.EssSymmetric.Reacting)", "sampling": "1 s cycle", "stale_after_s": 5},
+    {"channel": "_sum/GridActivePower", "unit": "W", "source": "meter0 (Simulator.GridMeter.Reacting)", "sampling": "1 s cycle", "stale_after_s": 5},
+    {"channel": "_sum/EssSoc", "unit": "%", "source": "ess0", "sampling": "1 s cycle", "stale_after_s": 10}
+  ],
+  "operating_limits": {
+    "ess_capacity_wh": 10200,
+    "ess_max_apparent_power_va": 10000,
+    "ess_max_charge_w": 10000,
+    "ess_max_discharge_w": 10000,
+    "soc_floor_pct": 0,
+    "soc_ceiling_pct": 100,
+    "soc_limit_note": "The simulated ESS enforces no configured reserve floor above 0%. Expected behaviour at a SOC limit is power limitation with non-zero grid exchange; that outcome would be correct behaviour, not a failure (planned EXP-06).",
+    "control_target": "grid setpoint 0 W (ctrlBalancing0 targetGridSetpoint)",
+    "not_modelled": ["inverter efficiency and ramp limits", "BMS protection behaviour", "grid protection and islanding"]
+  }
+}

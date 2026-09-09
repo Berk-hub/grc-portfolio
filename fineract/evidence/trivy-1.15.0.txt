@@ -1,0 +1,1340 @@
+2026-09-08T12:57:07Z	INFO	[vuln] Vulnerability scanning is enabled
+2026-09-08T12:57:07Z	INFO	[misconfig] Misconfiguration scanning is enabled
+2026-09-08T12:57:07Z	INFO	[checks-client] Using existing checks from cache	path="/home/codespace/.cache/trivy/policy/content"
+2026-09-08T12:57:09Z	INFO	[secret] Secret scanning is enabled
+2026-09-08T12:57:09Z	INFO	[secret] If your scanning is slow, please try '--scanners vuln,misconfig' to disable secret scanning
+2026-09-08T12:57:09Z	INFO	[secret] Please see https://trivy.dev/docs/v0.74/guide/scanner/secret#recommendation for faster secret detection
+2026-09-08T12:57:17Z	INFO	Number of language-specific files	num=0
+2026-09-08T12:57:17Z	INFO	Detected config files	num=4
+
+Report Summary
+
+┌───────────────────────────────────────────────────┬────────────┬─────────────────┬─────────┬───────────────────┐
+│                      Target                       │    Type    │ Vulnerabilities │ Secrets │ Misconfigurations │
+├───────────────────────────────────────────────────┼────────────┼─────────────────┼─────────┼───────────────────┤
+│ kubernetes/fineract-mifoscommunity-deployment.yml │ kubernetes │        -        │    -    │        30         │
+├───────────────────────────────────────────────────┼────────────┼─────────────────┼─────────┼───────────────────┤
+│ kubernetes/fineract-server-deployment.yml         │ kubernetes │        -        │    -    │        30         │
+├───────────────────────────────────────────────────┼────────────┼─────────────────┼─────────┼───────────────────┤
+│ kubernetes/fineractmysql-configmap.yml            │ kubernetes │        -        │    -    │         0         │
+├───────────────────────────────────────────────────┼────────────┼─────────────────┼─────────┼───────────────────┤
+│ kubernetes/fineractmysql-deployment.yml           │ kubernetes │        -        │    -    │        13         │
+└───────────────────────────────────────────────────┴────────────┴─────────────────┴─────────┴───────────────────┘
+Legend:
+- '-': Not scanned
+- '0': Clean (no security findings detected)
+
+
+kubernetes/fineract-mifoscommunity-deployment.yml (kubernetes)
+==============================================================
+Tests: 131 (SUCCESSES: 101, FAILURES: 30)
+Failures: 30 (UNKNOWN: 0, LOW: 17, MEDIUM: 8, HIGH: 5, CRITICAL: 0)
+
+KSV-0001 (MEDIUM): Container 'init-myservice' of Deployment 'mifos-community' should set 'securityContext.allowPrivilegeEscalation' to false
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+A program inside the container can elevate its own privileges and run as root, which might give the program control over the container and node.
+
+See https://avd.aquasec.com/misconfig/ksv-0001
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-mifoscommunity-deployment.yml:95-97
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  95 ┌     spec:
+  96 │       initContainers:
+  97 └         - name: init-myservice
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0001 (MEDIUM): Container 'mifos-community' of Deployment 'mifos-community' should set 'securityContext.allowPrivilegeEscalation' to false
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+A program inside the container can elevate its own privileges and run as root, which might give the program control over the container and node.
+
+See https://avd.aquasec.com/misconfig/ksv-0001
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-mifoscommunity-deployment.yml:99-132
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  99 ┌           command: ['sh', '-c', 'echo -e "Checking for the availability of Fineract server deployment"; while ! nc -z "fineract-server" 8443; do sleep 1; printf "-"; done; echo -e " >> Fineract server has started";']
+ 100 │       containers:
+ 101 │       - name: mifos-community
+ 102 │         image: openmf/web-app:master
+ 103 │         resources:
+ 104 │           limits:
+ 105 │             cpu: "1000m"
+ 106 │             memory: "1Gi"
+ 107 └           requests:
+ ...   
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0003 (LOW): Container 'init-myservice' of Deployment 'mifos-community' should add 'ALL' to 'securityContext.capabilities.drop'
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+The container should drop all default capabilities and add only those that are needed for its execution.
+
+See https://avd.aquasec.com/misconfig/ksv-0003
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-mifoscommunity-deployment.yml:95-97
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  95 ┌     spec:
+  96 │       initContainers:
+  97 └         - name: init-myservice
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0003 (LOW): Container 'mifos-community' of Deployment 'mifos-community' should add 'ALL' to 'securityContext.capabilities.drop'
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+The container should drop all default capabilities and add only those that are needed for its execution.
+
+See https://avd.aquasec.com/misconfig/ksv-0003
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-mifoscommunity-deployment.yml:99-132
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  99 ┌           command: ['sh', '-c', 'echo -e "Checking for the availability of Fineract server deployment"; while ! nc -z "fineract-server" 8443; do sleep 1; printf "-"; done; echo -e " >> Fineract server has started";']
+ 100 │       containers:
+ 101 │       - name: mifos-community
+ 102 │         image: openmf/web-app:master
+ 103 │         resources:
+ 104 │           limits:
+ 105 │             cpu: "1000m"
+ 106 │             memory: "1Gi"
+ 107 └           requests:
+ ...   
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0004 (LOW): Container 'init-myservice' of 'deployment' 'mifos-community' in 'default' namespace should set securityContext.capabilities.drop
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Security best practices require containers to run with minimal required capabilities.
+
+See https://avd.aquasec.com/misconfig/ksv-0004
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-mifoscommunity-deployment.yml:95-97
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  95 ┌     spec:
+  96 │       initContainers:
+  97 └         - name: init-myservice
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0004 (LOW): Container 'mifos-community' of 'deployment' 'mifos-community' in 'default' namespace should set securityContext.capabilities.drop
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Security best practices require containers to run with minimal required capabilities.
+
+See https://avd.aquasec.com/misconfig/ksv-0004
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-mifoscommunity-deployment.yml:99-132
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  99 ┌           command: ['sh', '-c', 'echo -e "Checking for the availability of Fineract server deployment"; while ! nc -z "fineract-server" 8443; do sleep 1; printf "-"; done; echo -e " >> Fineract server has started";']
+ 100 │       containers:
+ 101 │       - name: mifos-community
+ 102 │         image: openmf/web-app:master
+ 103 │         resources:
+ 104 │           limits:
+ 105 │             cpu: "1000m"
+ 106 │             memory: "1Gi"
+ 107 └           requests:
+ ...   
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0011 (LOW): Container 'init-myservice' of Deployment 'mifos-community' should set 'resources.limits.cpu'
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Enforcing CPU limits prevents DoS via resource exhaustion.
+
+See https://avd.aquasec.com/misconfig/ksv-0011
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-mifoscommunity-deployment.yml:95-97
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  95 ┌     spec:
+  96 │       initContainers:
+  97 └         - name: init-myservice
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0012 (MEDIUM): Container 'init-myservice' of Deployment 'mifos-community' should set 'securityContext.runAsNonRoot' to true
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Force the running image to run as a non-root user to ensure least privileges.
+
+See https://avd.aquasec.com/misconfig/ksv-0012
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-mifoscommunity-deployment.yml:95-97
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  95 ┌     spec:
+  96 │       initContainers:
+  97 └         - name: init-myservice
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0012 (MEDIUM): Container 'mifos-community' of Deployment 'mifos-community' should set 'securityContext.runAsNonRoot' to true
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Force the running image to run as a non-root user to ensure least privileges.
+
+See https://avd.aquasec.com/misconfig/ksv-0012
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-mifoscommunity-deployment.yml:99-132
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  99 ┌           command: ['sh', '-c', 'echo -e "Checking for the availability of Fineract server deployment"; while ! nc -z "fineract-server" 8443; do sleep 1; printf "-"; done; echo -e " >> Fineract server has started";']
+ 100 │       containers:
+ 101 │       - name: mifos-community
+ 102 │         image: openmf/web-app:master
+ 103 │         resources:
+ 104 │           limits:
+ 105 │             cpu: "1000m"
+ 106 │             memory: "1Gi"
+ 107 └           requests:
+ ...   
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0014 (HIGH): Container 'init-myservice' of Deployment 'mifos-community' should set 'securityContext.readOnlyRootFilesystem' to true
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+An immutable root file system prevents applications from writing to their local disk. This can limit intrusions, as attackers will not be able to tamper with the file system or write foreign executables to disk.
+
+See https://avd.aquasec.com/misconfig/ksv-0014
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-mifoscommunity-deployment.yml:95-97
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  95 ┌     spec:
+  96 │       initContainers:
+  97 └         - name: init-myservice
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0014 (HIGH): Container 'mifos-community' of Deployment 'mifos-community' should set 'securityContext.readOnlyRootFilesystem' to true
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+An immutable root file system prevents applications from writing to their local disk. This can limit intrusions, as attackers will not be able to tamper with the file system or write foreign executables to disk.
+
+See https://avd.aquasec.com/misconfig/ksv-0014
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-mifoscommunity-deployment.yml:99-132
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  99 ┌           command: ['sh', '-c', 'echo -e "Checking for the availability of Fineract server deployment"; while ! nc -z "fineract-server" 8443; do sleep 1; printf "-"; done; echo -e " >> Fineract server has started";']
+ 100 │       containers:
+ 101 │       - name: mifos-community
+ 102 │         image: openmf/web-app:master
+ 103 │         resources:
+ 104 │           limits:
+ 105 │             cpu: "1000m"
+ 106 │             memory: "1Gi"
+ 107 └           requests:
+ ...   
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0015 (LOW): Container 'init-myservice' of Deployment 'mifos-community' should set 'resources.requests.cpu'
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+When containers have resource requests specified, the scheduler can make better decisions about which nodes to place pods on, and how to deal with resource contention.
+
+See https://avd.aquasec.com/misconfig/ksv-0015
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-mifoscommunity-deployment.yml:95-97
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  95 ┌     spec:
+  96 │       initContainers:
+  97 └         - name: init-myservice
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0016 (LOW): Container 'init-myservice' of Deployment 'mifos-community' should set 'resources.requests.memory'
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+When containers have memory requests specified, the scheduler can make better decisions about which nodes to place pods on, and how to deal with resource contention.
+
+See https://avd.aquasec.com/misconfig/ksv-0016
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-mifoscommunity-deployment.yml:95-97
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  95 ┌     spec:
+  96 │       initContainers:
+  97 └         - name: init-myservice
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0018 (LOW): Container 'init-myservice' of Deployment 'mifos-community' should set 'resources.limits.memory'
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Enforcing memory limits prevents DoS via resource exhaustion.
+
+See https://avd.aquasec.com/misconfig/ksv-0018
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-mifoscommunity-deployment.yml:95-97
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  95 ┌     spec:
+  96 │       initContainers:
+  97 └         - name: init-myservice
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0020 (LOW): Container 'init-myservice' of Deployment 'mifos-community' should set 'securityContext.runAsUser' > 10000
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Force the container to run with user ID > 10000 to avoid conflicts with the host’s user table.
+
+See https://avd.aquasec.com/misconfig/ksv-0020
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-mifoscommunity-deployment.yml:95-97
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  95 ┌     spec:
+  96 │       initContainers:
+  97 └         - name: init-myservice
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0020 (LOW): Container 'mifos-community' of Deployment 'mifos-community' should set 'securityContext.runAsUser' > 10000
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Force the container to run with user ID > 10000 to avoid conflicts with the host’s user table.
+
+See https://avd.aquasec.com/misconfig/ksv-0020
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-mifoscommunity-deployment.yml:99-132
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  99 ┌           command: ['sh', '-c', 'echo -e "Checking for the availability of Fineract server deployment"; while ! nc -z "fineract-server" 8443; do sleep 1; printf "-"; done; echo -e " >> Fineract server has started";']
+ 100 │       containers:
+ 101 │       - name: mifos-community
+ 102 │         image: openmf/web-app:master
+ 103 │         resources:
+ 104 │           limits:
+ 105 │             cpu: "1000m"
+ 106 │             memory: "1Gi"
+ 107 └           requests:
+ ...   
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0021 (LOW): Container 'init-myservice' of Deployment 'mifos-community' should set 'securityContext.runAsGroup' > 10000
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Force the container to run with group ID > 10000 to avoid conflicts with the host’s user table.
+
+See https://avd.aquasec.com/misconfig/ksv-0021
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-mifoscommunity-deployment.yml:95-97
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  95 ┌     spec:
+  96 │       initContainers:
+  97 └         - name: init-myservice
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0021 (LOW): Container 'mifos-community' of Deployment 'mifos-community' should set 'securityContext.runAsGroup' > 10000
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Force the container to run with group ID > 10000 to avoid conflicts with the host’s user table.
+
+See https://avd.aquasec.com/misconfig/ksv-0021
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-mifoscommunity-deployment.yml:99-132
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  99 ┌           command: ['sh', '-c', 'echo -e "Checking for the availability of Fineract server deployment"; while ! nc -z "fineract-server" 8443; do sleep 1; printf "-"; done; echo -e " >> Fineract server has started";']
+ 100 │       containers:
+ 101 │       - name: mifos-community
+ 102 │         image: openmf/web-app:master
+ 103 │         resources:
+ 104 │           limits:
+ 105 │             cpu: "1000m"
+ 106 │             memory: "1Gi"
+ 107 └           requests:
+ ...   
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0030 (LOW): Either Pod or Container should set 'securityContext.seccompProfile.type' to 'RuntimeDefault'
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+According to pod security standard 'Seccomp', the RuntimeDefault seccomp profile must be required, or allow specific additional profiles.
+
+See https://avd.aquasec.com/misconfig/ksv-0030
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-mifoscommunity-deployment.yml:95-97
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  95 ┌     spec:
+  96 │       initContainers:
+  97 └         - name: init-myservice
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0030 (LOW): Either Pod or Container should set 'securityContext.seccompProfile.type' to 'RuntimeDefault'
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+According to pod security standard 'Seccomp', the RuntimeDefault seccomp profile must be required, or allow specific additional profiles.
+
+See https://avd.aquasec.com/misconfig/ksv-0030
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-mifoscommunity-deployment.yml:99-132
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  99 ┌           command: ['sh', '-c', 'echo -e "Checking for the availability of Fineract server deployment"; while ! nc -z "fineract-server" 8443; do sleep 1; printf "-"; done; echo -e " >> Fineract server has started";']
+ 100 │       containers:
+ 101 │       - name: mifos-community
+ 102 │         image: openmf/web-app:master
+ 103 │         resources:
+ 104 │           limits:
+ 105 │             cpu: "1000m"
+ 106 │             memory: "1Gi"
+ 107 └           requests:
+ ...   
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0104 (MEDIUM): container "init-myservice" of deployment "mifos-community" in "default" namespace should specify a seccomp profile
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+A program inside the container can bypass Seccomp protection policies.
+
+See https://avd.aquasec.com/misconfig/ksv-0104
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-mifoscommunity-deployment.yml:95-97
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  95 ┌     spec:
+  96 │       initContainers:
+  97 └         - name: init-myservice
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0104 (MEDIUM): container "mifos-community" of deployment "mifos-community" in "default" namespace should specify a seccomp profile
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+A program inside the container can bypass Seccomp protection policies.
+
+See https://avd.aquasec.com/misconfig/ksv-0104
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-mifoscommunity-deployment.yml:99-132
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  99 ┌           command: ['sh', '-c', 'echo -e "Checking for the availability of Fineract server deployment"; while ! nc -z "fineract-server" 8443; do sleep 1; printf "-"; done; echo -e " >> Fineract server has started";']
+ 100 │       containers:
+ 101 │       - name: mifos-community
+ 102 │         image: openmf/web-app:master
+ 103 │         resources:
+ 104 │           limits:
+ 105 │             cpu: "1000m"
+ 106 │             memory: "1Gi"
+ 107 └           requests:
+ ...   
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0106 (LOW): container should drop all
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Containers must drop ALL capabilities, and are only permitted to add back the NET_BIND_SERVICE capability.
+
+See https://avd.aquasec.com/misconfig/ksv-0106
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-mifoscommunity-deployment.yml:95-97
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  95 ┌     spec:
+  96 │       initContainers:
+  97 └         - name: init-myservice
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0106 (LOW): container should drop all
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Containers must drop ALL capabilities, and are only permitted to add back the NET_BIND_SERVICE capability.
+
+See https://avd.aquasec.com/misconfig/ksv-0106
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-mifoscommunity-deployment.yml:99-132
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  99 ┌           command: ['sh', '-c', 'echo -e "Checking for the availability of Fineract server deployment"; while ! nc -z "fineract-server" 8443; do sleep 1; printf "-"; done; echo -e " >> Fineract server has started";']
+ 100 │       containers:
+ 101 │       - name: mifos-community
+ 102 │         image: openmf/web-app:master
+ 103 │         resources:
+ 104 │           limits:
+ 105 │             cpu: "1000m"
+ 106 │             memory: "1Gi"
+ 107 └           requests:
+ ...   
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0110 (LOW): deployment mifos-community in default namespace should set metadata.namespace to a non-default namespace
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Checks whether a workload is running in the default namespace.
+
+See https://avd.aquasec.com/misconfig/ksv-0110
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-mifoscommunity-deployment.yml:77-80
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  77 ┌ apiVersion: apps/v1
+  78 │ kind: Deployment
+  79 │ metadata:
+  80 └   name: mifos-community
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0117 (MEDIUM): deployment mifos-community in default namespace should not set spec.template.spec.containers.ports.containerPort to less than 1024
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+The ports which are lower than 1024 receive and transmit various sensitive and privileged data. Allowing containers to use them can bring serious implications.
+
+See https://avd.aquasec.com/misconfig/ksv-0117
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-mifoscommunity-deployment.yml:73
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  73 [   type: LoadBalancer
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0118 (HIGH): container mifos-community in default namespace is using the default security context
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Security context controls the allocation of security parameters for the pod/container/volume, ensuring the appropriate level of protection. Relying on default security context may expose vulnerabilities to potential attacks that rely on privileged access.
+
+See https://avd.aquasec.com/misconfig/ksv-0118
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-mifoscommunity-deployment.yml:95-97
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  95 ┌     spec:
+  96 │       initContainers:
+  97 └         - name: init-myservice
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0118 (HIGH): container mifos-community in default namespace is using the default security context
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Security context controls the allocation of security parameters for the pod/container/volume, ensuring the appropriate level of protection. Relying on default security context may expose vulnerabilities to potential attacks that rely on privileged access.
+
+See https://avd.aquasec.com/misconfig/ksv-0118
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-mifoscommunity-deployment.yml:99-132
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  99 ┌           command: ['sh', '-c', 'echo -e "Checking for the availability of Fineract server deployment"; while ! nc -z "fineract-server" 8443; do sleep 1; printf "-"; done; echo -e " >> Fineract server has started";']
+ 100 │       containers:
+ 101 │       - name: mifos-community
+ 102 │         image: openmf/web-app:master
+ 103 │         resources:
+ 104 │           limits:
+ 105 │             cpu: "1000m"
+ 106 │             memory: "1Gi"
+ 107 └           requests:
+ ...   
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0118 (HIGH): deployment mifos-community in default namespace is using the default security context, which allows root privileges
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Security context controls the allocation of security parameters for the pod/container/volume, ensuring the appropriate level of protection. Relying on default security context may expose vulnerabilities to potential attacks that rely on privileged access.
+
+See https://avd.aquasec.com/misconfig/ksv-0118
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-mifoscommunity-deployment.yml:93-139
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  93 ┌         app: mifos-community
+  94 │         tier: frontend
+  95 │     spec:
+  96 │       initContainers:
+  97 │         - name: init-myservice
+  98 │           image: busybox:1.28
+  99 │           command: ['sh', '-c', 'echo -e "Checking for the availability of Fineract server deployment"; while ! nc -z "fineract-server" 8443; do sleep 1; printf "-"; done; echo -e " >> Fineract server has started";']
+ 100 │       containers:
+ 101 └       - name: mifos-community
+ ...   
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0125 (MEDIUM): Container mifos-community in deployment mifos-community (namespace: default) uses an image from an untrusted registry.
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Ensure that all containers use images only from trusted registry domains.
+
+See https://avd.aquasec.com/misconfig/ksv-0125
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-mifoscommunity-deployment.yml:99-132
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  99 ┌           command: ['sh', '-c', 'echo -e "Checking for the availability of Fineract server deployment"; while ! nc -z "fineract-server" 8443; do sleep 1; printf "-"; done; echo -e " >> Fineract server has started";']
+ 100 │       containers:
+ 101 │       - name: mifos-community
+ 102 │         image: openmf/web-app:master
+ 103 │         resources:
+ 104 │           limits:
+ 105 │             cpu: "1000m"
+ 106 │             memory: "1Gi"
+ 107 └           requests:
+ ...   
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+kubernetes/fineract-server-deployment.yml (kubernetes)
+======================================================
+Tests: 131 (SUCCESSES: 101, FAILURES: 30)
+Failures: 30 (UNKNOWN: 0, LOW: 17, MEDIUM: 8, HIGH: 5, CRITICAL: 0)
+
+KSV-0001 (MEDIUM): Container 'fineract-server' of Deployment 'fineract-server' should set 'securityContext.allowPrivilegeEscalation' to false
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+A program inside the container can elevate its own privileges and run as root, which might give the program control over the container and node.
+
+See https://avd.aquasec.com/misconfig/ksv-0001
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-server-deployment.yml:61-125
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  61 ┌       containers:
+  62 │       - name: fineract-server
+  63 │         image: apache/fineract:latest
+  64 │         resources:
+  65 │           limits:
+  66 │             cpu: "1000m"
+  67 │             memory: "2Gi"
+  68 │           requests:
+  69 └             cpu: "200m"
+  ..   
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0001 (MEDIUM): Container 'init-mydb' of Deployment 'fineract-server' should set 'securityContext.allowPrivilegeEscalation' to false
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+A program inside the container can elevate its own privileges and run as root, which might give the program control over the container and node.
+
+See https://avd.aquasec.com/misconfig/ksv-0001
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-server-deployment.yml:57-59
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  57 ┌       initContainers:
+  58 │         - name: init-mydb
+  59 └           image: busybox:1.28
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0003 (LOW): Container 'fineract-server' of Deployment 'fineract-server' should add 'ALL' to 'securityContext.capabilities.drop'
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+The container should drop all default capabilities and add only those that are needed for its execution.
+
+See https://avd.aquasec.com/misconfig/ksv-0003
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-server-deployment.yml:61-125
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  61 ┌       containers:
+  62 │       - name: fineract-server
+  63 │         image: apache/fineract:latest
+  64 │         resources:
+  65 │           limits:
+  66 │             cpu: "1000m"
+  67 │             memory: "2Gi"
+  68 │           requests:
+  69 └             cpu: "200m"
+  ..   
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0003 (LOW): Container 'init-mydb' of Deployment 'fineract-server' should add 'ALL' to 'securityContext.capabilities.drop'
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+The container should drop all default capabilities and add only those that are needed for its execution.
+
+See https://avd.aquasec.com/misconfig/ksv-0003
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-server-deployment.yml:57-59
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  57 ┌       initContainers:
+  58 │         - name: init-mydb
+  59 └           image: busybox:1.28
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0004 (LOW): Container 'fineract-server' of 'deployment' 'fineract-server' in 'default' namespace should set securityContext.capabilities.drop
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Security best practices require containers to run with minimal required capabilities.
+
+See https://avd.aquasec.com/misconfig/ksv-0004
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-server-deployment.yml:61-125
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  61 ┌       containers:
+  62 │       - name: fineract-server
+  63 │         image: apache/fineract:latest
+  64 │         resources:
+  65 │           limits:
+  66 │             cpu: "1000m"
+  67 │             memory: "2Gi"
+  68 │           requests:
+  69 └             cpu: "200m"
+  ..   
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0004 (LOW): Container 'init-mydb' of 'deployment' 'fineract-server' in 'default' namespace should set securityContext.capabilities.drop
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Security best practices require containers to run with minimal required capabilities.
+
+See https://avd.aquasec.com/misconfig/ksv-0004
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-server-deployment.yml:57-59
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  57 ┌       initContainers:
+  58 │         - name: init-mydb
+  59 └           image: busybox:1.28
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0011 (LOW): Container 'init-mydb' of Deployment 'fineract-server' should set 'resources.limits.cpu'
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Enforcing CPU limits prevents DoS via resource exhaustion.
+
+See https://avd.aquasec.com/misconfig/ksv-0011
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-server-deployment.yml:57-59
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  57 ┌       initContainers:
+  58 │         - name: init-mydb
+  59 └           image: busybox:1.28
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0012 (MEDIUM): Container 'fineract-server' of Deployment 'fineract-server' should set 'securityContext.runAsNonRoot' to true
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Force the running image to run as a non-root user to ensure least privileges.
+
+See https://avd.aquasec.com/misconfig/ksv-0012
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-server-deployment.yml:61-125
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  61 ┌       containers:
+  62 │       - name: fineract-server
+  63 │         image: apache/fineract:latest
+  64 │         resources:
+  65 │           limits:
+  66 │             cpu: "1000m"
+  67 │             memory: "2Gi"
+  68 │           requests:
+  69 └             cpu: "200m"
+  ..   
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0012 (MEDIUM): Container 'init-mydb' of Deployment 'fineract-server' should set 'securityContext.runAsNonRoot' to true
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Force the running image to run as a non-root user to ensure least privileges.
+
+See https://avd.aquasec.com/misconfig/ksv-0012
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-server-deployment.yml:57-59
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  57 ┌       initContainers:
+  58 │         - name: init-mydb
+  59 └           image: busybox:1.28
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0013 (MEDIUM): Container 'fineract-server' of Deployment 'fineract-server' should specify an image tag
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+It is best to avoid using the ':latest' image tag when deploying containers in production. Doing so makes it hard to track which version of the image is running, and hard to roll back the version.
+
+See https://avd.aquasec.com/misconfig/ksv-0013
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-server-deployment.yml:61-125
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  61 ┌       containers:
+  62 │       - name: fineract-server
+  63 │         image: apache/fineract:latest
+  64 │         resources:
+  65 │           limits:
+  66 │             cpu: "1000m"
+  67 │             memory: "2Gi"
+  68 │           requests:
+  69 └             cpu: "200m"
+  ..   
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0014 (HIGH): Container 'fineract-server' of Deployment 'fineract-server' should set 'securityContext.readOnlyRootFilesystem' to true
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+An immutable root file system prevents applications from writing to their local disk. This can limit intrusions, as attackers will not be able to tamper with the file system or write foreign executables to disk.
+
+See https://avd.aquasec.com/misconfig/ksv-0014
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-server-deployment.yml:61-125
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  61 ┌       containers:
+  62 │       - name: fineract-server
+  63 │         image: apache/fineract:latest
+  64 │         resources:
+  65 │           limits:
+  66 │             cpu: "1000m"
+  67 │             memory: "2Gi"
+  68 │           requests:
+  69 └             cpu: "200m"
+  ..   
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0014 (HIGH): Container 'init-mydb' of Deployment 'fineract-server' should set 'securityContext.readOnlyRootFilesystem' to true
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+An immutable root file system prevents applications from writing to their local disk. This can limit intrusions, as attackers will not be able to tamper with the file system or write foreign executables to disk.
+
+See https://avd.aquasec.com/misconfig/ksv-0014
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-server-deployment.yml:57-59
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  57 ┌       initContainers:
+  58 │         - name: init-mydb
+  59 └           image: busybox:1.28
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0015 (LOW): Container 'init-mydb' of Deployment 'fineract-server' should set 'resources.requests.cpu'
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+When containers have resource requests specified, the scheduler can make better decisions about which nodes to place pods on, and how to deal with resource contention.
+
+See https://avd.aquasec.com/misconfig/ksv-0015
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-server-deployment.yml:57-59
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  57 ┌       initContainers:
+  58 │         - name: init-mydb
+  59 └           image: busybox:1.28
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0016 (LOW): Container 'init-mydb' of Deployment 'fineract-server' should set 'resources.requests.memory'
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+When containers have memory requests specified, the scheduler can make better decisions about which nodes to place pods on, and how to deal with resource contention.
+
+See https://avd.aquasec.com/misconfig/ksv-0016
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-server-deployment.yml:57-59
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  57 ┌       initContainers:
+  58 │         - name: init-mydb
+  59 └           image: busybox:1.28
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0018 (LOW): Container 'init-mydb' of Deployment 'fineract-server' should set 'resources.limits.memory'
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Enforcing memory limits prevents DoS via resource exhaustion.
+
+See https://avd.aquasec.com/misconfig/ksv-0018
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-server-deployment.yml:57-59
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  57 ┌       initContainers:
+  58 │         - name: init-mydb
+  59 └           image: busybox:1.28
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0020 (LOW): Container 'fineract-server' of Deployment 'fineract-server' should set 'securityContext.runAsUser' > 10000
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Force the container to run with user ID > 10000 to avoid conflicts with the host’s user table.
+
+See https://avd.aquasec.com/misconfig/ksv-0020
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-server-deployment.yml:61-125
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  61 ┌       containers:
+  62 │       - name: fineract-server
+  63 │         image: apache/fineract:latest
+  64 │         resources:
+  65 │           limits:
+  66 │             cpu: "1000m"
+  67 │             memory: "2Gi"
+  68 │           requests:
+  69 └             cpu: "200m"
+  ..   
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0020 (LOW): Container 'init-mydb' of Deployment 'fineract-server' should set 'securityContext.runAsUser' > 10000
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Force the container to run with user ID > 10000 to avoid conflicts with the host’s user table.
+
+See https://avd.aquasec.com/misconfig/ksv-0020
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-server-deployment.yml:57-59
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  57 ┌       initContainers:
+  58 │         - name: init-mydb
+  59 └           image: busybox:1.28
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0021 (LOW): Container 'fineract-server' of Deployment 'fineract-server' should set 'securityContext.runAsGroup' > 10000
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Force the container to run with group ID > 10000 to avoid conflicts with the host’s user table.
+
+See https://avd.aquasec.com/misconfig/ksv-0021
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-server-deployment.yml:61-125
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  61 ┌       containers:
+  62 │       - name: fineract-server
+  63 │         image: apache/fineract:latest
+  64 │         resources:
+  65 │           limits:
+  66 │             cpu: "1000m"
+  67 │             memory: "2Gi"
+  68 │           requests:
+  69 └             cpu: "200m"
+  ..   
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0021 (LOW): Container 'init-mydb' of Deployment 'fineract-server' should set 'securityContext.runAsGroup' > 10000
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Force the container to run with group ID > 10000 to avoid conflicts with the host’s user table.
+
+See https://avd.aquasec.com/misconfig/ksv-0021
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-server-deployment.yml:57-59
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  57 ┌       initContainers:
+  58 │         - name: init-mydb
+  59 └           image: busybox:1.28
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0030 (LOW): Either Pod or Container should set 'securityContext.seccompProfile.type' to 'RuntimeDefault'
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+According to pod security standard 'Seccomp', the RuntimeDefault seccomp profile must be required, or allow specific additional profiles.
+
+See https://avd.aquasec.com/misconfig/ksv-0030
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-server-deployment.yml:57-59
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  57 ┌       initContainers:
+  58 │         - name: init-mydb
+  59 └           image: busybox:1.28
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0030 (LOW): Either Pod or Container should set 'securityContext.seccompProfile.type' to 'RuntimeDefault'
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+According to pod security standard 'Seccomp', the RuntimeDefault seccomp profile must be required, or allow specific additional profiles.
+
+See https://avd.aquasec.com/misconfig/ksv-0030
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-server-deployment.yml:61-125
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  61 ┌       containers:
+  62 │       - name: fineract-server
+  63 │         image: apache/fineract:latest
+  64 │         resources:
+  65 │           limits:
+  66 │             cpu: "1000m"
+  67 │             memory: "2Gi"
+  68 │           requests:
+  69 └             cpu: "200m"
+  ..   
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0104 (MEDIUM): container "fineract-server" of deployment "fineract-server" in "default" namespace should specify a seccomp profile
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+A program inside the container can bypass Seccomp protection policies.
+
+See https://avd.aquasec.com/misconfig/ksv-0104
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-server-deployment.yml:61-125
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  61 ┌       containers:
+  62 │       - name: fineract-server
+  63 │         image: apache/fineract:latest
+  64 │         resources:
+  65 │           limits:
+  66 │             cpu: "1000m"
+  67 │             memory: "2Gi"
+  68 │           requests:
+  69 └             cpu: "200m"
+  ..   
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0104 (MEDIUM): container "init-mydb" of deployment "fineract-server" in "default" namespace should specify a seccomp profile
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+A program inside the container can bypass Seccomp protection policies.
+
+See https://avd.aquasec.com/misconfig/ksv-0104
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-server-deployment.yml:57-59
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  57 ┌       initContainers:
+  58 │         - name: init-mydb
+  59 └           image: busybox:1.28
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0106 (LOW): container should drop all
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Containers must drop ALL capabilities, and are only permitted to add back the NET_BIND_SERVICE capability.
+
+See https://avd.aquasec.com/misconfig/ksv-0106
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-server-deployment.yml:61-125
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  61 ┌       containers:
+  62 │       - name: fineract-server
+  63 │         image: apache/fineract:latest
+  64 │         resources:
+  65 │           limits:
+  66 │             cpu: "1000m"
+  67 │             memory: "2Gi"
+  68 │           requests:
+  69 └             cpu: "200m"
+  ..   
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0106 (LOW): container should drop all
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Containers must drop ALL capabilities, and are only permitted to add back the NET_BIND_SERVICE capability.
+
+See https://avd.aquasec.com/misconfig/ksv-0106
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-server-deployment.yml:57-59
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  57 ┌       initContainers:
+  58 │         - name: init-mydb
+  59 └           image: busybox:1.28
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0110 (LOW): deployment fineract-server in default namespace should set metadata.namespace to a non-default namespace
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Checks whether a workload is running in the default namespace.
+
+See https://avd.aquasec.com/misconfig/ksv-0110
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-server-deployment.yml:39-42
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  39 ┌ kind: Deployment
+  40 │ metadata:
+  41 │   name: fineract-server
+  42 └   labels:
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0118 (HIGH): container fineract-server in default namespace is using the default security context
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Security context controls the allocation of security parameters for the pod/container/volume, ensuring the appropriate level of protection. Relying on default security context may expose vulnerabilities to potential attacks that rely on privileged access.
+
+See https://avd.aquasec.com/misconfig/ksv-0118
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-server-deployment.yml:61-125
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  61 ┌       containers:
+  62 │       - name: fineract-server
+  63 │         image: apache/fineract:latest
+  64 │         resources:
+  65 │           limits:
+  66 │             cpu: "1000m"
+  67 │             memory: "2Gi"
+  68 │           requests:
+  69 └             cpu: "200m"
+  ..   
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0118 (HIGH): container fineract-server in default namespace is using the default security context
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Security context controls the allocation of security parameters for the pod/container/volume, ensuring the appropriate level of protection. Relying on default security context may expose vulnerabilities to potential attacks that rely on privileged access.
+
+See https://avd.aquasec.com/misconfig/ksv-0118
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-server-deployment.yml:57-59
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  57 ┌       initContainers:
+  58 │         - name: init-mydb
+  59 └           image: busybox:1.28
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0118 (HIGH): deployment fineract-server in default namespace is using the default security context, which allows root privileges
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Security context controls the allocation of security parameters for the pod/container/volume, ensuring the appropriate level of protection. Relying on default security context may expose vulnerabilities to potential attacks that rely on privileged access.
+
+See https://avd.aquasec.com/misconfig/ksv-0118
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-server-deployment.yml:55-125
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  55 ┌         tier: backend
+  56 │     spec:
+  57 │       initContainers:
+  58 │         - name: init-mydb
+  59 │           image: busybox:1.28
+  60 │           command: ['sh', '-c', 'echo -e "Checking for the availability of MYSQL server deployment"; while ! nc -z "fineractmysql" 3306; do sleep 1; printf "-"; done; echo -e " >> MYSQL server has started";']
+  61 │       containers:
+  62 │       - name: fineract-server
+  63 └         image: apache/fineract:latest
+  ..   
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0125 (MEDIUM): Container fineract-server in deployment fineract-server (namespace: default) uses an image from an untrusted registry.
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Ensure that all containers use images only from trusted registry domains.
+
+See https://avd.aquasec.com/misconfig/ksv-0125
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineract-server-deployment.yml:61-125
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  61 ┌       containers:
+  62 │       - name: fineract-server
+  63 │         image: apache/fineract:latest
+  64 │         resources:
+  65 │           limits:
+  66 │             cpu: "1000m"
+  67 │             memory: "2Gi"
+  68 │           requests:
+  69 └             cpu: "200m"
+  ..   
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+kubernetes/fineractmysql-deployment.yml (kubernetes)
+====================================================
+Tests: 114 (SUCCESSES: 101, FAILURES: 13)
+Failures: 13 (UNKNOWN: 0, LOW: 7, MEDIUM: 3, HIGH: 3, CRITICAL: 0)
+
+KSV-0001 (MEDIUM): Container 'mysql' of Deployment 'fineractmysql' should set 'securityContext.allowPrivilegeEscalation' to false
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+A program inside the container can elevate its own privileges and run as root, which might give the program control over the container and node.
+
+See https://avd.aquasec.com/misconfig/ksv-0001
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineractmysql-deployment.yml:86-124
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  86 ┌         tier: fineractmysql
+  87 │     spec:
+  88 │       containers:
+  89 │         - image: mariadb:12.2
+  90 │           name: mysql
+  91 │           args:
+  92 │             - --innodb-snapshot-isolation=OFF
+  93 │           resources:
+  94 └             requests:
+  ..   
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0003 (LOW): Container 'mysql' of Deployment 'fineractmysql' should add 'ALL' to 'securityContext.capabilities.drop'
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+The container should drop all default capabilities and add only those that are needed for its execution.
+
+See https://avd.aquasec.com/misconfig/ksv-0003
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineractmysql-deployment.yml:86-124
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  86 ┌         tier: fineractmysql
+  87 │     spec:
+  88 │       containers:
+  89 │         - image: mariadb:12.2
+  90 │           name: mysql
+  91 │           args:
+  92 │             - --innodb-snapshot-isolation=OFF
+  93 │           resources:
+  94 └             requests:
+  ..   
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0004 (LOW): Container 'mysql' of 'deployment' 'fineractmysql' in 'default' namespace should set securityContext.capabilities.drop
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Security best practices require containers to run with minimal required capabilities.
+
+See https://avd.aquasec.com/misconfig/ksv-0004
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineractmysql-deployment.yml:86-124
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  86 ┌         tier: fineractmysql
+  87 │     spec:
+  88 │       containers:
+  89 │         - image: mariadb:12.2
+  90 │           name: mysql
+  91 │           args:
+  92 │             - --innodb-snapshot-isolation=OFF
+  93 │           resources:
+  94 └             requests:
+  ..   
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0012 (MEDIUM): Container 'mysql' of Deployment 'fineractmysql' should set 'securityContext.runAsNonRoot' to true
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Force the running image to run as a non-root user to ensure least privileges.
+
+See https://avd.aquasec.com/misconfig/ksv-0012
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineractmysql-deployment.yml:86-124
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  86 ┌         tier: fineractmysql
+  87 │     spec:
+  88 │       containers:
+  89 │         - image: mariadb:12.2
+  90 │           name: mysql
+  91 │           args:
+  92 │             - --innodb-snapshot-isolation=OFF
+  93 │           resources:
+  94 └             requests:
+  ..   
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0014 (HIGH): Container 'mysql' of Deployment 'fineractmysql' should set 'securityContext.readOnlyRootFilesystem' to true
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+An immutable root file system prevents applications from writing to their local disk. This can limit intrusions, as attackers will not be able to tamper with the file system or write foreign executables to disk.
+
+See https://avd.aquasec.com/misconfig/ksv-0014
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineractmysql-deployment.yml:86-124
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  86 ┌         tier: fineractmysql
+  87 │     spec:
+  88 │       containers:
+  89 │         - image: mariadb:12.2
+  90 │           name: mysql
+  91 │           args:
+  92 │             - --innodb-snapshot-isolation=OFF
+  93 │           resources:
+  94 └             requests:
+  ..   
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0020 (LOW): Container 'mysql' of Deployment 'fineractmysql' should set 'securityContext.runAsUser' > 10000
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Force the container to run with user ID > 10000 to avoid conflicts with the host’s user table.
+
+See https://avd.aquasec.com/misconfig/ksv-0020
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineractmysql-deployment.yml:86-124
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  86 ┌         tier: fineractmysql
+  87 │     spec:
+  88 │       containers:
+  89 │         - image: mariadb:12.2
+  90 │           name: mysql
+  91 │           args:
+  92 │             - --innodb-snapshot-isolation=OFF
+  93 │           resources:
+  94 └             requests:
+  ..   
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0021 (LOW): Container 'mysql' of Deployment 'fineractmysql' should set 'securityContext.runAsGroup' > 10000
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Force the container to run with group ID > 10000 to avoid conflicts with the host’s user table.
+
+See https://avd.aquasec.com/misconfig/ksv-0021
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineractmysql-deployment.yml:86-124
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  86 ┌         tier: fineractmysql
+  87 │     spec:
+  88 │       containers:
+  89 │         - image: mariadb:12.2
+  90 │           name: mysql
+  91 │           args:
+  92 │             - --innodb-snapshot-isolation=OFF
+  93 │           resources:
+  94 └             requests:
+  ..   
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0030 (LOW): Either Pod or Container should set 'securityContext.seccompProfile.type' to 'RuntimeDefault'
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+According to pod security standard 'Seccomp', the RuntimeDefault seccomp profile must be required, or allow specific additional profiles.
+
+See https://avd.aquasec.com/misconfig/ksv-0030
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineractmysql-deployment.yml:86-124
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  86 ┌         tier: fineractmysql
+  87 │     spec:
+  88 │       containers:
+  89 │         - image: mariadb:12.2
+  90 │           name: mysql
+  91 │           args:
+  92 │             - --innodb-snapshot-isolation=OFF
+  93 │           resources:
+  94 └             requests:
+  ..   
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0104 (MEDIUM): container "mysql" of deployment "fineractmysql" in "default" namespace should specify a seccomp profile
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+A program inside the container can bypass Seccomp protection policies.
+
+See https://avd.aquasec.com/misconfig/ksv-0104
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineractmysql-deployment.yml:86-124
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  86 ┌         tier: fineractmysql
+  87 │     spec:
+  88 │       containers:
+  89 │         - image: mariadb:12.2
+  90 │           name: mysql
+  91 │           args:
+  92 │             - --innodb-snapshot-isolation=OFF
+  93 │           resources:
+  94 └             requests:
+  ..   
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0106 (LOW): container should drop all
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Containers must drop ALL capabilities, and are only permitted to add back the NET_BIND_SERVICE capability.
+
+See https://avd.aquasec.com/misconfig/ksv-0106
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineractmysql-deployment.yml:86-124
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  86 ┌         tier: fineractmysql
+  87 │     spec:
+  88 │       containers:
+  89 │         - image: mariadb:12.2
+  90 │           name: mysql
+  91 │           args:
+  92 │             - --innodb-snapshot-isolation=OFF
+  93 │           resources:
+  94 └             requests:
+  ..   
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0110 (LOW): deployment fineractmysql in default namespace should set metadata.namespace to a non-default namespace
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Checks whether a workload is running in the default namespace.
+
+See https://avd.aquasec.com/misconfig/ksv-0110
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineractmysql-deployment.yml:68-71
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  68 ┌ 
+  69 │ apiVersion: apps/v1
+  70 │ kind: Deployment
+  71 └ metadata:
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0118 (HIGH): container fineractmysql in default namespace is using the default security context
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Security context controls the allocation of security parameters for the pod/container/volume, ensuring the appropriate level of protection. Relying on default security context may expose vulnerabilities to potential attacks that rely on privileged access.
+
+See https://avd.aquasec.com/misconfig/ksv-0118
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineractmysql-deployment.yml:86-124
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  86 ┌         tier: fineractmysql
+  87 │     spec:
+  88 │       containers:
+  89 │         - image: mariadb:12.2
+  90 │           name: mysql
+  91 │           args:
+  92 │             - --innodb-snapshot-isolation=OFF
+  93 │           resources:
+  94 └             requests:
+  ..   
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+KSV-0118 (HIGH): deployment fineractmysql in default namespace is using the default security context, which allows root privileges
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Security context controls the allocation of security parameters for the pod/container/volume, ensuring the appropriate level of protection. Relying on default security context may expose vulnerabilities to potential attacks that rely on privileged access.
+
+See https://avd.aquasec.com/misconfig/ksv-0118
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ kubernetes/fineractmysql-deployment.yml:84-131
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  84 ┌       labels:
+  85 │         app: fineract-server
+  86 │         tier: fineractmysql
+  87 │     spec:
+  88 │       containers:
+  89 │         - image: mariadb:12.2
+  90 │           name: mysql
+  91 │           args:
+  92 └             - --innodb-snapshot-isolation=OFF
+  ..   
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+

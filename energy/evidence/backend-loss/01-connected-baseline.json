@@ -1,0 +1,11 @@
+{
+  "phase": "CONNECTED_BASELINE",
+  "captured_at_utc": "2026-09-08T20:57:54.644537+00:00",
+  "consumption_w": 4000,
+  "production_w": 1000,
+  "ess_w": 3000,
+  "grid_w": 0,
+  "ess_soc_pct": 48,
+  "backend_connection_established": true,
+  "power_balance_residual_w": 0
+}

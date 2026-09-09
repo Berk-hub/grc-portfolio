@@ -1,0 +1,203 @@
+[
+  {
+    "risk_id": "R-RES-001",
+    "title": "Loss of central connectivity",
+    "category": "operational_resilience",
+    "risk_type": "failure",
+    "statement": "Loss of Edge-to-Backend connectivity removes central visibility or management capability and may complicate recovery even if local control remains available.",
+    "affected_assets": [
+      "A-EDGE-001",
+      "A-BACKEND-001",
+      "A-UI-001"
+    ],
+    "likelihood": 4,
+    "impact": 4,
+    "inherent_score": 16,
+    "rating": "HIGH",
+    "scenario": "SCN-BACKEND-LOSS",
+    "attack_reference": "MITRE ATT&CK for ICS: Loss of View is a useful adversarial analogue, but this project tests a failure condition rather than asserting an attack."
+  },
+  {
+    "risk_id": "R-CTL-002",
+    "title": "Unexplained local control transition",
+    "category": "process_control",
+    "risk_type": "cyber_physical",
+    "statement": "A connectivity, configuration or security event causes the local energy-control state or set-point to change in a way that cannot be explained from authorised logic and collected evidence.",
+    "affected_assets": [
+      "A-EDGE-001",
+      "A-BESS-001"
+    ],
+    "likelihood": 3,
+    "impact": 5,
+    "inherent_score": 15,
+    "rating": "HIGH",
+    "attack_reference": "MITRE ATT&CK for ICS: Manipulation of Control / Impair Process Control."
+  },
+  {
+    "risk_id": "R-TEL-003",
+    "title": "Telemetry loss or misleading operational view",
+    "category": "data_integrity",
+    "risk_type": "cyber_physical",
+    "statement": "Operational telemetry is missing, delayed, stale or inaccurate, causing the operator or controller to rely on an incomplete representation of site state.",
+    "affected_assets": [
+      "A-METER-001",
+      "A-PV-001",
+      "A-BESS-001",
+      "A-EDGE-001",
+      "A-EVIDENCE-001"
+    ],
+    "likelihood": 3,
+    "impact": 4,
+    "inherent_score": 12,
+    "rating": "HIGH",
+    "attack_reference": "MITRE ATT&CK for ICS: Loss of View and Manipulation of View."
+  },
+  {
+    "risk_id": "R-IAM-004",
+    "title": "Unauthorised remote or privileged control",
+    "category": "identity_access",
+    "risk_type": "cyber",
+    "statement": "A remote or privileged identity performs an energy-management action without appropriate authorisation or reliable attribution.",
+    "affected_assets": [
+      "A-BACKEND-001",
+      "A-UI-001",
+      "A-EDGE-001"
+    ],
+    "likelihood": 3,
+    "impact": 5,
+    "inherent_score": 15,
+    "rating": "HIGH",
+    "attack_reference": "MITRE ATT&CK for ICS: remote-service and unauthorised control paths are relevant threat-model references."
+  },
+  {
+    "risk_id": "R-MON-005",
+    "title": "Insufficient event and time evidence",
+    "category": "monitoring_assurance",
+    "risk_type": "control_failure",
+    "statement": "Logs, timestamps or event records are insufficient to reconstruct a material control or connectivity event.",
+    "affected_assets": [
+      "A-EDGE-001",
+      "A-BACKEND-001",
+      "A-EVIDENCE-001"
+    ],
+    "likelihood": 3,
+    "impact": 4,
+    "inherent_score": 12,
+    "rating": "HIGH",
+    "attack_reference": null
+  },
+  {
+    "risk_id": "R-SUP-006",
+    "title": "Unmanaged software dependency",
+    "category": "supply_chain",
+    "risk_type": "cyber",
+    "statement": "A material open-source or third-party dependency is deployed without known provenance, version ownership, upstream monitoring or an update decision process.",
+    "affected_assets": [
+      "A-EDGE-001",
+      "A-BACKEND-001"
+    ],
+    "likelihood": 3,
+    "impact": 4,
+    "inherent_score": 12,
+    "rating": "HIGH",
+    "attack_reference": null
+  },
+  {
+    "risk_id": "R-PHY-007",
+    "title": "Physical or environmental loss of Edge function",
+    "category": "physical_resilience",
+    "risk_type": "all_hazards",
+    "statement": "Physical access, loss of power or an environmental event disrupts or alters the site-local Edge function.",
+    "affected_assets": [
+      "A-EDGE-001"
+    ],
+    "likelihood": 2,
+    "impact": 5,
+    "inherent_score": 10,
+    "rating": "HIGH",
+    "attack_reference": null
+  },
+  {
+    "risk_id": "R-CFG-008",
+    "title": "Unsafe or uncontrolled configuration change",
+    "category": "change_management",
+    "risk_type": "cyber_physical",
+    "statement": "A configuration or controller change alters control behaviour without sufficient review, traceability or rollback capability.",
+    "affected_assets": [
+      "A-EDGE-001",
+      "A-BESS-001"
+    ],
+    "likelihood": 3,
+    "impact": 5,
+    "inherent_score": 15,
+    "rating": "HIGH",
+    "attack_reference": "MITRE ATT&CK for ICS: Modify Parameter is a relevant adversarial reference."
+  },
+  {
+    "risk_id": "R-REC-009",
+    "title": "Recovery without state reconciliation",
+    "category": "recovery",
+    "risk_type": "failure",
+    "statement": "Connectivity or service is restored but telemetry gaps, control state or operational history cannot be reconciled reliably.",
+    "affected_assets": [
+      "A-EDGE-001",
+      "A-BACKEND-001",
+      "A-EVIDENCE-001"
+    ],
+    "likelihood": 3,
+    "impact": 4,
+    "inherent_score": 12,
+    "rating": "HIGH",
+    "attack_reference": null
+  },
+  {
+    "risk_id": "R-DAT-010",
+    "title": "Weak operational-data lineage",
+    "category": "data_governance",
+    "risk_type": "governance",
+    "statement": "Operational data cannot be traced reliably to its source, purpose, retention rule or authorised access path.",
+    "affected_assets": [
+      "A-EVIDENCE-001",
+      "A-METER-001",
+      "A-PV-001",
+      "A-BESS-001"
+    ],
+    "likelihood": 2,
+    "impact": 3,
+    "inherent_score": 6,
+    "rating": "MEDIUM",
+    "attack_reference": null
+  },
+  {
+    "risk_id": "R-DEP-011",
+    "title": "Loss of a measurement required by local control",
+    "category": "dependency_resilience",
+    "risk_type": "failure",
+    "statement": "A meter or asset-facing measurement required by the local controller becomes unavailable or invalid while the controller continues to operate.",
+    "affected_assets": [
+      "A-METER-001",
+      "A-EDGE-001",
+      "A-BESS-001"
+    ],
+    "likelihood": 3,
+    "impact": 5,
+    "inherent_score": 15,
+    "rating": "HIGH",
+    "attack_reference": null
+  },
+  {
+    "risk_id": "R-GOV-012",
+    "title": "Unclear applicability or control ownership",
+    "category": "governance",
+    "risk_type": "governance",
+    "statement": "A regulatory requirement, risk treatment or assurance gap is accepted or reported without a clear applicability rationale and accountable owner.",
+    "affected_assets": [
+      "A-EVIDENCE-001"
+    ],
+    "likelihood": 3,
+    "impact": 3,
+    "inherent_score": 9,
+    "rating": "MEDIUM",
+    "attack_reference": null
+  }
+]
