@@ -216,3 +216,6 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Evidence logs are assurance records, never ignored
+!energy/evidence/**/*.log
