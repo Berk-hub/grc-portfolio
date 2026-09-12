@@ -12,7 +12,7 @@ Rule of thumb: a package is VERIFIED only when its acceptance check ran and the 
 | P01 | Evaluator hardening: limits from dictionary, schema checks, SC-03 trace semantics, manifest scope, CI exit policy | IN_PROGRESS | owner: implementer agent — files: src/energy_assurance/cli.py, tests/, data/measurement-dictionary.json |
 | P02 | Clean install + experiment runner (OpenEMS) | TODO | needs Codespace with pinned upstream build |
 | P03 | SC-06 real reconciliation (EXP-02) | TODO | depends on P02 |
-| P04 | Service and critical-infrastructure model | IN_PROGRESS | owner: modelling agent — new files only: data/service-model.json, docs/18-service-model.md |
+| P04 | Service and critical-infrastructure model | VERIFIED | commit 4a14c52; data/service-model.json (6 states, 11 transitions, 8 KPIs), docs/18; 28 cross-refs resolve; v1 run sits below example 40% reserve floor — classification note, not a fault |
 | P05 | Multi-site, distributed, network experiments | TODO | depends on P02, P04 |
 | P06 | Parallel Monte Carlo + scaling measurement | TODO | depends on P04; multi-node HPC stays NOT TESTED unless real nodes exist |
 | P07 | Probability, statistics, quantitative risk | TODO | depends on P04, P06 |
