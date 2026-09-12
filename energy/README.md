@@ -26,10 +26,12 @@ During the communication outage the operating point was changed in both directio
 |---|---|
 | SC-01 — required local measurements remain available | SUPPORTED |
 | SC-02 — local control continues | SUPPORTED |
-| SC-03 — no unexplained observed control transition | SUPPORTED |
+| SC-03 — no unexplained observed control transition | SUPPORTED (evaluator v1) / INCONCLUSIVE (evaluator v2: four snapshots are not a state trace) |
 | SC-04 — interruption and restoration are observable | SUPPORTED |
 | SC-05 — evidence remains time-orderable | SUPPORTED |
 | SC-06 — recovery and historical reconciliation | INCONCLUSIVE |
+
+Two evaluator versions exist. `./scripts/assure assess --evaluator v1` reproduces the v1.0 assessment exactly; the default (v2) applies stricter evidence rules and does not credit SC-03 from snapshot evidence. The recorded overall result is INCONCLUSIVE under both.
 
 SC-06 is intentionally separate from simple reconnection. A restored WebSocket connection is not treated as proof that historical telemetry was successfully reconciled centrally.
 

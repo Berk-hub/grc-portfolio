@@ -326,23 +326,133 @@ def validate_repository(root: Path):
     }
 
 
+
+# ---------------------------------------------------------------------------
+# Measurement dictionary: the single source of limits, tolerances and time rules
+# ---------------------------------------------------------------------------
+
+DICTIONARY_PATH = (
+    Path(__file__).resolve().parents[2] / "data" / "measurement-dictionary.json"
+)
+
+_DICTIONARY_CACHE = None
+
+
+class EvidenceError(Exception):
+    """Evidence could not be evaluated (schema, format or integrity problem).
+
+    Raised instead of producing a criterion result so that malformed evidence
+    can never be reported as SUPPORTED, NOT SUPPORTED or INCONCLUSIVE.
+    """
+
+
+def measurement_dictionary():
+    """Load data/measurement-dictionary.json once and cache it."""
+    global _DICTIONARY_CACHE
+    if _DICTIONARY_CACHE is None:
+        _DICTIONARY_CACHE = load_json(DICTIONARY_PATH)
+    return _DICTIONARY_CACHE
+
+
+def channel_limits():
+    """Map snapshot field name -> channel entry (unit, min, max, finite, ...)."""
+    return {
+        channel["field"]: channel
+        for channel in measurement_dictionary()["channels"]
+        if "field" in channel
+    }
+
+
+def required_fields():
+    return tuple(channel_limits())
+
+
+def balance_tolerance_w():
+    return measurement_dictionary()["balance_tolerance_w"]
+
+
+def validation_rules():
+    return measurement_dictionary()["validation"]
+
+
+def operating_limits():
+    return measurement_dictionary()["operating_limits"]
+
+
+def time_rules():
+    return measurement_dictionary()["time_semantics"]
+
+
+# ---------------------------------------------------------------------------
+# Time handling
+# ---------------------------------------------------------------------------
+
+def parse_timestamp(raw):
+    """Return an aware datetime, or None if raw is not an aware ISO-8601 string."""
+    if not isinstance(raw, str):
+        return None
+    try:
+        value = datetime.fromisoformat(raw.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    if value.utcoffset() is None:
+        return None
+    return value
+
+
 def ordered_timestamps(snapshots):
     values = []
     for snapshot in snapshots:
-        raw = snapshot.get("captured_at_utc")
-        if not isinstance(raw, str):
-            return False
-        try:
-            value = datetime.fromisoformat(raw.replace("Z", "+00:00"))
-        except ValueError:
-            return False
-        if value.utcoffset() is None:
+        value = parse_timestamp(snapshot.get("captured_at_utc"))
+        if value is None:
             return False
         values.append(value)
     return len(values) >= 2 and all(
         earlier < later for earlier, later in zip(values, values[1:])
     )
 
+
+def record_time(record):
+    """Ordering time of a record: source_timestamp if present, else captured_at_utc.
+
+    Format 1 snapshots only carry captured_at_utc. No time is invented when a
+    field is absent; the caller decides whether that is acceptable.
+    """
+    if "source_timestamp" in record:
+        return parse_timestamp(record.get("source_timestamp"))
+    return parse_timestamp(record.get("captured_at_utc"))
+
+
+def freshness_error(record):
+    """Return a reason string when a record violates the dictionary freshness rule.
+
+    The rule applies only when both source_timestamp and captured_at_utc are
+    present. Clock uncertainty comes from the dictionary; null means 0 s.
+    """
+    if "source_timestamp" not in record or "captured_at_utc" not in record:
+        return None
+    source = parse_timestamp(record.get("source_timestamp"))
+    captured = parse_timestamp(record.get("captured_at_utc"))
+    if source is None or captured is None:
+        return "source_timestamp and captured_at_utc must be aware ISO-8601 strings"
+    uncertainty = time_rules().get("clock_uncertainty_s") or 0
+    age_s = (captured - source).total_seconds()
+    if age_s < -uncertainty:
+        return (
+            f"source_timestamp is {-age_s:.3f} s later than captured_at_utc "
+            f"(clock uncertainty {uncertainty} s)"
+        )
+    stale_after_s = min(
+        channel["stale_after_s"] for channel in channel_limits().values()
+    )
+    if age_s > stale_after_s + uncertainty:
+        return f"sample was {age_s:.3f} s old at capture; stale after {stale_after_s} s"
+    return None
+
+
+# ---------------------------------------------------------------------------
+# Measurement validation
+# ---------------------------------------------------------------------------
 
 def finite_number(value):
     # bool is an int subclass, but is not a power or SOC measurement.
@@ -351,34 +461,110 @@ def finite_number(value):
     )
 
 
+def measurement_problems(snapshot):
+    """List the dictionary limits a snapshot violates (empty list = valid)."""
+    problems = []
+    if not isinstance(snapshot, dict):
+        return ["record is not an object"]
+    for field, channel in channel_limits().items():
+        value = snapshot.get(field)
+        if channel.get("finite", True) and not finite_number(value):
+            problems.append(f"{field} is not a finite number: {value!r}")
+            continue
+        low = channel.get("min")
+        high = channel.get("max")
+        if low is not None and value < low:
+            problems.append(f"{field}={value} below documented minimum {low}")
+        if high is not None and value > high:
+            problems.append(f"{field}={value} above documented maximum {high}")
+    return problems
+
+
 def required_measurements(snapshot):
-    names = (
-        "consumption_w", "production_w", "ess_w", "grid_w", "ess_soc_pct",
-    )
-    if not all(finite_number(snapshot.get(name)) for name in names):
-        return False
-    # Limits are from measurement-dictionary.json and the recorded simulator.
-    # No site load/PV upper limit or per-channel sample time was recorded.
+    return not measurement_problems(snapshot)
+
+
+def residual_w(snapshot):
+    """production + ess + grid - consumption (dictionary sign convention)."""
     return (
-        snapshot["consumption_w"] >= 0
-        and snapshot["production_w"] >= 0
-        and 0 <= snapshot["ess_soc_pct"] <= 100
-        and -10000 <= snapshot["ess_w"] <= 10000
+        snapshot["production_w"] + snapshot["ess_w"]
+        + snapshot["grid_w"] - snapshot["consumption_w"]
     )
 
 
-def balanced(snapshot, tolerance=50):
+def balanced(snapshot, tolerance=None):
+    if tolerance is None:
+        tolerance = balance_tolerance_w()
     if not required_measurements(snapshot):
         return False
     if not finite_number(tolerance) or tolerance < 0:
         return False
     # Grid import and ESS discharge supply the load. Do not trust the stored
     # residual: it can stay zero even when an input channel has been altered.
-    residual = (
-        snapshot["production_w"] + snapshot["ess_w"]
-        + snapshot["grid_w"] - snapshot["consumption_w"]
+    return (
+        abs(snapshot["grid_w"]) <= tolerance
+        and abs(residual_w(snapshot)) <= tolerance
     )
-    return abs(snapshot["grid_w"]) <= tolerance and abs(residual) <= tolerance
+
+
+def explained_by_limit(sample):
+    """True when a non-zero grid exchange is explained by an ESS operating limit.
+
+    At the SOC floor the ESS cannot discharge, at the ceiling it cannot charge,
+    and at rated power it cannot follow a larger step. In those states the
+    grid takes the difference; the dictionary records this as correct
+    behaviour. The sample must still satisfy power balance.
+    """
+    if not required_measurements(sample):
+        return False
+    tolerance = balance_tolerance_w()
+    if abs(residual_w(sample)) > tolerance:
+        return False
+    limits = operating_limits()
+    soc = sample["ess_soc_pct"]
+    ess = sample["ess_w"]
+    at_floor = soc <= limits["soc_floor_pct"] and ess <= tolerance
+    at_ceiling = soc >= limits["soc_ceiling_pct"] and ess >= -tolerance
+    at_discharge_limit = ess >= limits["ess_max_discharge_w"] - tolerance
+    at_charge_limit = ess <= -(limits["ess_max_charge_w"] - tolerance)
+    return at_floor or at_ceiling or at_discharge_limit or at_charge_limit
+
+
+# ---------------------------------------------------------------------------
+# Evidence loading and schema validation
+# ---------------------------------------------------------------------------
+
+def _reject_constant(name):
+    raise ValueError(f"non-finite JSON constant {name} is not allowed")
+
+
+def load_strict_json(path: Path):
+    """Parse JSON, rejecting NaN/Infinity, and raise EvidenceError on failure."""
+    try:
+        with path.open("r", encoding="utf-8") as handle:
+            return json.load(handle, parse_constant=_reject_constant)
+    except (ValueError, OSError) as exc:
+        raise EvidenceError(f"{path.name}: {exc}") from exc
+
+
+def load_jsonl(path: Path):
+    """Parse a JSONL file into a list of objects; any broken line is an error."""
+    try:
+        text = path.read_text(encoding="utf-8")
+    except OSError as exc:
+        raise EvidenceError(f"{path.name}: {exc}") from exc
+    records_out = []
+    for number, line in enumerate(text.splitlines(), start=1):
+        if not line.strip():
+            raise EvidenceError(f"{path.name} line {number}: empty line")
+        try:
+            record = json.loads(line, parse_constant=_reject_constant)
+        except ValueError as exc:
+            raise EvidenceError(f"{path.name} line {number}: {exc}") from exc
+        if not isinstance(record, dict):
+            raise EvidenceError(f"{path.name} line {number}: not a JSON object")
+        records_out.append(record)
+    return records_out
 
 
 def latest_resend_value(path: Path):
@@ -424,6 +610,7 @@ def reconciliation_evidence(root: Path):
             "status": "INCONCLUSIVE",
             "last_successful_resend": resend_value,
             "central_backfill_verified": False,
+            "reason": "No structured post-resend sample comparison is available.",
         }
 
     # Legacy query text has no validated run, channel or sample-window binding.
@@ -453,34 +640,147 @@ def load_backend_loss_run(root: Path):
     )
 
     if final_run.exists():
-        return final_run, load_json(final_run)
+        return final_run, load_strict_json(final_run)
 
     if earlier_run.exists():
-        return earlier_run, load_json(earlier_run)
+        return earlier_run, load_strict_json(earlier_run)
 
-    raise FileNotFoundError(
-        "No backend-loss evidence run found"
-    )
+    raise EvidenceError("No backend-loss evidence run found")
+
+
+PHASE_NAMES = ("pre_failure", "outage_discharge", "outage_charge", "recovery")
 
 
 def normalize_phases(run):
-    if "phases" in run:
-        phases = run["phases"]
+    if not isinstance(run, dict):
+        raise EvidenceError("evidence run must be a JSON object")
 
-        return {
-            "pre": phases["pre_failure"],
-            "discharge": phases["outage_discharge"],
-            "charge": phases["outage_charge"],
-            "recovery": phases["recovery"],
-        }
+    source = run.get("phases", run)
+    if not isinstance(source, dict):
+        raise EvidenceError("phases must be a JSON object")
+
+    phases = {}
+    for name in PHASE_NAMES:
+        phase = source.get(name)
+        if not isinstance(phase, dict):
+            raise EvidenceError(f"phase {name} is missing or not an object")
+        for field in required_fields():
+            if field not in phase:
+                raise EvidenceError(f"phase {name} is missing field {field}")
+            if not finite_number(phase[field]):
+                raise EvidenceError(
+                    f"phase {name}: {field} is not a finite number: {phase[field]!r}"
+                )
+        phases[name] = phase
 
     return {
-        "pre": run["pre_failure"],
-        "discharge": run["outage_discharge"],
-        "charge": run["outage_charge"],
-        "recovery": run["recovery"],
+        "pre": phases["pre_failure"],
+        "discharge": phases["outage_discharge"],
+        "charge": phases["outage_charge"],
+        "recovery": phases["recovery"],
     }
 
+
+def evidence_format(run):
+    """1 = four snapshots only; 2 = snapshots plus a continuous state trace."""
+    declared = run.get("evidence_format")
+    if declared is None:
+        return 2 if ("state_trace" in run or "state_trace_file" in run) else 1
+    if declared in (1, 2):
+        return declared
+    raise EvidenceError(f"unknown evidence_format {declared!r}")
+
+
+def load_state_trace(evidence_path: Path, run):
+    """Return the raw sample list from an inline trace or a sibling JSONL file."""
+    if "state_trace" in run and "state_trace_file" in run:
+        raise EvidenceError("state_trace and state_trace_file are both present")
+    if "state_trace" in run:
+        return run["state_trace"]
+    if "state_trace_file" in run:
+        name = run["state_trace_file"]
+        if not isinstance(name, str) or not name:
+            raise EvidenceError("state_trace_file must be a file name")
+        directory = evidence_path.parent.resolve()
+        path = (directory / name).resolve()
+        if path.parent != directory:
+            raise EvidenceError("state_trace_file must sit next to the run file")
+        if not path.is_file():
+            raise EvidenceError(f"state_trace_file not found: {name}")
+        return load_jsonl(path)
+    raise EvidenceError("evidence_format 2 requires state_trace or state_trace_file")
+
+
+def validate_state_trace(samples):
+    """Schema-check a state trace; return [(time, monotonic_s, sample), ...].
+
+    Errors: not a list, fewer than two samples, non-object sample, missing
+    channel field, non-finite or boolean value, missing or naive time,
+    duplicate sample time, non-increasing time or monotonic counter, and
+    freshness violations where both timestamps are present.
+    """
+    if not isinstance(samples, list):
+        raise EvidenceError("state_trace must be a list of sample objects")
+    if len(samples) < 2:
+        raise EvidenceError("state_trace must contain at least two samples")
+
+    parsed = []
+    seen_times = set()
+    uses_monotonic = None
+
+    for index, sample in enumerate(samples):
+        label = f"state_trace[{index}]"
+        if not isinstance(sample, dict):
+            raise EvidenceError(f"{label} is not an object")
+        for field in required_fields():
+            if field not in sample:
+                raise EvidenceError(f"{label} is missing field {field}")
+            if not finite_number(sample[field]):
+                raise EvidenceError(
+                    f"{label}: {field} is not a finite number: {sample[field]!r}"
+                )
+        if "grid_setpoint_w" in sample and not finite_number(sample["grid_setpoint_w"]):
+            raise EvidenceError(f"{label}: grid_setpoint_w is not a finite number")
+
+        moment = record_time(sample)
+        if moment is None:
+            raise EvidenceError(
+                f"{label} has no aware ISO-8601 source_timestamp or captured_at_utc"
+            )
+
+        monotonic = sample.get("monotonic_s")
+        has_monotonic = monotonic is not None
+        if uses_monotonic is None:
+            uses_monotonic = has_monotonic
+        elif uses_monotonic != has_monotonic:
+            raise EvidenceError("monotonic_s is present on only some samples")
+        if has_monotonic and not finite_number(monotonic):
+            raise EvidenceError(f"{label}: monotonic_s is not a finite number")
+
+        if moment in seen_times:
+            raise EvidenceError(f"{label}: duplicate sample time {moment.isoformat()}")
+        seen_times.add(moment)
+        if parsed:
+            previous_time, previous_monotonic, _ = parsed[-1]
+            if moment <= previous_time:
+                raise EvidenceError(
+                    f"{label}: time {moment.isoformat()} is not after the previous sample"
+                )
+            if has_monotonic and monotonic <= previous_monotonic:
+                raise EvidenceError(f"{label}: monotonic_s did not increase")
+
+        stale = freshness_error(sample)
+        if stale:
+            raise EvidenceError(f"{label}: {stale}")
+
+        parsed.append((moment, monotonic, sample))
+
+    return parsed
+
+
+# ---------------------------------------------------------------------------
+# Scenario assessment
+# ---------------------------------------------------------------------------
 
 def link_value(snapshot):
     if "backend_link_18081" in snapshot:
@@ -500,32 +800,172 @@ def central_value(snapshot):
     )
 
 
-def assess_backend_loss(root: Path):
+def outage_window(run, parsed):
+    """Select trace samples that belong to the outage.
+
+    Preference: the run's failure_injected_at_utc / reconnected_at_utc window;
+    otherwise samples whose backend_link_18081 is False; otherwise all samples.
+    """
+    start = parse_timestamp(run.get("failure_injected_at_utc"))
+    end = parse_timestamp(run.get("reconnected_at_utc"))
+    if start is not None and end is not None:
+        return [item for item in parsed if start <= item[0] <= end], "run outage window"
+    if all("backend_link_18081" in item[2] for item in parsed):
+        return [item for item in parsed if item[2]["backend_link_18081"] is False], "backend_link_18081 false"
+    return list(parsed), "whole trace"
+
+
+def evaluate_state_trace(run, samples):
+    """SC-03 over a continuous trace.
+
+    SUPPORTED: every adjacent change in ess_w is explained by the adjacent
+    change in (consumption - production) within transition_tolerance_w, or by
+    an ESS operating limit; every sample balances and reaches its set-point
+    (or is limit-explained); no sampling gap exceeds max_gap_s.
+    NOT SUPPORTED: an unexplained transition, residual or set-point miss.
+    INCONCLUSIVE: too few samples in the outage window, or a gap that could
+    hide a transition.
+    """
+    parsed = validate_state_trace(samples)
+    selected, selection = outage_window(run, parsed)
+    rules = validation_rules()
+    tolerance = balance_tolerance_w()
+    transition_tolerance = rules["transition_tolerance_w"]
+    max_gap_s = rules["max_gap_s"]
+
+    details = {
+        "samples_total": len(parsed),
+        "samples_in_window": len(selected),
+        "window_selection": selection,
+        "limit_explained_transitions": 0,
+        "gaps": [],
+        "problems": [],
+    }
+
+    if len(selected) < 2:
+        return (
+            "INCONCLUSIVE",
+            "fewer than two state-trace samples fall inside the outage window",
+            details,
+        )
+
+    problems = details["problems"]
+
+    for moment, _, sample in selected:
+        stamp = moment.isoformat()
+        for problem in measurement_problems(sample):
+            problems.append(f"{stamp}: {problem}")
+        if measurement_problems(sample):
+            continue
+        if abs(residual_w(sample)) > tolerance:
+            problems.append(
+                f"{stamp}: power balance residual {residual_w(sample):+} W exceeds {tolerance} W"
+            )
+        setpoint = sample.get("grid_setpoint_w")
+        if setpoint is not None and abs(sample["grid_w"] - setpoint) > tolerance:
+            if explained_by_limit(sample):
+                details["limit_explained_transitions"] += 1
+            else:
+                problems.append(
+                    f"{stamp}: grid_w {sample['grid_w']:+} W missed set-point {setpoint:+} W"
+                )
+
+    for (t0, m0, a), (t1, m1, b) in zip(selected, selected[1:]):
+        gap_s = (m1 - m0) if m0 is not None else (t1 - t0).total_seconds()
+        if gap_s > max_gap_s:
+            details["gaps"].append(f"{t1.isoformat()}: gap of {gap_s:.3f} s exceeds {max_gap_s} s")
+        if measurement_problems(a) or measurement_problems(b):
+            continue
+        d_ess = b["ess_w"] - a["ess_w"]
+        d_load = (b["consumption_w"] - b["production_w"]) - (a["consumption_w"] - a["production_w"])
+        if abs(d_ess - d_load) > transition_tolerance:
+            if explained_by_limit(a) or explained_by_limit(b):
+                details["limit_explained_transitions"] += 1
+            else:
+                problems.append(
+                    f"{t1.isoformat()}: ess_w changed {d_ess:+} W while "
+                    f"consumption-production changed {d_load:+} W"
+                )
+
+    if problems:
+        return "NOT SUPPORTED", "; ".join(problems[:5]), details
+    if details["gaps"]:
+        return "INCONCLUSIVE", "; ".join(details["gaps"][:5]), details
+    return (
+        "SUPPORTED",
+        f"{len(selected)} samples ({selection}); every ess_w change explained",
+        details,
+    )
+
+
+def overall_from_criteria(criteria):
+    if any(value == "NOT SUPPORTED" for value in criteria.values()):
+        return "NOT SUPPORTED"
+    if any(value == "INCONCLUSIVE" for value in criteria.values()):
+        return "INCONCLUSIVE"
+    return "SUPPORTED"
+
+
+EVALUATOR_VERSIONS = ("v1", "v2")
+
+
+def assess_backend_loss(root: Path, evaluator="v2"):
+    """Assess SCN-BACKEND-LOSS with the chosen evaluator version.
+
+    v1 reproduces the originally recorded assessment: SC-03 is SUPPORTED when
+    the two outage snapshots balance. v2 requires a continuous state trace for
+    SC-03; four snapshots give INCONCLUSIVE. Both versions raise EvidenceError
+    on malformed evidence rather than returning a result.
+    """
+    if evaluator not in EVALUATOR_VERSIONS:
+        raise ValueError(f"unknown evaluator {evaluator!r}")
+
     evidence_path, run = load_backend_loss_run(root)
     phases = normalize_phases(run)
+    fmt = evidence_format(run)
 
     pre = phases["pre"]
     discharge = phases["discharge"]
     charge = phases["charge"]
     recovery = phases["recovery"]
 
-    sc01 = (
-        required_measurements(discharge)
-        and required_measurements(charge)
-    )
+    reasons = {}
+
+    if evaluator == "v2":
+        for name, phase in zip(PHASE_NAMES, (pre, discharge, charge, recovery)):
+            stale = freshness_error(phase)
+            if stale:
+                raise EvidenceError(f"phase {name}: {stale}")
+
+    sc01 = required_measurements(discharge) and required_measurements(charge)
+    if not sc01:
+        reasons["SC-01"] = "; ".join(
+            measurement_problems(discharge) + measurement_problems(charge)
+        )
 
     sc02 = (
         sc01
-        and discharge.get("ess_w", 0) > 0
-        and charge.get("ess_w", 0) < 0
+        and discharge["ess_w"] > 0
+        and charge["ess_w"] < 0
         and balanced(discharge)
         and balanced(charge)
     )
 
-    sc03 = (
-        balanced(discharge)
-        and balanced(charge)
-    )
+    if evaluator == "v1":
+        sc03 = "SUPPORTED" if balanced(discharge) and balanced(charge) else "NOT SUPPORTED"
+        trace_details = None
+    elif fmt == 1:
+        sc03 = "INCONCLUSIVE"
+        reasons["SC-03"] = (
+            "format 1 evidence holds four snapshots and no continuous state "
+            "trace; two balanced snapshots cannot show that no unexplained "
+            "transition occurred between them"
+        )
+        trace_details = None
+    else:
+        sc03, reasons["SC-03"], trace_details = evaluate_state_trace(
+            run, load_state_trace(evidence_path, run)
+        )
 
     sc04 = (
         link_value(pre) is True
@@ -536,69 +976,31 @@ def assess_backend_loss(root: Path):
         and central_value(charge) is True
     )
 
-    sc05 = ordered_timestamps(
-        [
-            pre,
-            discharge,
-            charge,
-            recovery,
-        ]
-    )
+    sc05 = ordered_timestamps([pre, discharge, charge, recovery])
 
     reconciliation = reconciliation_evidence(root)
+    if "reason" in reconciliation:
+        reasons["SC-06"] = reconciliation["reason"]
 
     criteria = {
-        "SC-01": (
-            "SUPPORTED"
-            if sc01
-            else "NOT SUPPORTED"
-        ),
-        "SC-02": (
-            "SUPPORTED"
-            if sc02
-            else "NOT SUPPORTED"
-        ),
-        "SC-03": (
-            "SUPPORTED"
-            if sc03
-            else "NOT SUPPORTED"
-        ),
-        "SC-04": (
-            "SUPPORTED"
-            if sc04
-            else "NOT SUPPORTED"
-        ),
-        "SC-05": (
-            "SUPPORTED"
-            if sc05
-            else "NOT SUPPORTED"
-        ),
+        "SC-01": "SUPPORTED" if sc01 else "NOT SUPPORTED",
+        "SC-02": "SUPPORTED" if sc02 else "NOT SUPPORTED",
+        "SC-03": sc03,
+        "SC-04": "SUPPORTED" if sc04 else "NOT SUPPORTED",
+        "SC-05": "SUPPORTED" if sc05 else "NOT SUPPORTED",
         "SC-06": reconciliation["status"],
     }
 
-    if any(
-        value == "NOT SUPPORTED"
-        for value in criteria.values()
-    ):
-        overall = "NOT SUPPORTED"
-
-    elif any(
-        value == "INCONCLUSIVE"
-        for value in criteria.values()
-    ):
-        overall = "INCONCLUSIVE"
-
-    else:
-        overall = "SUPPORTED"
-
     return {
         "scenario": "SCN-BACKEND-LOSS",
-        "evidence_file": str(
-            evidence_path.relative_to(root)
-        ),
+        "evaluator_version": evaluator,
+        "evidence_format": fmt,
+        "evidence_file": evidence_path.relative_to(root).as_posix(),
         "criteria": criteria,
-        "overall_result": overall,
+        "reasons": reasons,
+        "overall_result": overall_from_criteria(criteria),
         "reconciliation": reconciliation,
+        "state_trace": trace_details,
         "observations": {
             "pre_failure": pre,
             "outage_discharge": discharge,
@@ -607,6 +1009,10 @@ def assess_backend_loss(root: Path):
         },
     }
 
+
+# ---------------------------------------------------------------------------
+# Evidence manifest
+# ---------------------------------------------------------------------------
 
 def sha256_file(path: Path):
     digest = hashlib.sha256()
@@ -621,6 +1027,29 @@ def sha256_file(path: Path):
     return digest.hexdigest()
 
 
+def _within(path: Path, directory: Path):
+    try:
+        path.relative_to(directory)
+    except ValueError:
+        return False
+    return True
+
+
+def regular_evidence_files(evidence_dir: Path):
+    """Regular files under evidence_dir. Symlinks and escaping paths are errors."""
+    files = []
+    for path in sorted(evidence_dir.rglob("*")):
+        if path.is_symlink():
+            raise EvidenceError(f"Symbolic link in evidence directory: {path}")
+        if not path.is_file():
+            continue
+        resolved = path.resolve()
+        if not _within(resolved, evidence_dir):
+            raise EvidenceError(f"Path escapes evidence directory: {path}")
+        files.append(resolved)
+    return files
+
+
 def create_manifest(
     root: Path,
     evidence_dir: Path,
@@ -632,23 +1061,20 @@ def create_manifest(
     evidence_dir = evidence_dir.resolve()
     output = output.resolve()
 
-    files = []
+    if not _within(evidence_dir, root):
+        raise EvidenceError(f"Evidence directory is outside the repository: {evidence_dir}")
 
-    for path in sorted(evidence_dir.rglob("*")):
-        if not path.is_file():
-            continue
-
-        if path.resolve() == output.resolve():
-            continue
-
-        # Generate manifests only after capture has stopped. JSONL is evidence,
-        # including the monitor consumed by the reconciliation assessor.
-        files.append(path)
+    # Generate manifests only after capture has stopped. JSONL is evidence,
+    # including the monitor consumed by the reconciliation assessor.
+    files = [
+        path for path in regular_evidence_files(evidence_dir)
+        if path != output
+    ]
 
     lines = []
 
     for path in files:
-        relative = path.relative_to(root)
+        relative = path.relative_to(root).as_posix()
         lines.append(
             f"{sha256_file(path)}  {relative}"
         )
@@ -661,9 +1087,18 @@ def create_manifest(
     return len(files)
 
 
-def verify_manifest(root: Path, manifest: Path):
+def verify_manifest(root: Path, manifest: Path, evidence_dir: Path = None):
+    """Check every manifest entry and report evidence files the manifest omits.
+
+    evidence_dir defaults to the manifest's own directory. Entries that are
+    absolute or contain '..' are rejected before any file is read.
+    """
     errors = []
     checked = 0
+
+    root = root.resolve()
+    manifest = manifest if manifest.is_absolute() else root / manifest
+    manifest = manifest.resolve()
 
     if not manifest.exists():
         return {
@@ -673,6 +1108,13 @@ def verify_manifest(root: Path, manifest: Path):
                 f"Manifest not found: {manifest}"
             ],
         }
+
+    if evidence_dir is None:
+        evidence_dir = manifest.parent
+    evidence_dir = evidence_dir if evidence_dir.is_absolute() else root / evidence_dir
+    evidence_dir = evidence_dir.resolve()
+
+    listed = set()
 
     for line in manifest.read_text(
         encoding="utf-8"
@@ -692,21 +1134,51 @@ def verify_manifest(root: Path, manifest: Path):
             )
             continue
 
-        path = root / raw_path.strip()
+        raw_path = raw_path.strip()
+        relative = Path(raw_path)
 
-        if not path.exists():
+        if relative.is_absolute() or ".." in relative.parts:
+            errors.append(f"Manifest path escapes repository: {raw_path}")
+            continue
+
+        path = root / relative
+
+        if path.is_symlink():
+            errors.append(f"Manifest entry is a symbolic link: {raw_path}")
+            continue
+
+        if not path.is_file():
             errors.append(
                 f"Missing evidence file: {raw_path}"
             )
             continue
 
-        actual = sha256_file(path)
+        resolved = path.resolve()
+        if not _within(resolved, root):
+            errors.append(f"Manifest path escapes repository: {raw_path}")
+            continue
+
+        listed.add(resolved)
+        actual = sha256_file(resolved)
         checked += 1
 
         if actual != expected:
             errors.append(
                 f"Hash mismatch: {raw_path}"
             )
+
+    try:
+        present = regular_evidence_files(evidence_dir)
+    except EvidenceError as exc:
+        present = []
+        errors.append(str(exc))
+
+    for path in present:
+        if path == manifest or path in listed:
+            continue
+        errors.append(
+            f"Unlisted evidence file: {path.relative_to(root).as_posix()}"
+        )
 
     return {
         "status": (
@@ -718,6 +1190,10 @@ def verify_manifest(root: Path, manifest: Path):
         "errors": errors,
     }
 
+
+# ---------------------------------------------------------------------------
+# Command line
+# ---------------------------------------------------------------------------
 
 def print_validation(result):
     print(
@@ -759,11 +1235,22 @@ def print_assessment(result):
         "EVIDENCE:",
         result["evidence_file"],
     )
+    print(
+        "EVALUATOR:",
+        result["evaluator_version"],
+        f"(evidence format {result['evidence_format']})",
+    )
+
+    reasons = result.get("reasons", {})
 
     for criterion, status in result[
         "criteria"
     ].items():
-        print(f"{criterion}: {status}")
+        reason = reasons.get(criterion)
+        if reason:
+            print(f"{criterion}: {status} ({reason})")
+        else:
+            print(f"{criterion}: {status}")
 
     print(
         "OVERALL:",
@@ -783,6 +1270,47 @@ def print_assessment(result):
             "central_backfill_verified"
         ],
     )
+
+
+def print_manifest_result(result):
+    print(
+        "EVIDENCE INTEGRITY:",
+        result["status"],
+    )
+    print(
+        "FILES CHECKED:",
+        result["checked"],
+    )
+
+    for error in result["errors"]:
+        print(
+            f"ERROR: {error}",
+            file=sys.stderr,
+        )
+
+
+EXIT_OK = 0
+EXIT_UNEXPECTED_RESULT = 1
+EXIT_EVIDENCE_ERROR = 2
+
+
+def assess_exit_code(result, expect):
+    """Exit-code policy for `assess`.
+
+    0: the assessment ran. With --expect RESULT the overall result must equal
+       RESULT; without --expect the run itself is the success condition and
+       the result (including a known INCONCLUSIVE) is reported as data.
+    1: --expect was given and the overall result differs from it.
+    2: (raised before this point) the evidence could not be evaluated: missing
+       or malformed file, schema violation, NaN or boolean measurement,
+       duplicate or non-monotonic samples, stale samples, escaping paths.
+
+    The scenario configuration carries no expected result; CI states its
+    expectation on the command line so that a changed outcome fails the job.
+    """
+    if expect is None or result["overall_result"] == expect:
+        return EXIT_OK
+    return EXIT_UNEXPECTED_RESULT
 
 
 def main(argv=None):
@@ -807,12 +1335,40 @@ def main(argv=None):
     assess_parser = sub.add_parser(
         "assess",
         help="Assess the backend-loss scenario.",
+        description=(
+            "Assess the backend-loss scenario. Exit 0 when the assessment "
+            "ran (and, with --expect, matched the expected overall result); "
+            "exit 1 when --expect does not match; exit 2 when the evidence "
+            "cannot be evaluated."
+        ),
     )
 
     assess_parser.add_argument(
         "--write",
         type=Path,
         help="Write assessment JSON.",
+    )
+
+    assess_parser.add_argument(
+        "--evaluator",
+        choices=EVALUATOR_VERSIONS,
+        default="v2",
+        help=(
+            "Evaluator version. v2 (default) needs a continuous state trace "
+            "for SC-03 and reports INCONCLUSIVE for four-snapshot evidence. "
+            "v1 reproduces the originally recorded assessment, where SC-03 "
+            "was SUPPORTED by two balanced snapshots."
+        ),
+    )
+
+    assess_parser.add_argument(
+        "--expect",
+        choices=sorted(ALLOWED_RESULTS),
+        default=None,
+        help=(
+            "Overall result CI expects. Exit 1 if the assessment differs. "
+            "Default: none (any completed assessment exits 0)."
+        ),
     )
 
     manifest_parser = sub.add_parser(
@@ -859,6 +1415,14 @@ def main(argv=None):
 
     root = Path.cwd()
 
+    try:
+        return run_command(args, root)
+    except EvidenceError as exc:
+        print(f"ERROR: {exc}", file=sys.stderr)
+        return EXIT_EVIDENCE_ERROR
+
+
+def run_command(args, root: Path):
     if args.command == "validate":
         result = validate_repository(root)
         print_validation(result)
@@ -870,7 +1434,7 @@ def main(argv=None):
         )
 
     if args.command == "assess":
-        result = assess_backend_loss(root)
+        result = assess_backend_loss(root, evaluator=args.evaluator)
         print_assessment(result)
 
         if args.write:
@@ -887,7 +1451,7 @@ def main(argv=None):
                 encoding="utf-8",
             )
 
-        return 0
+        return assess_exit_code(result, args.expect)
 
     if args.command == "manifest":
         args.output.parent.mkdir(
@@ -915,20 +1479,7 @@ def main(argv=None):
             args.manifest,
         )
 
-        print(
-            "EVIDENCE INTEGRITY:",
-            result["status"],
-        )
-        print(
-            "FILES CHECKED:",
-            result["checked"],
-        )
-
-        for error in result["errors"]:
-            print(
-                f"ERROR: {error}",
-                file=sys.stderr,
-            )
+        print_manifest_result(result)
 
         return (
             0
@@ -953,14 +1504,7 @@ def main(argv=None):
             / "evidence/backend-loss/SHA256SUMS",
         )
 
-        print(
-            "EVIDENCE INTEGRITY:",
-            manifest["status"],
-        )
-        print(
-            "FILES CHECKED:",
-            manifest["checked"],
-        )
+        print_manifest_result(manifest)
 
         return (
             0

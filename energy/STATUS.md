@@ -9,7 +9,7 @@ Rule of thumb: a package is VERIFIED only when its acceptance check ran and the 
 | Pkg | Scope | State | Evidence |
 |---|---|---|---|
 | P00 | Environment, Appendix A patch, baseline checks | VERIFIED | commit b1f2f12; validate VALID; manifest VALID (24); 29 tests OK; assess INCONCLUSIVE (expected) |
-| P01 | Evaluator hardening: limits from dictionary, schema checks, SC-03 trace semantics, manifest scope, CI exit policy | IN_PROGRESS | owner: implementer agent — files: src/energy_assurance/cli.py, tests/, data/measurement-dictionary.json |
+| P01 | Evaluator hardening | VERIFIED | 101 tests OK (3 symlink tests skip on Windows, run in CI); v2 evaluator: SC-03 INCONCLUSIVE on snapshot evidence, v1 reproducible via --evaluator v1; tamper (SoC 900) → NOT SUPPORTED; manifest reports unlisted files; exit codes 0/1/2 with --expect |
 | P02 | Clean install + experiment runner (OpenEMS) | TODO | needs Codespace with pinned upstream build |
 | P03 | SC-06 real reconciliation (EXP-02) | TODO | depends on P02 |
 | P04 | Service and critical-infrastructure model | VERIFIED | commit 4a14c52; data/service-model.json (6 states, 11 transitions, 8 KPIs), docs/18; 28 cross-refs resolve; v1 run sits below example 40% reserve floor — classification note, not a fault |
