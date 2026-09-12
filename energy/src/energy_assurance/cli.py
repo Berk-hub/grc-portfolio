@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -327,51 +328,57 @@ def validate_repository(root: Path):
 
 def ordered_timestamps(snapshots):
     values = []
-
     for snapshot in snapshots:
         raw = snapshot.get("captured_at_utc")
-
-        if not raw:
+        if not isinstance(raw, str):
             return False
-
         try:
-            values.append(
-                datetime.fromisoformat(
-                    raw.replace("Z", "+00:00")
-                )
-            )
+            value = datetime.fromisoformat(raw.replace("Z", "+00:00"))
         except ValueError:
             return False
+        if value.utcoffset() is None:
+            return False
+        values.append(value)
+    return len(values) >= 2 and all(
+        earlier < later for earlier, later in zip(values, values[1:])
+    )
 
-    return values == sorted(values)
 
-
-def balanced(snapshot, tolerance=50):
-    try:
-        return (
-            abs(snapshot["grid_w"]) <= tolerance
-            and
-            abs(
-                snapshot["power_balance_residual_w"]
-            ) <= tolerance
-        )
-    except (KeyError, TypeError):
-        return False
+def finite_number(value):
+    # bool is an int subclass, but is not a power or SOC measurement.
+    return type(value) in (int, float) and (
+        not isinstance(value, float) or math.isfinite(value)
+    )
 
 
 def required_measurements(snapshot):
     names = (
-        "consumption_w",
-        "production_w",
-        "ess_w",
-        "grid_w",
-        "ess_soc_pct",
+        "consumption_w", "production_w", "ess_w", "grid_w", "ess_soc_pct",
+    )
+    if not all(finite_number(snapshot.get(name)) for name in names):
+        return False
+    # Limits are from measurement-dictionary.json and the recorded simulator.
+    # No site load/PV upper limit or per-channel sample time was recorded.
+    return (
+        snapshot["consumption_w"] >= 0
+        and snapshot["production_w"] >= 0
+        and 0 <= snapshot["ess_soc_pct"] <= 100
+        and -10000 <= snapshot["ess_w"] <= 10000
     )
 
-    return all(
-        snapshot.get(name) is not None
-        for name in names
+
+def balanced(snapshot, tolerance=50):
+    if not required_measurements(snapshot):
+        return False
+    if not finite_number(tolerance) or tolerance < 0:
+        return False
+    # Grid import and ESS discharge supply the load. Do not trust the stored
+    # residual: it can stay zero even when an input channel has been altered.
+    residual = (
+        snapshot["production_w"] + snapshot["ess_w"]
+        + snapshot["grid_w"] - snapshot["consumption_w"]
     )
+    return abs(snapshot["grid_w"]) <= tolerance and abs(residual) <= tolerance
 
 
 def latest_resend_value(path: Path):
@@ -419,33 +426,16 @@ def reconciliation_evidence(root: Path):
             "central_backfill_verified": False,
         }
 
-    text = post_resend.read_text(
-        encoding="utf-8",
-        errors="replace",
-    )
-
-    expected_markers = (
-        "5200",
-        "700",
-        "4500",
-        "1800",
-        "4300",
-        "-2500",
-    )
-
-    backfill = all(
-        marker in text
-        for marker in expected_markers
-    )
-
+    # Legacy query text has no validated run, channel or sample-window binding.
+    # Marker presence (even exact numbers) cannot establish complete backfill.
+    # Keep this gate closed until EXP-02 supplies structured local/central samples
+    # and a comparator checks missing, duplicate and out-of-order observations.
     return {
-        "status": (
-            "SUPPORTED"
-            if backfill
-            else "INCONCLUSIVE"
-        ),
+        "status": "INCONCLUSIVE",
         "last_successful_resend": resend_value,
-        "central_backfill_verified": backfill,
+        "central_backfill_verified": False,
+        "reason": "Unstructured query text cannot establish historical reconciliation; "
+        "structured sample comparison is required.",
     }
 
 
@@ -525,7 +515,8 @@ def assess_backend_loss(root: Path):
     )
 
     sc02 = (
-        discharge.get("ess_w", 0) > 0
+        sc01
+        and discharge.get("ess_w", 0) > 0
         and charge.get("ess_w", 0) < 0
         and balanced(discharge)
         and balanced(charge)
@@ -650,14 +641,8 @@ def create_manifest(
         if path.resolve() == output.resolve():
             continue
 
-        # This file can still be changing while the
-        # OpenEMS resend worker is under observation.
-        if (
-            path.name
-            == "13-historic-resend-monitor.jsonl"
-        ):
-            continue
-
+        # Generate manifests only after capture has stopped. JSONL is evidence,
+        # including the monitor consumed by the reconciliation assessor.
         files.append(path)
 
     lines = []

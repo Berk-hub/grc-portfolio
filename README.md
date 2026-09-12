@@ -14,7 +14,7 @@ versions, and honest limitations sections.
 |---|---|---|---|---|
 | [Apache Fineract](fineract/) — core banking platform | Finance | PRA SS2/21, FCA SYSC 15A, DORA, ISO 27001:2022, NIST CSF 2.0 | Suitable with conditions | Done |
 | BBC micro:bit radio protocol | IoT / education | — | — | In progress |
-| [OpenEMS energy resilience lab](energy/) — energy management system | Energy | NCSC CAF v4.0, UK NIS, NIS2 | Reasonable assurance on design, limited on operating effectiveness | Done |
+| [OpenEMS energy resilience lab](energy/) — energy management system | Energy | NCSC CAF v4.0, UK NIS, NIS2 | Reasonable assurance on design, limited on operating effectiveness | Baseline published; SC-06 retest open |
 
 The OpenEMS entry works the other way round from the others: I built the laboratory
 first, then reviewed my own build with the same discipline — separate opinions on
@@ -26,8 +26,9 @@ CI) lives in this repository under
 ## Ground rules
 
 - Every claim traces to evidence in the repo (tool output, screenshots, or a named
-  file and line in the assessed source). Each assessment ships an evidence register
-  and a `check.py` that verifies internal consistency.
+  file and line in the assessed source). Fineract includes an evidence register
+  and `fineract/check.py`; Energy uses machine-readable evidence records and
+  `energy/scripts/assure validate` for model consistency checks.
 - Clients are hypothetical and clearly labelled as such. No real institution's data
   is used; everything comes from public sources.
 - Ratings can disagree with scanner severity, but the report has to say why.

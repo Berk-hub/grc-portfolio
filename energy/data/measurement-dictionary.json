@@ -7,7 +7,7 @@
   "sign_convention": {
     "ess_w": "positive = discharge to the site, negative = charge",
     "grid_w": "positive = import from grid",
-    "residual_definition": "production + ess - consumption - grid, expected 0 within tolerance"
+    "residual_definition": "production + ess + grid - consumption, expected 0 within tolerance (grid import positive)"
   },
   "channels": [
     {"channel": "_sum/ConsumptionActivePower", "unit": "W", "source": "simulateConsumption via meter1", "sampling": "1 s cycle", "stale_after_s": 5},

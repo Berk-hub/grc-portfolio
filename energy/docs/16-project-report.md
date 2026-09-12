@@ -24,9 +24,9 @@ I will admit the temptation: the reconnection was right there in the evidence, a
 
 The inconclusive result nagged at me, so in the second phase of the project I went looking for the cause — not by rerunning the experiment, but by reading the upstream code.
 
-The answer was in the resend worker. On reconnection, OpenEMS deliberately does not resend history immediately. It schedules the resend for five minutes plus a random delay of up to one hour — a sensible design, since a fleet of devices reconnecting after a regional outage would otherwise hammer the Backend simultaneously. My observation window after reconnection was 48.8 minutes. The scheduler's worst case is 65. There was roughly a one-in-four chance that the resend was simply still pending when I froze the evidence, and everything else I observed is consistent with exactly that.
+The resend worker supplied a possible explanation. On reconnection, OpenEMS schedules a resend after five minutes plus a random delay of up to one hour. The observation window after reconnection was 48.8 minutes, shorter than the nominal maximum scheduling delay of 65 minutes. Under the uniform-delay model, roughly 27% of delay draws would exceed that window. That calculation describes the scheduler; it is not a measured probability that scheduling caused this result. The actual delay drawn for this run was not captured.
 
-So the finding changed character: not "data was lost", and not "the feature failed", but "my observation window was shorter than the scheduler's worst-case delay". I kept SC-06 inconclusive — a root cause explains missing evidence, it doesn't substitute for it — and wrote a retest protocol that waits the full 66 minutes. Small confession: I had also enabled the local history store only thirteen minutes before the final run, which limits what gap-detection could see. Both facts are in the repository, because an assurance case that hides its own weaknesses is marketing.
+SC-06 remains inconclusive. The retest must observe for at least 66 minutes after reconnection, then verify transfer completion and compare central history with the local record. Waiting 66 minutes alone proves neither completion nor reconciliation. The local history store was also enabled only thirteen minutes before the final run, limiting what gap detection could see.
 
 ## Building the boring layer, carefully
 

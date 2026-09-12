@@ -74,7 +74,7 @@ Build provenance and executable hashes are recorded under `evidence/supply-chain
 - `scripts/` — environment and assurance tooling
 - `src/energy_assurance/` — Python assurance CLI
 - `tests/` — automated model and evidence tests
-- `.github/workflows/` — continuous assurance validation
+- `../.github/workflows/assurance.yml` — continuous assurance validation
 
 ## Key documents
 
@@ -87,6 +87,9 @@ Build provenance and executable hashes are recorded under `evidence/supply-chain
 - `docs/07-data-governance.md` — telemetry lineage and data governance
 - `docs/08-ai-governance.md` — conditional AI governance
 - `docs/09-assurance-report.md` — consolidated assurance report
+- [Project report](docs/16-project-report.md) — experiment narrative and limitations
+- [Integrated assurance review](docs/17-integrated-assurance-review.md) — findings and control assessment
+- Published baseline PDFs: [project report](../reports/Energy-Project-Report.pdf) and [assurance review](../reports/Integrated-Assurance-Review-Energy.pdf). These snapshots predate the reporting corrections in the Markdown sources above; use those sources for the corrected wording.
 
 ## Regulatory context
 
@@ -137,7 +140,7 @@ A second layer was added on top of the v1.0 evidence without changing it:
 - a residual-risk view for all twelve risks with no unevidenced reductions (`data/risk-treatments.json`)
 - open findings with owners and closure criteria (`data/findings.json`)
 - measurement semantics and operating limits (`data/measurement-dictionary.json`)
-- operating model, dependency and common-cause analysis, and the identified SC-06 root cause (`docs/11` to `docs/14`)
+- operating model, dependency and common-cause analysis, and the SC-06 scheduling mechanism and unconfirmed cause (`docs/11` to `docs/14`)
 
 Cross-references between these models are enforced by automated tests.
 
