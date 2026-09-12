@@ -1,0 +1,189 @@
+# Reproducible OpenEMS resilience lab (work package P02).
+#
+# Topology (all on the internal "lab" network):
+#
+#   edge ──ws://relay:18081──> relay ──tcp──> backend-edge:8081 ──ws──> backend:8083
+#                                                                        │
+#                                                                        └──> influx:8086
+#
+# Failure injection = `docker compose stop relay`; recovery = `docker compose start relay`.
+#
+# Secrets (Influx admin token, edge apikey) are NOT in this file. They live in
+# the git-ignored ./.env written by `python scripts/lab_config.py render`.
+# Jars are built by the `builder` profile into ./jars (git-ignored).
+
+x-openems-runtime: &openems-runtime
+  image: eclipse-temurin:21-jre
+  restart: "no"
+  networks: [lab]
+  environment:
+    JAVA_TOOL_OPTIONS: "-Djava.net.preferIPv4Stack=true -XX:+ExitOnOutOfMemoryError"
+
+services:
+
+  builder:
+    # Runs the three Gradle fat-jar tasks against the pinned upstream checkout.
+    # Not started by `docker compose up`; invoked by scripts/lab_build.py.
+    image: eclipse-temurin:21-jdk
+    profiles: [build]
+    working_dir: /src
+    volumes:
+      - ${OPENEMS_DIR:-../../../openems-upstream}:/src
+      - ./jars:/jars
+      - gradle-cache:/root/.gradle
+    environment:
+      OEMS_EDGE_OUTPUT: /jars/openems-edge.jar
+      OEMS_BACKEND_OUTPUT: /jars/openems-backend.jar
+      OEMS_BACKEND_EDGE_OUTPUT: /jars/openems-backend-edge.jar
+      GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+    command: ["./gradlew", "--no-daemon", "--console=plain", "buildEdge", "buildBackend", "buildBackendEdge"]
+    networks: [lab]
+
+  influx:
+    image: influxdb:2.9-alpine
+    networks: [lab]
+    ports:
+      - "127.0.0.1:18086:8086"
+    environment:
+      DOCKER_INFLUXDB_INIT_MODE: setup
+      DOCKER_INFLUXDB_INIT_USERNAME: ${INFLUX_USERNAME:-lab}
+      DOCKER_INFLUXDB_INIT_PASSWORD: ${INFLUX_PASSWORD:?run lab_config.py render to create .env}
+      DOCKER_INFLUXDB_INIT_ORG: ${INFLUX_ORG:-openems}
+      DOCKER_INFLUXDB_INIT_BUCKET: ${INFLUX_BUCKET:-openems}
+      DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: ${INFLUX_TOKEN:?run lab_config.py render to create .env}
+    volumes:
+      - influx-data:/var/lib/influxdb2
+    healthcheck:
+      test: ["CMD", "influx", "ping", "--host", "http://127.0.0.1:8086"]
+      interval: 5s
+      timeout: 5s
+      retries: 24
+      start_period: 10s
+
+  backend:
+    <<: *openems-runtime
+    # Felix console 8079, Edge.Manager websocket 8083 (Backend-Edge-App clients).
+    ports:
+      - "127.0.0.1:8079:8079"
+      - "127.0.0.1:8083:8083"
+    volumes:
+      - ./jars/openems-backend.jar:/opt/openems/openems-backend.jar:ro
+      - ./runtime/backend/config:/var/opt/openems/config
+      - ./runtime/backend/data:/var/opt/openems/data
+      - ./runtime/backend/metadata.json:/var/opt/openems/metadata.json:ro
+    command:
+      - java
+      - -Dosgi.clean=true
+      - -Dorg.apache.felix.eventadmin.Timeout=0
+      - -Dorg.apache.felix.http.host=0.0.0.0
+      - -Dorg.apache.felix.http.port=8079
+      - -Dfelix.cm.dir=/var/opt/openems/config
+      - -Dopenems.data.dir=/var/opt/openems/data
+      - -jar
+      - /opt/openems/openems-backend.jar
+    depends_on:
+      influx:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "bash", "-c", "exec 3<>/dev/tcp/127.0.0.1/8083"]
+      interval: 5s
+      timeout: 3s
+      retries: 60
+      start_period: 20s
+
+  backend-edge:
+    <<: *openems-runtime
+    # Felix console 8078; Edge-facing websocket 8081. The websocket server is
+    # only started once the client to backend:8083 is connected AND the
+    # metadata cache (apikey -> edge id) is initialised, so "8081 open" is the
+    # readiness signal for the apikey handshake (see README, UNVERIFIED).
+    ports:
+      - "127.0.0.1:8078:8078"
+      - "127.0.0.1:8081:8081"
+    volumes:
+      - ./jars/openems-backend-edge.jar:/opt/openems/openems-backend-edge.jar:ro
+      - ./runtime/backend-edge/config:/var/opt/openems/config
+      - ./runtime/backend-edge/data:/var/opt/openems/data
+    command:
+      - java
+      - -Dosgi.clean=true
+      - -Dorg.apache.felix.eventadmin.Timeout=0
+      - -Dorg.apache.felix.http.host=0.0.0.0
+      - -Dorg.apache.felix.http.port=8078
+      - -Dfelix.cm.dir=/var/opt/openems/config
+      - -Dopenems.data.dir=/var/opt/openems/data
+      - -jar
+      - /opt/openems/openems-backend-edge.jar
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "bash", "-c", "exec 3<>/dev/tcp/127.0.0.1/8081"]
+      interval: 5s
+      timeout: 3s
+      retries: 60
+      start_period: 20s
+
+  relay:
+    # The failure-injection point. Runs the repository's backend-link-proxy.py
+    # unchanged on disk; relay/entrypoint.sh rebinds its listen/target hosts.
+    image: python:3.12-alpine
+    networks: [lab]
+    ports:
+      - "127.0.0.1:18081:18081"
+    volumes:
+      - ../scripts/backend-link-proxy.py:/lab/backend-link-proxy.py:ro
+      - ./relay/entrypoint.sh:/lab/entrypoint.sh:ro
+    environment:
+      RELAY_LISTEN_HOST: 0.0.0.0
+      RELAY_LISTEN_PORT: "18081"
+      RELAY_TARGET_HOST: backend-edge
+      RELAY_TARGET_PORT: "8081"
+    command: ["sh", "/lab/entrypoint.sh"]
+    depends_on:
+      backend-edge:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import socket; socket.create_connection(('127.0.0.1', 18081), 2).close()"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 3s
+
+  edge:
+    <<: *openems-runtime
+    # Felix console 8080; REST/JSON-RPC (Controller.Api.Rest.ReadWrite) 8084.
+    ports:
+      - "127.0.0.1:8080:8080"
+      - "127.0.0.1:8084:8084"
+    volumes:
+      - ./jars/openems-edge.jar:/opt/openems/openems-edge.jar:ro
+      - ./runtime/edge/config:/var/opt/openems/config
+      - ./runtime/edge/data:/var/opt/openems/data
+    command:
+      - java
+      - -Dosgi.clean=true
+      - -Dorg.apache.felix.eventadmin.Timeout=0
+      - -Dorg.apache.felix.http.host=0.0.0.0
+      - -Dorg.apache.felix.http.port=8080
+      - -Dfelix.cm.dir=/var/opt/openems/config
+      - -Dopenems.data.dir=/var/opt/openems/data
+      - -jar
+      - /opt/openems/openems-edge.jar
+    depends_on:
+      relay:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "bash", "-c", "exec 3<>/dev/tcp/127.0.0.1/8084"]
+      interval: 5s
+      timeout: 3s
+      retries: 60
+      start_period: 20s
+
+networks:
+  lab:
+    driver: bridge
+
+volumes:
+  gradle-cache:
+  influx-data:

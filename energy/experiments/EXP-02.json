@@ -1,0 +1,70 @@
+{
+  "experiment_id": "EXP-02",
+  "scenario": "SCN-BACKEND-LOSS",
+  "title": "Backend link loss with local buffering and historic resend",
+  "evidence_format": 2,
+  "runner": "scripts/lab_run.py",
+  "purpose": "Reproduce SCN-BACKEND-LOSS on the clean P02 lab and close SC-06 with structured local/central samples instead of query text.",
+  "channels": {
+    "consumption_w": "_sum/ConsumptionActivePower",
+    "production_w": "_sum/ProductionActivePower",
+    "ess_w": "_sum/EssActivePower",
+    "grid_w": "_sum/GridActivePower",
+    "ess_soc_pct": "_sum/EssSoc"
+  },
+  "controls": {
+    "consumption_datasource": "simulateConsumption",
+    "production_datasource": "simulateProduction",
+    "datasource_channel": "Data",
+    "backend_controller": "ctrlBackend0",
+    "resend_channel": "LastSuccessfulResend",
+    "unable_to_send_channel": "UnableToSend",
+    "grid_setpoint_w": 0
+  },
+  "markers": {
+    "note": "Distinct from the v1 run (5200/700, 1800/4300, ess 4500/-2500) so a central sample can be attributed to this run by value alone. Tests assert no marker is a substring of another or of a v1 marker.",
+    "baseline": {"consumption_w": 4109, "production_w": 1097},
+    "outage_discharge": {"consumption_w": 5217, "production_w": 683},
+    "outage_charge": {"consumption_w": 1811, "production_w": 4297},
+    "v1_markers": [5200, 700, 4500, 1800, 4300, -2500]
+  },
+  "timing": {
+    "trace_interval_s": 1.0,
+    "settle_timeout_s": 30,
+    "readiness_timeout_s": 300,
+    "link_change_timeout_s": 60,
+    "rrd_step_s": 300,
+    "rrd_grace_s": 15,
+    "baseline_min_s": 60,
+    "outage_phase_min_s": 30,
+    "observation_poll_s": 15,
+    "observation_budget_s": 4080,
+    "observation_budget_rationale": "Resend is scheduled 5 min + U[0, 60 min) after reconnection (ResendHistoricDataWorker: DELAY_TRIGGER_TIME 300 s, MAX_RANDOM_DELAY 3600 s); 66 min covers it, plus 2 min slack."
+  },
+  "central": {
+    "measurement": "data",
+    "edge_tag": "edge",
+    "edge_id": "edge0",
+    "influx_edge_id": "0",
+    "query_margin_s": 60
+  },
+  "evidence": {
+    "run_file": "run.json",
+    "state_trace_file": "state-trace.jsonl",
+    "events_file": "run-events.jsonl",
+    "observation_file": "13-resend-observation.jsonl",
+    "central_file": "14-influx-post-resend.json",
+    "edge_config_file": "edge-config.json",
+    "manifest_file": "SHA256SUMS",
+    "success_marker": "run-complete.json"
+  },
+  "expected_results": {
+    "vocabulary": ["SUPPORTED", "NOT SUPPORTED", "INCONCLUSIVE", "NOT TESTED"],
+    "SC-01": "SUPPORTED",
+    "SC-02": "SUPPORTED",
+    "SC-03": "SUPPORTED",
+    "SC-04": "SUPPORTED",
+    "SC-05": "SUPPORTED",
+    "SC-06": "SUPPORTED if LastSuccessfulResend becomes non-null within the observation budget and the central samples cover the outage window; otherwise INCONCLUSIVE"
+  }
+}

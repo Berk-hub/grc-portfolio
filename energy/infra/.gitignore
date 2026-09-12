@@ -1,0 +1,6 @@
+# Generated at runtime by scripts/lab_config.py and scripts/lab_build.py.
+# Contains the Influx admin token and the edge apikey: never commit.
+.env
+runtime/
+# Built fat jars (hundreds of MB); their hashes are recorded in build-record.json.
+jars/
