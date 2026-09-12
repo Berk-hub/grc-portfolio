@@ -1,6 +1,6 @@
 # V2 Assurance Summary
 
-This summary reports the deepening layer added after the v1.0 release. The v1.0 experiment evidence and its INCONCLUSIVE result are unchanged; v2 adds the governance, obligation, audit and risk structure around that evidence and identifies the SC-06 root cause.
+This summary reports the deepening layer added after the v1.0 release. The v1.0 experiment evidence and its INCONCLUSIVE result are unchanged; v2 adds the governance, obligation, audit and risk structure around that evidence and identifies a scheduling mechanism that could explain SC-06; the cause of the recorded run remains unconfirmed.
 
 ## Service outcome
 

@@ -10,11 +10,11 @@
       "risk_id": "R-REC-009",
       "condition": "Central historical backfill was not verified. LastSuccessfulResend remained null and the expected post-resend central query evidence (14-influx-post-resend.txt) was never captured during the v1.0 run.",
       "consequence": "An incident cannot be fully reconstructed from central history alone; local RRD4J remains the only continuous record. Permanent data loss is not established - this is an evidence gap, not a proven loss.",
-      "root_cause_status": "IDENTIFIED",
+      "root_cause_status": "UNCONFIRMED",
       "root_cause_candidates": [
-        "CONFIRMED: ResendHistoricDataWorker schedules resend 5-65 minutes after reconnection (DELAY_TRIGGER_TIME + random up to MAX_RANDOM_DELAY); the v1.0 observation window was 48.8 minutes and could end before the drawn delay elapsed. See docs/13-sc06-root-cause.md."
+        "SOURCE-CONFIRMED MECHANISM, UNCONFIRMED RUN CAUSE: ResendHistoricDataWorker uses a nominal scheduling delay of 5 to just under 65 minutes. The 48.8-minute observation window could end before the selected delay elapsed, but the actual draw was not captured. See docs/13-sc06-root-cause.md."
       ],
-      "planned_action": "EXP-02: rerun with distinctive outage markers, observe at least 66 minutes after reconnection, wait for LastSuccessfulResend to become non-null, capture evidence/backend-loss/14-influx-post-resend.txt, then compare local vs central per predefined window.",
+      "planned_action": "EXP-02: rerun with distinctive outage markers and structured field matching. Observe at least 66 minutes after reconnection to cover nominal scheduling delay, separately verify transfer completion with a documented timeout, capture evidence/backend-loss/14-influx-post-resend.txt, and compare local vs central records for the predefined window. Keep SC-06 INCONCLUSIVE if reconciliation remains unverified.",
       "owner_role": "recovery control owner (person unassigned)",
       "priority": "HIGH",
       "closure_criteria": "Retest measures missing/duplicate/out-of-order samples within stated tolerance, or the root cause is documented and the INCONCLUSIVE result is kept and scoped.",

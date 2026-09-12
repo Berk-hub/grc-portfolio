@@ -24,7 +24,7 @@ Consistent with common internal-audit practice, separate opinions are expressed 
 | Aspect | Opinion |
 |---|---|
 | Design of the control framework | **Reasonable assurance** — a generally sound framework exists; some issues were identified which may put the achievement of objectives at risk |
-| Operating effectiveness of controls | **Limited assurance** — significant gaps remain: nine of eleven controls have no operating-effectiveness evidence |
+| Operating effectiveness of controls | **Limited assurance** — significant gaps remain: ten of eleven controls have no operating-effectiveness evidence; the remaining control has narrow evidence from repeated CI verification |
 
 Four findings were raised:
 
@@ -35,9 +35,9 @@ Four findings were raised:
 | 3 | Weak marker matching in the automated reconciliation check | Low |
 | 4 | Repository history hygiene | Low / Advisory |
 
-Three controls were tested and found operating as expected for the recorded scope (section 5.6). Given the self-review threat described in section 3.3, no opinion in this report should be read as stronger than limited assurance overall.
+Three controls have scoped observations described in section 5.6. These observations do not establish sustained operating effectiveness; Appendix B distinguishes implementation evidence from operating-effectiveness evidence. Given the self-review threat described in section 3.3, no opinion in this report should be read as stronger than limited assurance overall.
 
-The direction of travel is positive. Between v1.0.0 and v1.1.0 the repository added provision-level obligation records, a residual-risk register covering all twelve risks, an audit program covering all eleven controls, and — the item I consider most significant — a source-level root cause for the one criterion that had failed to reach a conclusion.
+The direction of travel is positive. Between v1.0.0 and v1.1.0 the repository added provision-level obligation records, a residual-risk register covering all twelve risks, an audit program covering all eleven controls, and — the item I consider most significant — a source-level scheduling mechanism that could explain the unresolved criterion.
 
 ## 2. Background
 
@@ -63,7 +63,7 @@ The review covered the eleven controls in `data/controls.json`, the evidence und
 
 ### 3.2 Methodology
 
-Testing was full-inspection rather than sample-based. The population of recorded failure-injection runs is two — the initial run and the final reconciliation run — and both were examined in full, including their timestamps, connection-state transitions, channel values and hash records. Model cross-references were verified by executing the repository's own test suite (21 tests) and its validation CLI. Where a conclusion depends on upstream behaviour, the pinned source was read directly rather than inferred from observation; the root cause in Finding 1 rests on specific constants and scheduling logic in the upstream resend worker.
+Testing was full-inspection rather than sample-based. The population of recorded failure-injection runs is two — the initial run and the final reconciliation run — and both were examined in full, including their timestamps, connection-state transitions, channel values and hash records. Model cross-references were verified by executing the repository's own test suite (21 tests) and its validation CLI. Where a conclusion depends on upstream behaviour, the pinned source was read directly rather than inferred from observation; the candidate explanation in Finding 1 rests on specific constants and scheduling logic in the upstream resend worker; the actual random delay in the recorded run remains unknown.
 
 ### 3.3 Independence and limitations
 
@@ -89,12 +89,12 @@ Assurance opinions use the four-level convention common in UK practice (substant
 
 **Condition.** Testing of the final recorded run identified that the Edge's `LastSuccessfulResend` channel remained null throughout the post-reconnection observation window, and the expected post-resend central query evidence was never captured. Reconnection itself was clearly evidenced; reconciliation was not.
 
-**Cause.** The root cause was identified from the pinned upstream source. OpenEMS deliberately does not resend history immediately on reconnection: the resend worker schedules its run at five minutes plus a random delay of up to one hour (`DELAY_TRIGGER_TIME` + `MAX_RANDOM_DELAY`), a sensible fleet-protection design. The laboratory's observation window after reconnection was 48.8 minutes against a worst case of 65. A contributing factor is that the local history store (RRD4J) was enabled thirteen minutes before the final run, which limits what gap-detection could see.
+**Cause under investigation.** The pinned upstream source identifies a scheduling mechanism, but does not confirm the cause in the recorded run. OpenEMS deliberately does not resend history immediately on reconnection: the resend worker schedules its run at five minutes plus a random delay of up to one hour (`DELAY_TRIGGER_TIME` + `MAX_RANDOM_DELAY`), a sensible fleet-protection design. The laboratory's observation window after reconnection was 48.8 minutes against a worst case of 65. Another limitation is that the local history store (RRD4J) was enabled thirteen minutes before the final run, which limits what gap-detection could see.
 
 **Consequence.** There is a risk that an operational event could not be fully reconstructed from central records. In a production context that would impair incident analysis and could affect regulatory reporting. It is important to state what was *not* found: no evidence of data loss exists — local history remained intact — so this is an evidence gap, not a proven failure.
 
-**Corrective action.** Management should execute retest protocol EXP-02 with an observation window of at least 66 minutes and distinctive marker values, capturing the post-resend central query as evidence.
-**Management response:** Agreed. The recovery control owner (role; person unassigned) will execute EXP-02 in the next laboratory session. Until then SC-06 remains INCONCLUSIVE, and the repository's assessment logic keeps the overall result INCONCLUSIVE automatically.
+**Corrective action.** The project author should execute retest protocol EXP-02 with an observation window of at least 66 minutes and distinctive marker values, capturing the post-resend central query as evidence. The 66-minute minimum covers nominal scheduling delay, not transfer completion; completion and reconciliation must be verified separately, with a documented timeout.
+**Author response (self-review):** Agreed. The recovery control owner (role; person unassigned) will execute EXP-02 in the next laboratory session. Until then SC-06 remains INCONCLUSIVE, and the repository's assessment logic keeps the overall result INCONCLUSIVE automatically.
 
 ### 5.2 Finding 2 — No independent review (Medium)
 
@@ -106,24 +106,24 @@ Assurance opinions use the four-level convention common in UK practice (substant
 
 **Consequence.** No reliance can be placed on internal review as an assurance layer. Every conclusion, including those in this report, carries a self-review threat.
 
-**Corrective action.** Management should obtain an independent technical review of the evidence chain for at least the primary scenario when practicable.
-**Management response:** Agreed in principle; recorded as GAP-GOV-OVERSIGHT, with SELF_REVIEW labelling maintained meanwhile — the repository's honesty mechanism is to name the limitation rather than to costume it.
+**Corrective action.** The project author should obtain an independent technical review of the evidence chain for at least the primary scenario when practicable.
+**Author response (self-review):** Agreed in principle; recorded as GAP-GOV-OVERSIGHT, with SELF_REVIEW labelling maintained meanwhile — the repository's honesty mechanism is to name the limitation rather than to costume it.
 
 ### 5.3 Finding 3 — Weak marker matching in the reconciliation check (Low)
 
-**Condition.** The automated SC-06 check verifies central backfill by substring-matching expected power values (for example "700") in query output. A value such as "5700" would also match, so the check can produce a false positive.
+**Condition at the baseline review.** The automated SC-06 check used substring matching of expected power values in central query output. A value such as "5700" could match "700", allowing a false positive.
 
-**Consequence.** Low impact today, because SC-06 currently cannot pass at all. But the check would be unreliable at exactly the moment it matters — during the EXP-02 retest — and a false positive there would corrupt the project's central result.
+**Consequence.** This could incorrectly classify reconciliation as supported during a retest. The recorded SC-06 result remains INCONCLUSIVE.
 
-**Corrective action.** Management should select marker values that cannot collide as substrings, or match on delimited fields.
-**Management response:** Agreed; will be addressed as part of EXP-02 preparation.
+**Corrective action and current status.** The substring-based upgrade has been removed. Legacy query text can no longer establish reconciliation; SC-06 stays INCONCLUSIVE until a structured comparison of local and central samples is implemented and supported by retest evidence. Closing the unsafe evaluation path does not complete reconciliation testing.
+**Author response (self-review):** The structured comparator and EXP-02 remain open work.
 
 ### 5.4 Finding 4 — Repository history hygiene (Low / Advisory)
 
 **Condition.** Review of the development history identified several commits with non-descriptive messages. Git history is a stated integrity anchor for the evidence manifest — the repository's own documentation notes that a rewritten manifest passes local verification, so the manifest's integrity rests on history and CI. That raises the documentation bar for the history itself.
 
-**Corrective action.** Management should maintain descriptive commit messages and establish a clean public baseline.
-**Management response:** Agreed. The public repository was re-initialised at a clean v1.1.0 baseline before wider publication, and descriptive messages are required from that baseline onward. The development history preceding the baseline is disclosed here rather than silently discarded.
+**Corrective action.** The project author should maintain descriptive commit messages and establish a clean public baseline.
+**Author response (self-review):** Agreed. The public repository was re-initialised at a clean v1.1.0 baseline before wider publication, and descriptive messages are required from that baseline onward. The development history preceding the baseline is disclosed here rather than silently discarded.
 
 ### 5.5 Matter arising, closed in period
 
@@ -201,7 +201,7 @@ The compensating discipline — the only one genuinely available to a single aut
 
 The laboratory demonstrates the mechanics of an assurance-led operation at small scale: obligations traced to controls, controls to tests, tests to evidence, and gaps to owned actions — with the traceability enforced by software rather than promised by prose. What it cannot demonstrate, it says out loud: independence, operating effectiveness over time, physical and identity-layer resilience, and any regulatory relationship.
 
-The single follow-up that matters is EXP-02. If the retest verifies central backfill within the scheduler's window, the last criterion moves to supported and the central claim closes; if it shows genuine loss, the project gains a finding worth having. Either outcome is acceptable to this reviewer; only the current unknown is not, and it is time-bound.
+The single follow-up that matters is EXP-02. If the retest verifies central backfill against the reconciliation criteria, the last criterion moves to supported and the central claim closes; if it shows genuine loss, the project gains a finding worth having. Either outcome is acceptable to this reviewer; the current unknown remains open, with no calendar deadline assigned.
 
 In my judgement the correct professional posture for a laboratory of this kind is exactly the one it takes: narrow claims, constrained vocabulary, published uncertainty, and limits stated in the same breath as results. The findings in this report are real, but none of them undermines that posture — three of the four exist precisely because the repository is honest enough to expose them.
 
