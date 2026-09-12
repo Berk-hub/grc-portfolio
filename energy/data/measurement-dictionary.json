@@ -1,21 +1,40 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "note": "Measurement semantics and operating limits for the laboratory. Limits are derived from the recorded simulation configuration (evidence/backend-loss/04-edge-config-discovery.json), not from hardware datasheets. All channels derive from the same simulator clock and equations; the zero-residual check is therefore a consistency check, not an independent measurement.",
   "time_source": "host UTC; no independent clock verification",
   "balance_tolerance_w": 50,
-  "balance_tolerance_rationale": "Matches the tolerance already applied by the assessment logic in src/energy_assurance/cli.py.",
+  "balance_tolerance_rationale": "Read by src/energy_assurance/cli.py; the code carries no separate copy of this value.",
   "sign_convention": {
     "ess_w": "positive = discharge to the site, negative = charge",
     "grid_w": "positive = import from grid",
     "residual_definition": "production + ess + grid - consumption, expected 0 within tolerance (grid import positive)"
   },
   "channels": [
-    {"channel": "_sum/ConsumptionActivePower", "unit": "W", "source": "simulateConsumption via meter1", "sampling": "1 s cycle", "stale_after_s": 5},
-    {"channel": "_sum/ProductionActivePower", "unit": "W", "source": "simulateProduction via meter2", "sampling": "1 s cycle", "stale_after_s": 5},
-    {"channel": "_sum/EssActivePower", "unit": "W", "source": "ess0 (Simulator.EssSymmetric.Reacting)", "sampling": "1 s cycle", "stale_after_s": 5},
-    {"channel": "_sum/GridActivePower", "unit": "W", "source": "meter0 (Simulator.GridMeter.Reacting)", "sampling": "1 s cycle", "stale_after_s": 5},
-    {"channel": "_sum/EssSoc", "unit": "%", "source": "ess0", "sampling": "1 s cycle", "stale_after_s": 10}
+    {"channel": "_sum/ConsumptionActivePower", "field": "consumption_w", "unit": "W", "min": 0, "max": null, "finite": true, "source": "simulateConsumption via meter1", "sampling": "1 s cycle", "stale_after_s": 5},
+    {"channel": "_sum/ProductionActivePower", "field": "production_w", "unit": "W", "min": 0, "max": null, "finite": true, "source": "simulateProduction via meter2", "sampling": "1 s cycle", "stale_after_s": 5},
+    {"channel": "_sum/EssActivePower", "field": "ess_w", "unit": "W", "min": -10000, "max": 10000, "finite": true, "limit_note": "min equals -operating_limits.ess_max_charge_w, max equals operating_limits.ess_max_discharge_w; tests assert agreement", "source": "ess0 (Simulator.EssSymmetric.Reacting)", "sampling": "1 s cycle", "stale_after_s": 5},
+    {"channel": "_sum/GridActivePower", "field": "grid_w", "unit": "W", "min": null, "max": null, "finite": true, "limit_note": "No grid connection limit was recorded for the simulator.", "source": "meter0 (Simulator.GridMeter.Reacting)", "sampling": "1 s cycle", "stale_after_s": 5},
+    {"channel": "_sum/EssSoc", "field": "ess_soc_pct", "unit": "%", "min": 0, "max": 100, "finite": true, "limit_note": "equals operating_limits.soc_floor_pct and soc_ceiling_pct; tests assert agreement", "source": "ess0", "sampling": "1 s cycle", "stale_after_s": 10}
   ],
+  "validation": {
+    "note": "Read by src/energy_assurance/cli.py. Per-channel min, max and finite live on the channel entries above; the required snapshot fields are the channel 'field' names.",
+    "transition_tolerance_w": 100,
+    "transition_tolerance_rationale": "Two adjacent samples that are each balanced within balance_tolerance_w may differ in residual by up to twice that value; a larger unexplained change in ess_w is a transition.",
+    "max_gap_s": 5,
+    "max_gap_rationale": "Equal to stale_after_s of the power channels. A longer gap between adjacent trace samples can hide a transition, so SC-03 becomes INCONCLUSIVE.",
+    "evidence_formats": {
+      "1": "Four phase snapshots (pre_failure, outage_discharge, outage_charge, recovery), each with captured_at_utc and the five channel fields. Sufficient for SC-01, SC-02, SC-04 and SC-05. SC-03 is INCONCLUSIVE because two balanced snapshots cannot show the absence of transitions between them.",
+      "2": "Format 1 plus evidence_format = 2 and a state_trace: either an inline list of sample objects or state_trace_file naming a JSONL file next to the run file (one sample object per line). Each sample carries captured_at_utc and/or source_timestamp, optional monotonic_s, the five channel fields, and optionally grid_setpoint_w and backend_link_18081."
+    }
+  },
+  "time_semantics": {
+    "source_timestamp": "Time stamped by the producing system (edge or simulator) for the sample. Absent from format 1 evidence; no value is invented for old snapshots.",
+    "captured_at_utc": "Host wall-clock time (UTC, aware ISO-8601) at which the evidence collector read the value. Present in all recorded evidence.",
+    "monotonic_s": "Host monotonic counter in seconds. Used for gap measurement between adjacent samples when present; never compared with wall-clock time or across hosts.",
+    "clock_uncertainty_s": null,
+    "clock_uncertainty_note": "Not measured. Host UTC without independent verification; no bound is claimed, so the code uses 0 s and a source_timestamp later than captured_at_utc is an evidence error.",
+    "freshness_rule": "captured_at_utc minus source_timestamp must not exceed the smallest stale_after_s among the required channels. Enforced only when both timestamps are present on the same record."
+  },
   "operating_limits": {
     "ess_capacity_wh": 10200,
     "ess_max_apparent_power_va": 10000,

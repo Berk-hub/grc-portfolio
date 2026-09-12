@@ -5,8 +5,8 @@ import unittest
 from pathlib import Path
 
 from energy_assurance.cli import (
-    assess_backend_loss, balanced, load_backend_loss_run,
-    ordered_timestamps, required_measurements,
+    EvidenceError, assess_backend_loss, balanced, load_backend_loss_run,
+    measurement_problems, ordered_timestamps, required_measurements,
 )
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -32,7 +32,11 @@ class MeasurementValidationTests(unittest.TestCase):
             ('ess_w', 10001), ('ess_w', -10001),
         ):
             with self.subTest(field=field, value=value):
-                self.assertFalse(required_measurements(dict(self.snapshot, **{field: value})))
+                snapshot = dict(self.snapshot, **{field: value})
+                self.assertFalse(required_measurements(snapshot))
+                problems = measurement_problems(snapshot)
+                self.assertEqual(len(problems), 1)
+                self.assertIn(field, problems[0])
 
     def test_forged_residual_cannot_hide_unbalanced_load(self):
         self.snapshot['consumption_w'] = 10**12
@@ -47,20 +51,35 @@ class MeasurementValidationTests(unittest.TestCase):
         self.snapshot['grid_w'] = -40
         self.assertFalse(balanced(self.snapshot))
 
-    def test_invalid_inputs_produce_failed_assessment_without_crashing(self):
-        for field, value in (
-            ('ess_soc_pct', 900), ('consumption_w', 10**12), ('ess_w', 'bad'),
+    def _assess_with(self, field, value, evaluator="v2"):
+        with tempfile.TemporaryDirectory() as tmp:
+            run = copy.deepcopy(self.run)
+            run['outage_discharge'][field] = value
+            root = Path(tmp)
+            evidence = root / 'evidence/backend-loss'
+            evidence.mkdir(parents=True)
+            (evidence / '11-final-reconciliation-run.json').write_text(json.dumps(run))
+            return assess_backend_loss(root, evaluator=evaluator)
+
+    def test_out_of_range_inputs_produce_failed_assessment_without_crashing(self):
+        for field, value, failing in (
+            ('ess_soc_pct', 900, 'SC-01'),
+            ('consumption_w', 10**12, 'SC-02'),
         ):
-            with self.subTest(field=field), tempfile.TemporaryDirectory() as tmp:
-                run = copy.deepcopy(self.run)
-                run['outage_discharge'][field] = value
-                root = Path(tmp)
-                evidence = root / 'evidence/backend-loss'
-                evidence.mkdir(parents=True)
-                (evidence / '11-final-reconciliation-run.json').write_text(json.dumps(run))
-                result = assess_backend_loss(root)
-                self.assertEqual(result['overall_result'], 'NOT SUPPORTED')
-                self.assertEqual(result['criteria']['SC-03'], 'NOT SUPPORTED')
+            for evaluator in ("v1", "v2"):
+                with self.subTest(field=field, evaluator=evaluator):
+                    result = self._assess_with(field, value, evaluator)
+                    self.assertEqual(result['overall_result'], 'NOT SUPPORTED')
+                    self.assertEqual(result['criteria'][failing], 'NOT SUPPORTED')
+                    self.assertNotEqual(result['criteria']['SC-03'], 'SUPPORTED')
+
+    def test_malformed_inputs_are_evidence_errors(self):
+        # Wrong type, boolean and null are schema problems: the assessment
+        # refuses to run rather than reporting a criterion result.
+        for field, value in (('ess_w', 'bad'), ('grid_w', True), ('ess_soc_pct', None)):
+            with self.subTest(field=field, value=value):
+                with self.assertRaises(EvidenceError):
+                    self._assess_with(field, value)
 
 
 class TimestampValidationTests(unittest.TestCase):

@@ -1,0 +1,170 @@
+{
+  "schema_version": "1.0",
+  "model_id": "SVC-MODEL-001",
+  "note": "P04 energy service and critical-infrastructure model for the fictional reference site REF-ENERGY-001. Every number carries a 'source' of exactly one kind: 'simulator_config' (recorded in evidence/backend-loss/04-edge-config-discovery.json or data/measurement-dictionary.json), 'assumption' (an explicitly labelled example value, not a vendor or operator limit) or 'derived' (calculated from the two kinds above; the calculation is shown in docs/18-service-model.md). No physical test was performed. States, transitions and KPIs describe how the laboratory would classify simulator output; they are not a claim about real equipment.",
+  "context": {
+    "site_id": "REF-ENERGY-001",
+    "fictional": true,
+    "description": "Example commercial microgrid: PV, one battery energy storage system (ESS), a grid connection, one critical load and one deferrable load. The recorded simulator has a single consumption channel; the load split below is a modelling assumption that EXP-05 or later would have to implement as two simulated meters.",
+    "simulator_facts": {
+      "ess_capacity_wh": {"value": 10200, "source": "simulator_config", "ref": "ess0.capacity"},
+      "ess_max_charge_w": {"value": 10000, "source": "simulator_config", "ref": "ess0.maxChargePower"},
+      "ess_max_discharge_w": {"value": 10000, "source": "simulator_config", "ref": "ess0.maxDischargePower"},
+      "ess_initial_soc_pct": {"value": 50, "source": "simulator_config", "ref": "ess0.initialSoc"},
+      "grid_setpoint_w": {"value": 0, "source": "simulator_config", "ref": "ctrlBalancing0.targetGridSetpoint"},
+      "cycle_time_s": {"value": 1, "source": "simulator_config", "ref": "_cycle.cycleTime = 1000 ms"},
+      "balance_tolerance_w": {"value": 50, "source": "simulator_config", "ref": "data/measurement-dictionary.json balance_tolerance_w"},
+      "grid_mode": {"value": "ON_GRID", "source": "simulator_config", "ref": "ess0.gridMode; grid loss was never simulated"},
+      "fuse_limit_a": {"value": 32, "source": "simulator_config", "ref": "_meta.gridConnectionPointFuseLimit; recorded but not enforced by any controller in the configuration"}
+    }
+  },
+  "services": [
+    {
+      "id": "SVC-ENERGY-001",
+      "name": "Battery balancing (grid setpoint 0 W)",
+      "tier": "T2",
+      "existing": true,
+      "assets": ["A-EDGE-001", "A-BESS-001", "A-METER-001"],
+      "risks": ["R-RES-001", "R-CTL-002"],
+      "controls": ["ENG-CTL-004"],
+      "minimum_service_level": {"statement": "|GridActivePower| <= 50 W in every cycle while ST-NORMAL or ST-CENTRAL-LOST applies", "source": "simulator_config"}
+    },
+    {
+      "id": "SVC-CRIT-001",
+      "name": "Supply of the critical load",
+      "tier": "T1",
+      "existing": false,
+      "loads": ["LOAD-CRIT-001"],
+      "assets": ["A-BESS-001", "A-METER-001", "A-EDGE-001"],
+      "risks": ["R-DEP-011", "R-PHY-007"],
+      "controls": ["ENG-CTL-004", "ENG-PHY-009"],
+      "minimum_service_level": {"statement": "critical-service fulfilment ratio (KPI-CSF-001) = 1.00 over any 60 s window", "source": "assumption"},
+      "outage_tolerance": {"value_min": 0, "statement": "no interruption of the critical load is tolerated while ESS energy above the reserve floor remains", "source": "assumption"},
+      "reserve_autonomy_h": {"value": 2, "source": "assumption", "rationale": "example planning horizon for the critical load with no grid and no PV; not a vendor or operator figure"}
+    },
+    {
+      "id": "SVC-DEF-001",
+      "name": "Supply of the deferrable load",
+      "tier": "T3",
+      "existing": false,
+      "loads": ["LOAD-DEF-001"],
+      "assets": ["A-EDGE-001"],
+      "risks": ["R-CTL-002"],
+      "controls": ["ENG-CTL-004"],
+      "minimum_service_level": {"statement": "none; may be curtailed to 0 W in ST-SAFE-CURTAIL", "source": "assumption"},
+      "outage_tolerance": {"value_min": 240, "source": "assumption", "rationale": "example: the deferrable load may be shifted by up to 4 h"}
+    },
+    {
+      "id": "SVC-VIS-001",
+      "name": "Central visibility and history",
+      "tier": "T3",
+      "existing": false,
+      "assets": ["A-BACKEND-001", "A-UI-001", "A-EVIDENCE-001"],
+      "risks": ["R-RES-001", "R-TEL-003", "R-REC-009"],
+      "controls": ["ENG-REC-007", "ENG-MON-006"],
+      "minimum_service_level": {"statement": "local record continuous at 1 s; central history complete after backfill", "source": "assumption"},
+      "outage_tolerance": {"value_min": 66, "source": "derived", "rationale": "nominal resend scheduling delay 5 to 65 min recorded in docs/13-sc06-root-cause.md, rounded up; central visibility may be absent this long without breaching the local record"}
+    }
+  ],
+  "tiers": [
+    {"id": "T1", "name": "critical", "rule": "must be served; the reserve floor exists for this tier only"},
+    {"id": "T2", "name": "economic", "rule": "balancing function; may be limited when a limit or the reserve floor is reached"},
+    {"id": "T3", "name": "deferrable or informational", "rule": "may be curtailed or delayed within its outage tolerance"}
+  ],
+  "loads": [
+    {
+      "id": "LOAD-CRIT-001",
+      "service": "SVC-CRIT-001",
+      "power_w": {"value": 2000, "source": "assumption", "rationale": "example constant critical demand; about half of the 4100 W consumption recorded in the connected baseline of evidence/backend-loss/11-final-reconciliation-run.json"},
+      "curtailable": false,
+      "simulator_channel": null,
+      "note": "not a separate channel in the recorded configuration; _sum/ConsumptionActivePower is one aggregate"
+    },
+    {
+      "id": "LOAD-DEF-001",
+      "service": "SVC-DEF-001",
+      "power_w": {"value": 3000, "source": "assumption", "rationale": "example maximum deferrable demand; with LOAD-CRIT-001 it brackets the 1800 to 5200 W consumption range recorded in the v1 evidence"},
+      "curtailable": true,
+      "curtail_latency_s": {"value": 1, "source": "assumption", "rationale": "one controller cycle in simulation; no physical switching modelled"},
+      "simulator_channel": null
+    }
+  ],
+  "limits": [
+    {"id": "LIM-ESS-P", "quantity": "EssActivePower", "unit": "W", "min": -10000, "max": 10000, "source": "simulator_config", "risks": ["R-CTL-002"], "controls": ["ENG-CTL-004"]},
+    {"id": "LIM-SOC-FLOOR", "quantity": "EssSoc", "unit": "%", "min": 40, "max": 100, "source": "derived", "calculation": "reserve_wh = 2000 W x 2 h = 4000 Wh; 4000 / 10200 = 39.2 %, rounded up to 40 %", "enforced_by_simulator": false, "risks": ["R-DEP-011"], "controls": ["ENG-CTL-004"]},
+    {"id": "LIM-SOC-HYST", "quantity": "EssSoc", "unit": "%", "value": 2, "source": "assumption", "rationale": "exit hysteresis above the floor; the SoC channel is an integer percentage, so 1 % would chatter", "risks": ["R-CTL-002"], "controls": ["ENG-CTL-004"]},
+    {"id": "LIM-GRID-BAL", "quantity": "GridActivePower", "unit": "W", "min": -50, "max": 50, "source": "simulator_config", "applies_in": ["ST-NORMAL", "ST-CENTRAL-LOST"], "risks": ["R-CTL-002"], "controls": ["ENG-CTL-004"]},
+    {"id": "LIM-GRID-IMPORT", "quantity": "GridActivePower", "unit": "W", "max": 22080, "source": "derived", "calculation": "3 phases x 230 V x 32 A = 22080 W; 32 A is the recorded fuse config value, 3 x 230 V is an assumption; not enforced by any recorded controller", "risks": ["R-PHY-007"], "controls": ["ENG-PHY-009"]},
+    {"id": "LIM-STALE-P", "quantity": "power channels", "unit": "s", "max": 5, "source": "simulator_config", "ref": "measurement-dictionary stale_after_s", "risks": ["R-TEL-003"], "controls": ["ENG-TEL-005"]},
+    {"id": "LIM-STALE-SOC", "quantity": "EssSoc", "unit": "s", "max": 10, "source": "simulator_config", "ref": "measurement-dictionary stale_after_s", "risks": ["R-TEL-003"], "controls": ["ENG-TEL-005"]}
+  ],
+  "data_loss_and_recovery": {
+    "local_record_gap_tolerance_s": {"value": 60, "source": "assumption", "rationale": "example: a gap longer than 60 consecutive 1 s samples in the local record is a loss event", "risks": ["R-MON-005"], "controls": ["ENG-MON-006"]},
+    "central_backfill_window_min": {"value": 66, "source": "derived", "rationale": "nominal resend delay upper bound from docs/13-sc06-root-cause.md; a separate transfer timeout must be recorded per run", "risks": ["R-REC-009"], "controls": ["ENG-REC-007"]},
+    "central_permanent_loss_tolerance_wh": {"value": 0, "source": "assumption", "rationale": "example target: no energy record permanently missing from central history after the backfill window; FND-REC-001 remains open until EXP-02 measures this", "risks": ["R-REC-009"], "controls": ["ENG-REC-007"]},
+    "control_reaction_objective_s": {"value": 2, "source": "assumption", "rationale": "two controller cycles of 1 s; simulation-only, no inverter ramp modelled", "risks": ["R-CTL-002"], "controls": ["ENG-CTL-004"]},
+    "link_loss_detection_objective_s": {"value": 60, "source": "assumption", "rationale": "example; the v1 evidence shows UnableToSend rising within the 12 s snapshot spacing, so the objective is not tight", "risks": ["R-RES-001"], "controls": ["ENG-MON-006"]}
+  },
+  "equations": {
+    "sign_convention": "ESS positive = discharge to the site; grid positive = import (data/measurement-dictionary.json)",
+    "power_balance": "P_prod + P_ess + P_grid - P_cons = residual; |residual| <= 50 W",
+    "soc_evolution": "SoC(t + dt) = SoC(t) - 100 * (P_ess * dt / 3600) / C, with P_ess in W, dt in s, C = 10200 Wh, SoC in %",
+    "energy_not_supplied": "ENS = sum over cycles of max(0, P_crit_demand - P_crit_served) * dt / 3600, in Wh",
+    "critical_fulfilment_ratio": "CSF = 1 - ENS / (P_crit_demand * T / 3600) over a window of T seconds",
+    "worked_check": "3000 W discharge for 41 s = 34.2 Wh = 0.335 % of 10200 Wh; the integer SoC channel staying at 28 % across the 41 s v1 run is consistent with the equation",
+    "not_modelled": ["charge and discharge efficiency (treated as 100 %)", "inverter ramp rate", "BMS protection and temperature limits", "reactive power", "grid loss, islanding and protection"],
+    "note": "These equations describe the simulator. They say nothing about physical safety of real equipment."
+  },
+  "states": [
+    {"id": "ST-NORMAL", "name": "normal", "priority": 6, "entry": "all required channels fresh (LIM-STALE-*), backend link up, LIM-GRID-BAL met, LIM-SOC-FLOOR + LIM-SOC-HYST < SoC < 100, no limit violation", "exit": "the entry condition of any other state holds", "risks": ["R-CTL-002"], "controls": ["ENG-CTL-004"], "evidence_now": "evidence/backend-loss/11-final-reconciliation-run.json connected_baseline (except the SoC floor, which is below the example floor)"},
+    {"id": "ST-CENTRAL-LOST", "name": "central-connectivity-lost", "priority": 4, "entry": "backend link down (relay port 18081 closed or ctrlBackend0 UnableToSend > 0) while local channels are fresh", "exit": "backend link up -> ST-RECOVERY", "risks": ["R-RES-001", "R-TEL-003"], "controls": ["ENG-CTL-004", "ENG-MON-006"], "evidence_now": "outage_discharge and outage_charge snapshots, SCN-BACKEND-LOSS"},
+    {"id": "ST-MEAS-UNRELIABLE", "name": "unreliable-measurement", "priority": 2, "entry": "any required channel older than its stale_after_s, or |residual| > 50 W, or a value outside physical bounds (SoC outside 0-100, |P_ess| > 10000)", "exit": "two consecutive cycles fresh and consistent (assumption) -> previous state; if held longer than 30 s (assumption) -> ST-SAFE-CURTAIL", "risks": ["R-DEP-011", "R-TEL-003"], "controls": ["ENG-TEL-005"], "evidence_now": null, "experiment": "EXP-05"},
+    {"id": "ST-CAP-LIMIT", "name": "capacity-limit", "priority": 3, "entry": "SoC <= 40 % while balancing requests discharge, or SoC >= 100 % while balancing requests charge, or requested |P_ess| > 10000 W", "exit": "SoC > 42 % (floor + hysteresis) or request within limits", "expected_behaviour": "non-zero grid exchange is correct here, not a violation (measurement-dictionary soc_limit_note)", "risks": ["R-DEP-011", "R-CTL-002"], "controls": ["ENG-CTL-004"], "evidence_now": "11-final run SoC 28 % is below the example floor; the simulator did not limit because it enforces 0 %", "experiment": "EXP-06"},
+    {"id": "ST-SAFE-CURTAIL", "name": "safe-curtailment", "priority": 1, "entry": "ST-CAP-LIMIT with grid supply unavailable, or ST-MEAS-UNRELIABLE held longer than 30 s", "action": "LOAD-DEF-001 set to 0 W; ESS serves LOAD-CRIT-001 only", "exit": "entry condition cleared and operator acknowledgement recorded -> ST-RECOVERY", "risks": ["R-DEP-011", "R-PHY-007"], "controls": ["ENG-CTL-004", "ENG-PHY-009"], "evidence_now": null, "simulation_only": true, "note": "grid loss is not in the recorded configuration; no curtailment controller exists in it"},
+    {"id": "ST-RECOVERY", "name": "recovery", "priority": 5, "entry": "a lost dependency returned or ST-SAFE-CURTAIL cleared", "exit": "to ST-NORMAL when LastSuccessfulResend is non-null and the central record matches the local record within the backfill window; to a flagged ST-NORMAL with an FND-REC-001-type finding if the transfer timeout expires", "risks": ["R-REC-009"], "controls": ["ENG-REC-007"], "evidence_now": "after_reconnection snapshot; exit never observed (SC-06 INCONCLUSIVE)", "experiment": "EXP-02"}
+  ],
+  "priority_rule": "When two entry conditions hold, the state with the lower priority number is reported; the other condition is recorded as a concurrent flag. Safety of the critical load (1) beats measurement doubt (2), which beats an energy limit (3), which beats loss of the central link (4). Recovery (5) is reported only when nothing else is active.",
+  "transitions": [
+    {"id": "TR-01", "from": "ST-NORMAL", "to": "ST-CENTRAL-LOST", "trigger": "backend link down", "evidence": "backend_link_18081 false, unable_to_send 0 -> 1", "kpi": "KPI-LINK-001", "risks": ["R-RES-001"]},
+    {"id": "TR-02", "from": "ST-CENTRAL-LOST", "to": "ST-RECOVERY", "trigger": "backend link up", "evidence": "backend_link_18081 true", "kpi": "KPI-REC-001", "risks": ["R-REC-009"]},
+    {"id": "TR-03", "from": "ST-RECOVERY", "to": "ST-NORMAL", "trigger": "backfill verified or timeout recorded", "evidence": "LastSuccessfulResend non-null; 14-influx-post-resend.txt", "kpi": "KPI-REC-001", "risks": ["R-REC-009"]},
+    {"id": "TR-04", "from": "ST-NORMAL", "to": "ST-MEAS-UNRELIABLE", "trigger": "stale or inconsistent channel", "evidence": "channel age > stale_after_s or |residual| > 50 W", "kpi": "KPI-TRL-001", "risks": ["R-DEP-011"]},
+    {"id": "TR-05", "from": "ST-MEAS-UNRELIABLE", "to": "ST-NORMAL", "trigger": "two consecutive consistent cycles", "evidence": "1 s samples", "kpi": "KPI-TRL-001", "risks": ["R-TEL-003"]},
+    {"id": "TR-06", "from": "ST-NORMAL", "to": "ST-CAP-LIMIT", "trigger": "SoC reaches floor or ceiling, or power request exceeds LIM-ESS-P", "evidence": "_sum/EssSoc, _sum/EssActivePower", "kpi": "KPI-LIM-001", "risks": ["R-DEP-011"]},
+    {"id": "TR-07", "from": "ST-CAP-LIMIT", "to": "ST-NORMAL", "trigger": "SoC beyond hysteresis band or request within limits", "evidence": "_sum/EssSoc", "kpi": "KPI-TRL-001", "risks": ["R-CTL-002"]},
+    {"id": "TR-08", "from": "ST-CAP-LIMIT", "to": "ST-SAFE-CURTAIL", "trigger": "grid supply unavailable while at floor", "evidence": "not obtainable from the recorded configuration", "kpi": "KPI-CSF-001", "risks": ["R-PHY-007"], "simulation_only": true},
+    {"id": "TR-09", "from": "ST-MEAS-UNRELIABLE", "to": "ST-SAFE-CURTAIL", "trigger": "unreliable measurement held > 30 s", "evidence": "1 s samples", "kpi": "KPI-TRL-001", "risks": ["R-DEP-011"], "simulation_only": true},
+    {"id": "TR-10", "from": "ST-SAFE-CURTAIL", "to": "ST-RECOVERY", "trigger": "condition cleared and operator acknowledgement", "evidence": "operator record; none exists yet", "kpi": "KPI-REC-001", "risks": ["R-GOV-012"], "simulation_only": true},
+    {"id": "TR-11", "from": "ST-CENTRAL-LOST", "to": "ST-CAP-LIMIT", "trigger": "floor or limit reached while the link is down", "evidence": "local RRD4J record only", "kpi": "KPI-LIM-001", "risks": ["R-RES-001", "R-DEP-011"], "note": "priority 3 beats 4; ST-CENTRAL-LOST stays as a flag"}
+  ],
+  "dependencies": [
+    {"id": "DEP-ELEC", "name": "electricity supply (grid)", "existing_ids": ["A-METER-001"], "failure_effect": "balancing cannot hold 0 W; ESS alone serves load until LIM-SOC-FLOOR", "cascade_to": ["SVC-CRIT-001", "SVC-DEF-001"], "common_cause_group": null, "risks": ["R-PHY-007"], "controls": ["ENG-PHY-009"], "lab_method": "simulator gridMode OFF_GRID; not yet run", "physical_test": false},
+    {"id": "DEP-NET", "name": "network path Edge to Backend", "existing_ids": ["D-001"], "failure_effect": "central visibility and transfer lost; local control unaffected", "cascade_to": ["SVC-VIS-001", "DEP-OPER"], "common_cause_group": "CCG-HOST", "risks": ["R-RES-001"], "controls": ["ENG-CTL-004", "ENG-REC-007"], "lab_method": "TCP relay interruption (SCN-BACKEND-LOSS)", "physical_test": false},
+    {"id": "DEP-TIME", "name": "time source", "existing_ids": ["A-EVIDENCE-001"], "failure_effect": "evidence cannot be ordered (SC-05); state durations and KPI-TRL-001 become unmeasurable", "cascade_to": ["SVC-VIS-001"], "common_cause_group": "CCG-CLOCK", "risks": ["R-MON-005"], "controls": ["ENG-MON-006"], "lab_method": "host UTC only; no independent clock", "physical_test": false},
+    {"id": "DEP-DNS-ID", "name": "name resolution and identity", "existing_ids": ["A-BACKEND-001", "A-UI-001"], "failure_effect": "Edge cannot reach or authenticate to Backend (uri ws://localhost:18081, apikey); operator cannot log in", "cascade_to": ["SVC-VIS-001", "DEP-OPER"], "common_cause_group": "CCG-HOST", "risks": ["R-IAM-004"], "controls": ["ENG-IAM-003"], "lab_method": "localhost only; DNS is not exercised in this laboratory", "physical_test": false},
+    {"id": "DEP-STORE", "name": "storage (local RRD4J, central InfluxDB)", "existing_ids": ["A-EVIDENCE-001"], "failure_effect": "local record gap or central history loss; ST-RECOVERY cannot exit cleanly", "cascade_to": ["SVC-VIS-001"], "common_cause_group": "CCG-HOST", "risks": ["R-REC-009", "R-DAT-010"], "controls": ["ENG-DAT-011", "ENG-REC-007"], "lab_method": "EXP-08 quota or directory fault", "physical_test": false},
+    {"id": "DEP-HOST", "name": "shared host (single Codespace)", "existing_ids": ["A-EDGE-001", "A-BACKEND-001", "A-EVIDENCE-001"], "failure_effect": "control, management plane and evidence pipeline fail together", "cascade_to": ["DEP-NET", "DEP-STORE", "DEP-DNS-ID", "DEP-TIME", "SVC-ENERGY-001", "SVC-CRIT-001", "SVC-VIS-001"], "common_cause_group": "CCG-HOST", "risks": ["R-PHY-007", "R-RES-001"], "controls": ["ENG-ARC-002"], "lab_method": "analysis only", "physical_test": false},
+    {"id": "DEP-OPER", "name": "operator", "existing_ids": ["A-UI-001"], "failure_effect": "no acknowledgement for TR-10; no manual intervention during ST-SAFE-CURTAIL", "cascade_to": ["ST-RECOVERY"], "common_cause_group": null, "risks": ["R-GOV-012", "R-IAM-004"], "controls": ["ENG-GOV-001"], "lab_method": "role model only; single author (GAP-GOV-OVERSIGHT)", "physical_test": false},
+    {"id": "DEP-SUPPLY", "name": "supply chain (OpenEMS build and libraries)", "existing_ids": ["A-EDGE-001", "A-BACKEND-001"], "failure_effect": "control logic or resend behaviour changes with an upstream revision; results are tied to the pinned build", "cascade_to": ["SVC-ENERGY-001", "SVC-VIS-001"], "common_cause_group": "CCG-BUILD", "risks": ["R-SUP-006"], "controls": ["ENG-SUP-008"], "lab_method": "pinned build; no test", "physical_test": false}
+  ],
+  "common_cause_groups": [
+    {"id": "CCG-HOST", "members": ["DEP-NET", "DEP-DNS-ID", "DEP-STORE", "DEP-HOST"], "effect": "one host failure removes service, management and evidence at once; only failures injectable above the host can be isolated", "risks": ["R-PHY-007"]},
+    {"id": "CCG-CLOCK", "members": ["DEP-TIME"], "effect": "all channels and all timestamps come from one host clock; residual and ordering checks are consistency checks, not independent measurements", "risks": ["R-MON-005"]},
+    {"id": "CCG-BUILD", "members": ["DEP-SUPPLY"], "effect": "Edge and Backend share one upstream revision; a defect affects both sides of D-001", "risks": ["R-SUP-006"]}
+  ],
+  "kpis": [
+    {"id": "KPI-CSF-001", "name": "critical-service fulfilment ratio", "unit": "ratio", "method": "1 - ENS / (2000 W x T / 3600) over window T; needs a separate critical-load channel", "status": "NEEDS_EXPERIMENT", "source_channel": "none in the recorded config; requires a second simulated consumption meter", "experiment": "EXP-05 extension", "risks": ["R-DEP-011"], "controls": ["ENG-CTL-004"], "service": "SVC-CRIT-001"},
+    {"id": "KPI-ENS-001", "name": "energy not supplied to the critical load", "unit": "Wh", "method": "sum of max(0, demand - served) x dt / 3600 at 1 s", "status": "SIMULATION_ONLY", "source_channel": "requires grid-loss simulation (gridMode OFF_GRID) and a load split; no physical meaning in this laboratory", "experiment": "EXP-06 extension", "risks": ["R-DEP-011", "R-PHY-007"], "controls": ["ENG-CTL-004"], "service": "SVC-CRIT-001"},
+    {"id": "KPI-LIM-001", "name": "limit violations (count)", "unit": "count", "method": "number of samples where LIM-GRID-BAL fails outside ST-CAP-LIMIT, |P_ess| > 10000 W, or SoC < 40 % without ST-CAP-LIMIT declared", "status": "MEASURABLE_NOW", "source_channel": "_sum/GridActivePower, _sum/EssActivePower, _sum/EssSoc in evidence/backend-loss/11-final-reconciliation-run.json", "current_value": "0 grid or power violations in 4 snapshots; SoC 28 % is below the example floor in all 4 (floor not enforced by simulator)", "risks": ["R-CTL-002"], "controls": ["ENG-CTL-004"], "service": "SVC-ENERGY-001"},
+    {"id": "KPI-LIM-002", "name": "limit violations (duration)", "unit": "s", "method": "sum of sample intervals in violation; resolution equals sample spacing", "status": "MEASURABLE_NOW", "source_channel": "same as KPI-LIM-001", "current_value": "resolution about 12 s (snapshot spacing); 0 s for grid and power; SoC floor breached for the whole 41 s window", "risks": ["R-CTL-002"], "controls": ["ENG-CTL-004"], "service": "SVC-ENERGY-001"},
+    {"id": "KPI-SOC-001", "name": "reserve margin above floor", "unit": "Wh", "method": "(SoC - 40) / 100 x 10200", "status": "MEASURABLE_NOW", "source_channel": "_sum/EssSoc", "current_value": "(28 - 40) / 100 x 10200 = -1224 Wh in the 11-final run", "risks": ["R-DEP-011"], "controls": ["ENG-CTL-004"], "service": "SVC-CRIT-001"},
+    {"id": "KPI-TRL-001", "name": "transition latency", "unit": "s", "method": "time from trigger sample to first sample in the new state, at 1 s sampling", "status": "NEEDS_EXPERIMENT", "source_channel": "1 s channel log; v1 snapshots at about 12 s are too coarse", "experiment": "EXP-05, EXP-07", "risks": ["R-CTL-002", "R-MON-005"], "controls": ["ENG-MON-006"], "service": "SVC-ENERGY-001"},
+    {"id": "KPI-LINK-001", "name": "central-loss detection latency", "unit": "s", "method": "time from relay stop to UnableToSend > 0", "status": "NEEDS_EXPERIMENT", "source_channel": "ctrlBackend0 UnableToSend; v1 bound: within 12 s", "experiment": "EXP-02 rerun with 1 s sampling", "risks": ["R-RES-001"], "controls": ["ENG-MON-006"], "service": "SVC-VIS-001"},
+    {"id": "KPI-REC-001", "name": "recovery time to verified central history", "unit": "s", "method": "time from link restoration to LastSuccessfulResend non-null and central record matching local record", "status": "NEEDS_EXPERIMENT", "source_channel": "13-historic-resend-monitor.jsonl, 14-influx-post-resend.txt (not yet captured)", "experiment": "EXP-02", "current_value": "not measured; FND-REC-001 open", "risks": ["R-REC-009"], "controls": ["ENG-REC-007"], "service": "SVC-VIS-001"}
+  ],
+  "downstream_packages": {
+    "P05": "needs LOAD-* as two simulated meters, DEP-NET per site, and KPI-LINK-001 / KPI-TRL-001 at 1 s sampling",
+    "P06": "needs the SoC equation, LIM-* and state entry conditions as the deterministic core of Monte Carlo runs",
+    "P07": "needs KPI-CSF-001, KPI-ENS-001 and KPI-REC-001 as the quantities whose distributions are estimated; CCG-* as correlation structure"
+  }
+}

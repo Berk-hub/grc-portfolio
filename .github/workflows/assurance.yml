@@ -28,7 +28,7 @@ jobs:
         run: ./scripts/assure validate
 
       - name: Assess recorded resilience evidence
-        run: ./scripts/assure assess
+        run: ./scripts/assure assess --expect INCONCLUSIVE
 
       - name: Verify evidence integrity
         run: ./scripts/assure verify-manifest
